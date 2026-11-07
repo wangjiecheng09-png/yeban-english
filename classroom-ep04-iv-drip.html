@@ -62,7 +62,7 @@ button.opt:active{transform:scale(.99)}
 </style></head><body><div class="wrap">
 <p><a class="homebtn" href="index.html">🌙 回课堂首页</a></p>
 <h1>夜班英语课堂 · 第4课</h1>
-<p class="sub">给病人输液 · 跟今晚第4集同一课 · 第3课格式，未发布草稿</p>
+<p class="sub">给病人输液 · 跟今晚第4集同一课 · 只用第4集原句</p>
 <p class="note">怎么用：苹果手机在微信里直接打开就能听、能学；想像 App 那样放桌面图标，就在自带浏览器 Safari 里打开，再点分享 → 添加到主屏幕。安卓手机在微信里听不到声，要在 Chrome 里打开（微信里点 … → 在浏览器打开）再听、再加图标。</p>
 <p><label>语速 <input type="range" id="rate" min="0.7" max="1.1" step="0.1" value="0.9"> <span id="ratev">0.9</span></label>
 <button class="ghost" onclick="toggleZh()">中文开/关</button></p>
@@ -120,7 +120,7 @@ button.opt:active{transform:scale(.99)}
 <p><button class="btn-block" id="homeBtn" style="display:none" onclick="location.href='index.html'">✅ 已完成，回首页 →</button></p></div>
 
 <p><button onclick="window.print()">🖨️ 打印 / 保存这页白板</button></p>
-<p class="note">草稿说明：本课只用第4集原句，没有新编的模板句。未推送到公开课堂链接，需用户点头后再发布。</p></div>
+<p class="note">本课只用第4集原句，没有新编的模板句。</p></div>
 </div>
 <script src="audio/audio-data.js?v=3"></script>
 <script src="video/wordcard-data.js?v=2"></script>
@@ -137,11 +137,11 @@ document.addEventListener('pointerdown',function(){try{speechSynthesis.getVoices
 document.getElementById('rate').oninput=e=>{document.getElementById('ratev').textContent=e.target.value};
 function toggleZh(){showZh=!showZh;document.querySelectorAll('.zh').forEach(el=>el.style.display=showZh?'block':'none');}
 let mistakes=JSON.parse(localStorage.getItem('classroom-ep04-mistakes')||'[]');
-function showProgress(){const done=localStorage.getItem('classroom-ep04-done');document.getElementById('progress').textContent=done?'进度：✅ 本课已完成（已打勾）':'进度：还没完成本课小测';document.getElementById('review').textContent=mistakes.length?('错题回炉：你之前错过 '+mistakes.join('、')+'，先把这几道做对再打勾。'):'错过的题会先出现在这里，做对了再打勾。';}
+function showProgress(){const done=localStorage.getItem('classroom-ep04-done');var q1=document.getElementById('q1'),q2=document.getElementById('q2');var quizDone=!!(q1&&q2&&q1.textContent.trim()&&q2.textContent.trim());document.getElementById('progress').textContent=done?'进度：✅ 本课已完成（已打勾）':(quizDone?'进度：小测已完成，点“我学完了”打勾':'进度：还没完成本课小测');document.getElementById('review').textContent=mistakes.length?('错题回炉：你之前错过 '+mistakes.join('、')+'，先把这几道做对再打勾。'):'错过的题会先出现在这里，做对了再打勾。';}
 function noteMistake(name,correct){if(!correct&&!mistakes.includes(name))mistakes.push(name);if(correct)mistakes=mistakes.filter(m=>m!==name);localStorage.setItem('classroom-ep04-mistakes',JSON.stringify(mistakes));showProgress();}
 function quiz(el,correct){document.getElementById('q1').textContent=correct?' ✅ 对，输液就是 IV drip。':' ❌ 再想想，第4集词卡就是这个词。';noteMistake('第1题',correct);}
 function quiz2(el,correct){document.getElementById('q2').textContent=correct?' ✅ 对，start an IV drip for you。':' ❌ 再想想，原句里是 for you。';noteMistake('第2题',correct);}
-function makeSentence(){const w=document.getElementById('myword').value.trim();if(!w){document.getElementById('mysent').textContent='先填一个词，再生成。';return;}const s='I am going to start an IV drip for '+w+'.';const el=document.getElementById('mysent');el.textContent='你的句子：'+s;el.dataset.t=s;}
+function makeSentence(){const w=document.getElementById('myword').value.trim();if(!w){document.getElementById('mysent').textContent='先填一个词，再生成。';return;}const s="I'm going to start an IV drip for "+w+'.';const el=document.getElementById('mysent');el.textContent='你的句子：'+s;el.dataset.t=s;}
 function markDone(){if(mistakes.length){alert('先把错题回炉做对：'+mistakes.join('、'));return;}localStorage.setItem('classroom-ep04-done','1');showProgress();}
 function clearProgress(){localStorage.removeItem('classroom-ep04-done');localStorage.removeItem('classroom-ep04-mistakes');mistakes=[];document.getElementById('q1').textContent='';document.getElementById('q2').textContent='';showProgress();}
 showProgress();
