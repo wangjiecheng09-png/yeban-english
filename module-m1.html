@@ -145,7 +145,7 @@ document.getElementById("progBar").style.width=(doneCount*10)+"%";
 document.getElementById("progText").textContent=doneCount===10?"✅ 10 课全学完了，去复习页拿总结小抄卡吧。":"已完成 "+doneCount+" / 10 课。";
 var cb=document.getElementById("continueBtn");
 if(doneCount===10){cb.textContent="📖 10 课全学完了，去复习页";cb.href="module-m1-review.html";}
-else{cb.textContent="▶ 继续学第 "+(firstTodo+1)+" 课 · "+lessons[firstTodo].t;cb.href=lessons[firstTodo].d;}
+else{cb.textContent="▶ 继续学";cb.href=lessons[firstTodo].d;}
 </script>
 <script>(function(){var im=document.getElementById('keypointsImgM1');if(!im)return;try{var b=window.__KEYPOINTS_EP01;if(!b)return;var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);im.src=URL.createObjectURL(new Blob([a],{type:'image/png'}));}catch(e){}})();</script>
 <script>(function(){var cb=document.getElementById("continueBtn"),b=document.getElementById("barCta");if(cb&&b){b.textContent=cb.textContent;b.href=cb.href;}})();</script><script>
