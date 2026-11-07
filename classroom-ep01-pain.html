@@ -103,7 +103,7 @@ button.opt:active{transform:scale(.99)}
 <p><button onclick="window.print()">🖨️ 打印 / 保存这页白板</button></p>
 <p class="note">原型说明：本课只用第1集原句，没有新编的模板句。</p></div>
 </div>
-<script src="audio/audio-data.js?v=2"></script>
+<script src="audio/audio-data.js?v=3"></script>
 <script src="video/wordcard-data.js?v=1"></script>
 <script src="video/keypoints-ep01-data.js?v=1"></script>
 <script>(function(){var im=document.getElementById('keypointsImg');if(!im)return;try{var b=window.__KEYPOINTS_EP01;if(!b)return;var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);im.src=URL.createObjectURL(new Blob([a],{type:'image/png'}));}catch(e){}})();</script>
@@ -120,7 +120,7 @@ document.addEventListener('pointerdown',function(){try{speechSynthesis.getVoices
 document.getElementById('rate').oninput=e=>{document.getElementById('ratev').textContent=e.target.value;};
 function toggleZh(){showZh=!showZh;document.querySelectorAll('.zh').forEach(el=>el.style.display=showZh?'block':'none');}
 let mistakes=JSON.parse(localStorage.getItem('classroom-ep01-mistakes')||'[]');
-function showProgress(){const done=localStorage.getItem('classroom-ep01-done');var q1=document.getElementById('q1'),q2=document.getElementById('q2');var quizDone=!!(q1&&q2&&q1.textContent.trim()&&q2.textContent.trim());document.getElementById('progress').textContent=done?'进度：✅ 本课已完成（已打勾）':(quizDone?'进度：小测已完成，点“我学完了”打勾':'进度：还没完成本课小测');document.getElementById('review').textContent=mistakes.length?('错题回炉：你之前错过 '+mistakes.join('、')+'，先把这几道做对再打勾。'):'错过的题会先出现在这里，做对了再打勾。';}
+function showProgress(){const done=localStorage.getItem('classroom-ep01-done');document.getElementById('progress').textContent=done?'进度：✅ 本课已完成（已打勾）':'进度：还没完成本课小测';document.getElementById('review').textContent=mistakes.length?('错题回炉：你之前错过 '+mistakes.join('、')+'，先把这几道做对再打勾。'):'错过的题会先出现在这里，做对了再打勾。';}
 function noteMistake(name,correct){if(!correct&&!mistakes.includes(name))mistakes.push(name);if(correct)mistakes=mistakes.filter(m=>m!==name);localStorage.setItem('classroom-ep01-mistakes',JSON.stringify(mistakes));showProgress();}
 function quiz1(el,correct){document.getElementById('q1').textContent=correct?' ✅ 对。':' ❌ 再想想。';noteMistake('第1题',correct);}function quiz2(el,correct){document.getElementById('q2').textContent=correct?' ✅ 对。':' ❌ 再想想。';noteMistake('第2题',correct);}
 function makeSentence(){const w=document.getElementById('myword').value.trim();if(!w){document.getElementById('mysent').textContent='先填一个词，再生成。';return;}const s="About seven, it's ___.".replace('___',w);const el=document.getElementById('mysent');el.textContent='你的句子：'+s;el.dataset.t=s;}

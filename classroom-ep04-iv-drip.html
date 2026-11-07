@@ -122,13 +122,18 @@ button.opt:active{transform:scale(.99)}
 <p><button onclick="window.print()">🖨️ 打印 / 保存这页白板</button></p>
 <p class="note">草稿说明：本课只用第4集原句，没有新编的模板句。未推送到公开课堂链接，需用户点头后再发布。</p></div>
 </div>
+<script src="audio/audio-data.js?v=3"></script>
 <script src="video/wordcard-data.js?v=2"></script>
 <script>(function(){var v=document.getElementById('wordcardVideo');if(!v)return;try{var b=window.__WORDCARD_EP04;if(!b)return;var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);v.src=URL.createObjectURL(new Blob([a],{type:'video/mp4'}));}catch(e){}})();</script>
 <script>
 let showZh=true;
 function showVoiceHint(){document.getElementById('voicehint').style.display='block';}
-function speak(t){if(!('speechSynthesis' in window)){showVoiceHint();return;}var rate=0.9;try{var _r=document.getElementById('rate');if(_r)rate=parseFloat(_r.value)||0.9;}catch(e){}function doSpeak(){var u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=rate;var vs=[];try{vs=speechSynthesis.getVoices()||[];}catch(e){}var v=null;for(var i=0;i<vs.length;i++){if(vs[i].lang==='en-US'){v=vs[i];break;}}if(!v)for(var j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.indexOf('en')===0){v=vs[j];break;}}if(v)u.voice=v;var started=false;u.onstart=function(){started=true;};u.onerror=function(){showVoiceHint();};speechSynthesis.speak(u);try{speechSynthesis.resume();}catch(e){}setTimeout(function(){if(!started&&!speechSynthesis.speaking&&!speechSynthesis.pending)showVoiceHint();},2000);}try{if(speechSynthesis.speaking||speechSynthesis.pending){speechSynthesis.cancel();setTimeout(doSpeak,150);}else{doSpeak();}}catch(e){doSpeak();}}
+var _audioEl=null,_blobUrls={};
+function playMp3(t){var b=window.__AUDIO&&window.__AUDIO[t];if(!b)return false;try{if(!_blobUrls[t]){var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);_blobUrls[t]=URL.createObjectURL(new Blob([a],{type:'audio/mpeg'}));}if(!_audioEl)_audioEl=new Audio();var r=0.9;try{var _e=document.getElementById('rate');if(_e)r=parseFloat(_e.value)||0.9;}catch(e){}_audioEl.playbackRate=r;_audioEl.src=_blobUrls[t];var p=_audioEl.play();if(p&&p.catch)p.catch(function(){speakTts(t);});return true;}catch(e){return false;}}
+function speakTts(t){if(!('speechSynthesis' in window)){showVoiceHint();return;}var u=new SpeechSynthesisUtterance(t);u.lang='en-US';try{var _e=document.getElementById('rate');if(_e)u.rate=parseFloat(_e.value)||0.9;else u.rate=0.9;}catch(e){u.rate=0.9;}var vs=[];try{vs=speechSynthesis.getVoices()||[];}catch(e){}for(var i=0;i<vs.length;i++){if(vs[i].lang&&vs[i].lang.indexOf('en-US')===0){u.voice=vs[i];break;}}if(!u.voice)for(var j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.indexOf('en')===0){u.voice=vs[j];break;}}var started=false;u.onstart=function(){started=true;};u.onerror=function(){showVoiceHint();};try{speechSynthesis.cancel();}catch(e){}speechSynthesis.speak(u);try{speechSynthesis.resume();}catch(e){}setTimeout(function(){if(!started&&!speechSynthesis.speaking&&!speechSynthesis.pending)showVoiceHint();},2000);}
+function speak(t){if(typeof t!=='string')t=String(t);if(playMp3(t))return;speakTts(t);}
 if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){speechSynthesis.getVoices();};}
+document.addEventListener('pointerdown',function(){try{speechSynthesis.getVoices();}catch(e){}},{once:true});
 document.getElementById('rate').oninput=e=>{document.getElementById('ratev').textContent=e.target.value};
 function toggleZh(){showZh=!showZh;document.querySelectorAll('.zh').forEach(el=>el.style.display=showZh?'block':'none');}
 let mistakes=JSON.parse(localStorage.getItem('classroom-ep04-mistakes')||'[]');
