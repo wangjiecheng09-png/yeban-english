@@ -54,7 +54,8 @@ a{color:#0F5E5A}
 button.opt:active{transform:scale(.99)}
 .wordrow{display:flex;width:100%;gap:12px;align-items:center;background:#FFF7E8;border-radius:10px;padding:10px 14px;margin:8px 0}
 .wordrow span{flex:1;min-width:0}
-.wordrow button{flex:none;margin:0;padding:6px 10px;min-height:36px;font-size:14px}</style></head>
+.wordrow button{flex:none;margin:0;padding:6px 10px;min-height:36px;font-size:14px}
+@media print{body{background:#fff;padding:0}.nav{display:none !important}button{display:none !important}body.print-cheat .wrap>*{display:none !important}body.print-cheat #cheatCard{display:block !important;border:1.5px solid #000;margin:0}body.print-pocket .wrap>*{display:none !important}body.print-pocket #pocketCard{display:block !important;border:1.5px solid #000;margin:0}}</style></head>
 <body><div class="wrap"><p><a href="index.html">← 回课堂首页</a></p>
 <h1>🎁 免费资料包 · 体验版</h1>
 <p class="sub">免费体验版 · 先试试，再决定。完整版入院到出院资料包 11 月 11 日之后上。</p>
@@ -64,11 +65,11 @@ button.opt:active{transform:scale(.99)}
 <p>第 1 课疼痛评估 + 第 2 课生命体征的句子和单词，都在这张表里，点开就能学、能听。</p>
 <a class="btn" href="words-ep01.html">打开单词短语表 →</a></div>
 
-<div class="card"><h2>🗂️ 小抄卡 · 2 张</h2>
+<div class="card" id="cheatCard"><h2>🗂️ 小抄卡 · 2 张</h2>
 <p>截图保存，下次查房直接用。只给第 1、2 课这两张。</p>
 <div class="lesson"><b>第 1 课 · 疼痛评估</b><br>On a scale of zero to ten, how bad is your pain?<br>从零到十分，你的疼痛有几分？<br>About seven, it's sharp.<br>大概七分，是刺痛。</div>
 <div class="lesson"><b>第 2 课 · 生命体征</b><br>Let me check your blood pressure.<br>我给你量一下血压。<br>Your blood pressure is one twenty over eighty, that's normal.<br>你的血压是一百二比八十，正常。</div>
-<p><button onclick="window.print()">🖨️ 打印 / 保存小抄卡</button></p></div>
+<p><button onclick="printCard('cheat')">🖨️ 打印 / 保存小抄卡</button></p></div>
 
 <div class="card"><h2>🔊 跟读音频 · 2 条</h2>
 <p>第 1 课的两句关键句，真人录音，点一下听一句。</p>
@@ -106,20 +107,21 @@ button.opt:active{transform:scale(.99)}
 <label class="line"><input type="checkbox" id="ck2" onchange="saveCheck()" style="width:22px;height:22px"> <span class="line-text"><b>第 2 天 · 第 2 课生命体征</b><br><span class="note">Let me check your blood pressure.</span></span></label>
 <p class="note" id="ckMsg"></p></div>
 
-<div class="card"><h2>🪪 口袋卡 · 5 句</h2>
+<div class="card" id="pocketCard"><h2>🪪 口袋卡 · 5 句</h2>
 <p>最常用的 5 句，截图存手机里，查房前看一眼。</p>
 <div class="lesson">1. On a scale of zero to ten, how bad is your pain?<br><span class="note">从零到十分，你的疼痛有几分？</span></div>
 <div class="lesson">2. About seven, it's sharp.<br><span class="note">大概七分，是刺痛。</span></div>
 <div class="lesson">3. About seven, it's dull.<br><span class="note">大概七分，是钝痛。</span></div>
 <div class="lesson">4. Let me check your blood pressure.<br><span class="note">我给你量一下血压。</span></div>
 <div class="lesson">5. Your blood pressure is one twenty over eighty, that's normal.<br><span class="note">你的血压是一百二比八十，正常。</span></div>
-<p><button onclick="window.print()">🖨️ 打印 / 保存口袋卡</button></p></div>
+<p><button onclick="printCard('pocket')">🖨️ 打印 / 保存口袋卡</button></p></div>
 
 <p class="note">免费体验版，只含第 1、2 课的样品。完整版入院到出院资料包 11 月 11 日之后上，包含 10 课的完整内容。</p>
 <p class="note">学习交流，不构成诊疗建议；临床操作以本院制度和医嘱为准。</p>
 </div>
 <script>
 var _qs=0,_qt=0;
+function printCard(which){document.body.classList.add('print-'+which);window.addEventListener('afterprint',function(){document.body.classList.remove('print-'+which);},{once:true});window.print();}
 function quizAns(btn,idx){var q=btn.parentElement;if(q.dataset.done)return;q.dataset.done='1';var ans=parseInt(q.dataset.ans,10);_qt++;if(idx===ans){_qs++;btn.style.background='#DFF2E3';btn.textContent='✅ '+btn.textContent;}else{btn.style.background='#FADBD8';btn.textContent='❌ '+btn.textContent;}q.querySelectorAll('.opt').forEach(function(b){b.disabled=true;});var e=q.querySelector('.exp');if(e)e.style.display='block';document.getElementById('quizScore').textContent='答对 '+_qs+' / '+_qt+' 道（共 5 道）。';}
 function saveCheck(){var a=document.getElementById('ck1').checked,b=document.getElementById('ck2').checked;try{localStorage.setItem('freepack-checkin',JSON.stringify([a,b]));}catch(e){}document.getElementById('ckMsg').textContent=(a&&b)?'✅ 两天都打卡了，继续加油！':(a||b)?'已打卡 1 天，继续下一课。':'';}
 (function(){try{var v=JSON.parse(localStorage.getItem('freepack-checkin')||'[]');if(v[0])document.getElementById('ck1').checked=true;if(v[1])document.getElementById('ck2').checked=true;saveCheck();}catch(e){}})();
