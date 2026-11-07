@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="../avatar.png"><link rel="apple-touch-icon" href="../avatar.png"><meta property="og:title" content="夜班英语课堂"><meta property="og:image" content="https://wangjiecheng09-png.github.io/yeban-english/avatar.png"><title>夜班重开 · 第2关 输液</title><style>body{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#0F2A28;background-image:radial-gradient(120% 55% at 50% 0%,#1E4F49 0%,#0F2A28 60%);background-attachment:fixed;color:#FFF7E8;margin:0;padding:16px 16px 90px;min-height:100vh;box-sizing:border-box;font-size:16px;line-height:1.6}
+:root{--teal:#0F5E5A;--teal-deep:#0B4743;--night:#0F2A28;--cream:#FFF7E8;--paper:#fff;--ink:#222;--muted:#666;--gold:#E8A838;--gold-soft:#FFE08A;--danger:#C0392B;--line:#E7DFC8;--strip:#FFF7E8;--r-card:16px;--r-inner:12px;--shadow:0 2px 10px rgba(15,42,40,.08)}
+*{box-sizing:border-box}
+.wrap{max-width:720px;margin:0 auto}
+h1{color:#FFE08A;font-size:24px;line-height:1.3;margin:8px 0 4px}
+h2{color:#FFE08A;font-size:18px;line-height:1.4}
+.sub{color:#BFD9D2;font-size:14px}
+.card{background:#FFF7E8;color:#222;border:2px solid #0F5E5A;border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 2px 10px rgba(15,42,40,.08)}
+.card h2{color:#0F5E5A;font-size:18px;margin:0 0 8px}.card>p.en{color:#222}.card a{color:#0F5E5A}.card .note{color:#0F5E5A}.card .soon{color:#666}
+button,.btn{background:#0F5E5A;color:#fff;border:0;border-radius:999px;padding:11px 18px;margin:4px 4px 4px 0;cursor:pointer;text-decoration:none;display:inline-block;font-size:15px;line-height:1.4;min-height:44px}
+button:active,.btn:active{transform:scale(.97)}
+button:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid #E8A838;outline-offset:2px}
+button.ghost,.btn.ghost{background:#fff;color:#0F5E5A;border:1.5px solid #0F5E5A}
+button.active{background:#E8A838;color:#222}
+button.warn{background:#C0392B}
+.btn-block{display:block;width:100%;text-align:center;margin:10px 0}
+input[type=text]{width:100%;box-sizing:border-box;padding:10px;border-radius:10px;border:1.5px solid #0F5E5A;font-size:16px}
+.lesson{border:1.5px solid #E7DFC8;border-radius:14px;padding:14px;margin:10px 0;background:#fff}
+.lesson b{font-size:17px}
+.tag{color:#FFE08A;font-size:13px}
+.note{font-size:13px;color:#BFD9D2}
+.soon{color:#999}
+.nav{position:fixed;left:0;right:0;bottom:0;background:#0F5E5A;display:flex;justify-content:space-around;padding:10px 0 calc(10px + env(safe-area-inset-bottom));z-index:10}
+.nav button{background:none;color:#FFF7E8;font-size:16px;margin:0;padding:8px 10px;min-height:44px}
+.nav button.active{color:#FFD97A;font-weight:bold}
+.section{display:none}
+.section.show{display:block}
+.group{border:2px solid #0F5E5A;border-radius:16px;margin:12px 0;overflow:hidden;background:#fff}
+.group-head{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;border-radius:0;margin:0;padding:13px 14px;font-size:17px;font-weight:bold;box-sizing:border-box}
+.group-head .group-meta{font-size:13px;font-weight:normal;color:#FFE08A;white-space:nowrap}
+.group-head .group-arrow{font-size:15px;white-space:nowrap}
+.group-head.ghost{background:#fff;color:#0F5E5A}
+.group-body{padding:2px 12px 12px}
+.teacher{border-left:6px solid #0F5E5A}
+.classmate{border-left:6px solid #E8A838}
+.line{display:flex;width:100%;gap:12px;align-items:flex-start;background:#fff;color:#222;border-radius:12px;padding:12px 14px;margin:10px 0}
+.line-text{flex:1;min-width:0}
+.line button{flex:none;margin:0;padding:8px 12px;min-height:40px}
+.en{font-size:17px}
+.zh{color:#555;font-size:14px;margin-top:4px}
+.board{background:#14655E;border:2px solid #2A7A72;color:#FFF7E8;border-radius:16px;padding:16px;margin:14px 0}
+.board h2{color:#FFF7E8}
+.vocab{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.vocab div{background:#FFF7E8;color:#222;border-radius:10px;padding:10px 12px;min-height:56px;display:flex;flex-direction:column;justify-content:center}
+a{color:#FFE08A}
+.hidden{display:none}
+.badge{display:inline-block;background:#FFE08A;color:#222;border-radius:999px;padding:2px 10px;font-size:13px}
+.q{margin:14px 0}
+.q b{display:block;margin-bottom:4px}
+.opt{display:block;width:100%;text-align:left;background:#fff;color:#222;border:2px solid #0F5E5A;border-radius:14px;padding:14px 16px;margin:10px 0;min-height:56px;font-size:16px}
+button.opt:active{transform:scale(.99)}
+.wordrow{display:flex;width:100%;gap:12px;align-items:center;background:#FFF7E8;border-radius:10px;padding:10px 14px;margin:8px 0}
+.wordrow span{flex:1;min-width:0}
+.wordrow button{flex:none;margin:0;padding:6px 10px;min-height:36px;font-size:14px}
+.choice{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#0F5E5A;color:#fff;border:2px solid #0F5E5A;border-radius:14px;padding:14px 16px;margin:10px 0;min-height:56px;cursor:pointer;box-sizing:border-box}
+.choice:active{transform:scale(.99)}
+.choice-letter{flex:none;width:28px;height:28px;border-radius:50%;background:#E8A838;color:#222;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+.choice-text{flex:1;min-width:0}
+.choice-text .en{display:block;font-weight:700;font-size:17px}
+.choice-text .zh{display:block;font-size:14px;color:#D9EDEA;margin-top:4px}
+.choice-listen{flex:none;align-self:center;background:rgba(255,255,255,.16);border-radius:999px;padding:8px 10px;cursor:pointer;font-size:13px;white-space:nowrap}.homebtn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:10px 16px;border-radius:999px;background:#0F2A28;color:#FFE08A;font-size:14px;font-weight:bold;text-decoration:none;border:1.5px solid #FFE08A}
+.homebtn:active{transform:scale(.97)}</style></head><body><div class="wrap">
+<p><a class="homebtn" data-home href="../fan/index.html" onclick="goHome();return false;">🌙 回课堂首页</a></p>
+<div id="gameArea" class="hidden">
+<h1>第 2 关 · 输液</h1>
+<p class="note">玩法：选一句 → 看后果 → 选错了可以“重开”倒带，再选一次。选对了才过关。</p>
+<p class="note">点 🔊 可以先听一句再选；安卓手机在微信里听不到声，请在 Chrome 里打开再听。</p>
+<p>重开次数：<b id="retries">0</b> 次 · 状态：<span class="badge" id="status">进行中</span></p>
+
+<div class="card" id="scene">
+<h2>🌙 夜里 03:05 · 病房</h2>
+<p>你要给 8 床输液。病人醒着，有点紧张，手臂绷得紧紧的。你拿着输液针走过去——先说什么？</p>
+<p><b>你先说哪句？</b></p>
+<button onclick="choose('wrong')">A · IV drip<br><span style="font-size:13px">只说“输液”这个词，就直接动手</span></button> <button class="ghost" onclick="speak('IV drip')">🔊 听这句</button>
+<button onclick="choose('right')">B · I'm going to start an IV drip for you.<br><span style="font-size:13px">我要给你输液了</span></button> <button class="ghost" onclick="speak('I\'m going to start an IV drip for you.')">🔊 听这句</button>
+</div>
+
+<div class="card hidden" id="consequence">
+<h2>⏪ 后果</h2>
+<p>病人没听懂你要做什么，手臂一动，针滑了。只说一个词，病人不知道接下来会发生什么，就会紧张、会动。</p>
+<p>先把话说全：要做什么、会有什么感觉，病人心里有数，手臂才放松。</p>
+<p><b>倒带重来：</b>回到输液前，这次先把话说全。</p>
+<button class="warn" onclick="replay()">↩️ 重开这一夜</button> <a data-home href="../fan/index.html" onclick="goHome();return false;"><button class="ghost">🏠 回课堂</button></a>
+</div>
+
+<div class="card hidden" id="correct">
+<h2>✅ 过关</h2>
+<p class="en">I'm going to start an IV drip for you.</p>
+<p class="zh">我要给你输液了。</p>
+<p class="en">It may feel a little cold.</p>
+<p class="zh">可能会感觉有点凉。</p>
+<p>先说要做什么，再补一句会有什么感觉，病人心里有数，就不会紧张了。</p>
+<p><button onclick="speak('I\'m going to start an IV drip for you. It may feel a little cold.')">🔊 朗读这两句</button></p>
+<p><button class="ghost" onclick="location.reload()">↻ 再玩一次</button> <a data-home href="../fan/index.html" onclick="goHome();return false;"><button>🏠 回夜班英语课堂</button></a></p>
+<p class="note" style="color:#0F5E5A">第 3 关 🔒 暂未开放，敬请期待。</p>
+</div>
+
+</div>
+<div class="card hidden" id="lockedCard"><h2>🔒 第 2 关 · 输液</h2>
+<p>这一关是会员 / 买断专享。第 1 关免费玩；第 2 关要先开通会员，或者买断第 4 课 / 优惠包。</p>
+<p><button onclick="goMy()">👤 去“我的”开通</button> <a href="index.html"><button class="ghost">🎮 回第 1 关</button></a></p>
+<p class="note">开通后回来就能玩；第 1 关不用开通，直接玩。</p></div>
+<p class="note">学习交流，不构成诊疗建议；临床操作以本院制度和医嘱为准。</p>
+</div><script src="../audio/audio-data.js?v=2"></script>
+<script src="../video/access.js"></script>
+<script>
+let retries=0;
+function choose(c){
+  document.getElementById('scene').classList.add('hidden');
+  if(c==='wrong'){
+    document.getElementById('consequence').classList.remove('hidden');
+    document.getElementById('status').textContent='针滑了 · 可以重开';
+  }else{
+    document.getElementById('correct').classList.remove('hidden');
+    document.getElementById('status').textContent='已过关 ✅';
+    try{localStorage.setItem('night-reopen-ep02-done','1');}catch(e){}
+  }
+}
+function replay(){
+  retries++;
+  document.getElementById('retries').textContent=retries;
+  document.getElementById('consequence').classList.add('hidden');
+  document.getElementById('scene').classList.remove('hidden');
+  document.getElementById('status').textContent='重开第 '+retries+' 次 · 进行中';
+  window.scrollTo(0,0);
+}
+function voiceFail(){alert('这台设备不支持朗读，请在 Chrome / Safari 里打开。安卓手机在微信里听不到声，请在 Chrome 里打开再听。');}
+var _audioEl=null,_blobUrls={};
+function playMp3(t){var b=window.__AUDIO&&window.__AUDIO[t];if(!b)return false;try{if(!_blobUrls[t]){var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);_blobUrls[t]=URL.createObjectURL(new Blob([a],{type:'audio/mpeg'}));}if(!_audioEl)_audioEl=new Audio();var r=0.9;try{var _e=document.getElementById('rate');if(_e)r=parseFloat(_e.value)||0.9;}catch(e){}_audioEl.playbackRate=r;_audioEl.src=_blobUrls[t];var p=_audioEl.play();if(p&&p.catch)p.catch(function(){speakTts(t);});return true;}catch(e){return false;}}
+function speakTts(t){if(!('speechSynthesis' in window)){voiceFail();return;}var u=new SpeechSynthesisUtterance(t);u.lang='en-US';try{var _e=document.getElementById('rate');if(_e)u.rate=parseFloat(_e.value)||0.9;else u.rate=0.9;}catch(e){u.rate=0.9;}var vs=[];try{vs=speechSynthesis.getVoices()||[];}catch(e){}for(var i=0;i<vs.length;i++){if(vs[i].lang&&vs[i].lang.indexOf('en-US')===0){u.voice=vs[i];break;}}if(!u.voice)for(var j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.indexOf('en')===0){u.voice=vs[j];break;}}var started=false;u.onstart=function(){started=true;};u.onerror=function(){voiceFail();};try{speechSynthesis.cancel();}catch(e){}speechSynthesis.speak(u);try{speechSynthesis.resume();}catch(e){}setTimeout(function(){if(!started&&!speechSynthesis.speaking&&!speechSynthesis.pending)voiceFail();},2000);}
+function speak(t){if(typeof t!=='string')t=String(t);if(playMp3(t))return;speakTts(t);}
+if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){speechSynthesis.getVoices();};}
+document.addEventListener('pointerdown',function(){try{speechSynthesis.getVoices();}catch(e){}},{once:true});
+</script><script>/* 回课堂：从粉丝版来回 fan 首页，其余回首页，直接打开默认回 fan（更安全） */
+function homeUrl(){var r="";try{r=document.referrer||"";}catch(e){}if(r.indexOf("/fan/")>=0)return "../fan/index.html";if(r)return "../index.html";return "../fan/index.html";}
+function goHome(){location.href=homeUrl();}
+try{document.querySelectorAll("a[data-home]").forEach(function(a){a.href=homeUrl();});}catch(e){}</script>
+<script>/* 第 2 关门禁：默认锁住（gameArea 自带 hidden），有权益才放行；access.js 未加载也锁 */
+function goMy(){var h="../fan/index.html";try{h=homeUrl();}catch(e){}location.href=h+"#sec-my";}
+(function(){var ok=false;try{ok=(typeof hasGameLevel2==='function')&&hasGameLevel2();}catch(e){ok=false;}var ga=document.getElementById('gameArea'),lk=document.getElementById('lockedCard');if(ok){if(ga)ga.classList.remove('hidden');}else{if(lk)lk.classList.remove('hidden');}})();</script>
+</body></html>

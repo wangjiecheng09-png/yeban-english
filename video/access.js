@@ -9,3 +9,6 @@ function shanghaiTodayKey(){try{var ps=new Intl.DateTimeFormat("en-CA",{timeZone
 function lessonCollection(n){return null;/* 模块 1 的课属于第 1 周课程，没有所属合集；以后模块复用时按课号返回合集包名，如 'coll-b1' */}
 function hasVideoAccess(n){if(n===1)return true;var e=getEntitlement();var b=(e.buyout||[]);if(b.indexOf('bundle-w1a')>=0)return true;var nn=('0'+n).slice(-2);if(b.indexOf('lesson-ep'+nn)>=0)return true;var c=lessonCollection(n);if(c&&b.indexOf(c)>=0)return true;return false;}
 function hasTextAccess(n){if(hasVideoAccess(n))return true;var e=getEntitlement();if(e.vip&&e.vip.until&&e.vip.until>=shanghaiTodayKey())return true;return false;}
+/* 夜班重开第 2 关（输液 = 第 4 课场景）：会员在期内，或买断第 4 课（lesson-ep04）/ 优惠包（bundle-w1a）可玩；合集 A 单独不解锁。 */
+function hasActiveVip(){var e=getEntitlement();return !!(e.vip&&e.vip.until&&e.vip.until>=shanghaiTodayKey());}
+function hasGameLevel2(){return hasVideoAccess(4)||hasActiveVip();}

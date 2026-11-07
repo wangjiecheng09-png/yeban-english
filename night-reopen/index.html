@@ -92,11 +92,12 @@ button.opt:active{transform:scale(.99)}
 <p>三查七对：发药前至少用两种身份识别方式，住院号是病人唯一的编号，床号不能单独作依据。先看床头卡，再让病人自己说姓名、床号、住院号，最后核对腕带。</p>
 <p><button onclick="speak('Please tell me your full name, your bed number, and your hospital number. Let me check your wristband as well. Let me check the medicine name and dose.')">🔊 朗读这三句</button></p>
 <p><button class="ghost" onclick="location.reload()">↻ 再玩一次</button> <a data-home href="../fan/index.html" onclick="goHome();return false;"><button>🏠 回夜班英语课堂</button></a></p>
-<p class="note" style="color:#0F5E5A">第 2 关 · 输液 🔒 暂未开放，敬请期待。</p>
+<div id="level2Card"><p class="note" style="color:#0F5E5A">第 2 关 · 输液 🔒 会员 / 买断专享</p></div>
 </div>
 
 <p class="note">学习交流，不构成诊疗建议；临床操作以本院制度和医嘱为准。</p>
 </div><script src="../audio/audio-data-fan.js?v=1"></script>
+<script src="../video/access.js"></script>
 <script>
 let retries=0;
 function choose(c){
@@ -130,4 +131,6 @@ function homeUrl(){var r="";try{r=document.referrer||"";}catch(e){}if(r.indexOf(
 function goHome(){location.href=homeUrl();}
 try{document.querySelectorAll("a[data-home]").forEach(function(a){a.href=homeUrl();});}catch(e){}</script>
 <nav class="nav"><a data-nav="home" href="../fan/index.html">🏠 首页</a><a data-nav="lessons" href="../fan/index.html#sec-lessons">📚 课程</a><a data-nav="courses" href="../fan/video-courses.html">🎬 视频课</a><a data-nav="my" href="../fan/index.html#sec-my">👤 我的</a><a href="index.html" class="active">🎮 重开</a></nav><script>/* 底部导航：按来源回对应首页，其余默认回 fan（更安全） */(function(){var r="";try{r=document.referrer||"";}catch(e){}var fan=r.indexOf("/fan/")>=0||!r;if(fan)return;var m={home:"../index.html",lessons:"../index.html#sec-lessons",courses:"../video-courses.html",my:"../index.html#sec-my"};document.querySelectorAll("nav.nav a[data-nav]").forEach(function(a){var k=a.getAttribute("data-nav");if(m[k])a.href=m[k];});})();</script>
+<script>/* 第 2 关入口：按权益显示；默认锁住（无权益 / access.js 未加载都锁），有权益才给链接 */
+(function(){var ok=false;try{ok=(typeof hasGameLevel2==='function')&&hasGameLevel2();}catch(e){ok=false;}var c=document.getElementById('level2Card');if(!c)return;if(ok){c.innerHTML='<p class="note" style="color:#0F5E5A">第 2 关 · 输液 ✅ 已解锁</p><p><a href="level2.html"><button>▶ 玩第 2 关 →</button></a></p>';}else{c.innerHTML='<p class="note" style="color:#0F5E5A">第 2 关 · 输液 🔒 会员 / 买断专享</p><p class="note" style="color:#0F5E5A">开通会员，或买断第 4 课 / 优惠包，就能玩第 2 关。</p>';}})();</script>
 </body></html>
