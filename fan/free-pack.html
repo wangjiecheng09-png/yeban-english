@@ -59,14 +59,14 @@ button.opt:active{transform:scale(.99)}
 <body><div class="wrap"><p><a href="index.html">← 回课堂首页</a></p>
 <h1>🎁 免费资料包 · 体验版</h1>
 <p class="sub">免费体验版 · 先试试，再决定。完整版入院到出院资料包 11 月 11 日之后上。</p>
-<p>这里面是第 1、2 课的样品：句子单词表、小抄卡 2 张、跟读音频 2 条、小测 5 道、打卡 2 天、口袋卡 5 句。先用着，觉得好用再等完整版。</p>
+<p>第 1、2 课的样品：句子单词表、小抄卡 2 张、跟读音频 2 条、小测 5 道、打卡 2 天、口袋卡 5 句。先用着，好用再等完整版。</p>
 
 <div class="card"><h2>📄 句子 + 单词表</h2>
-<p>第 1 课疼痛评估 + 第 2 课生命体征的句子和单词，都在这张表里，点开就能学、能听。</p>
+<p>第 1 课疼痛评估 + 第 2 课生命体征的句子和单词，都在这张表里。</p>
 <a class="btn" href="words-ep01.html">打开单词短语表 →</a></div>
 
 <div class="card" id="cheatCard"><h2>🗂️ 小抄卡 · 2 张</h2>
-<p>截图保存，下次查房直接用。只给第 1、2 课这两张。</p>
+<p>截图保存，下次查房直接用。只含第 1、2 课。</p>
 <div class="lesson"><b>第 1 课 · 疼痛评估</b><br>On a scale of zero to ten, how bad is your pain?<br>从零到十分，你的疼痛有几分？<br>About seven, it's sharp.<br>大概七分，是刺痛。</div>
 <div class="lesson"><b>第 2 课 · 生命体征</b><br>Let me check your blood pressure.<br>我给你量一下血压。<br>Your blood pressure is one twenty over eighty, that's normal.<br>你的血压是一百二比八十，正常。</div>
 <p><button onclick="printCard('cheat')">🖨️ 打印 / 保存小抄卡</button></p></div>
@@ -75,7 +75,7 @@ button.opt:active{transform:scale(.99)}
 <p>第 1 课的两句关键句，真人录音，点一下听一句。</p>
 <div class="line"><div class="line-text"><div class="en">On a scale of zero to ten, how bad is your pain?</div><div class="zh">从零到十分，你的疼痛有几分？</div></div><button onclick="speak('On a scale of zero to ten, how bad is your pain?')">🔊 朗读</button></div>
 <div class="line"><div class="line-text"><div class="en">About seven, it's sharp.</div><div class="zh">大概七分，是刺痛。</div></div><button onclick="speak('About seven, it\'s sharp.')">🔊 朗读</button></div>
-<p class="note">点 🔊 可以听英文发音（真人录音）；如果没有声音，请把手机媒体音量调大，或在 Chrome / Safari 里打开再试。</p></div>
+<p class="note">点 🔊 听英文发音；没声音就调大手机媒体音量，或在 Chrome / Safari 里打开再试。</p></div>
 
 <div class="card"><h2>✏️ 小测 · 5 道</h2>
 <p id="quizScore">还没开始，点一个答案试试。</p>
@@ -102,7 +102,7 @@ button.opt:active{transform:scale(.99)}
 </div>
 
 <div class="card"><h2>📅 打卡表 · 2 天</h2>
-<p>学完一课，勾一天。打勾存在你这台手机里。</p>
+<p>学完一课，勾一天。打勾只存这台手机里。</p>
 <label class="line"><input type="checkbox" id="ck1" onchange="saveCheck()" style="width:22px;height:22px"> <span class="line-text"><b>第 1 天 · 第 1 课疼痛评估</b><br><span class="note">On a scale of zero to ten, how bad is your pain?</span></span></label>
 <label class="line"><input type="checkbox" id="ck2" onchange="saveCheck()" style="width:22px;height:22px"> <span class="line-text"><b>第 2 天 · 第 2 课生命体征</b><br><span class="note">Let me check your blood pressure.</span></span></label>
 <p class="note" id="ckMsg"></p></div>
@@ -116,7 +116,7 @@ button.opt:active{transform:scale(.99)}
 <div class="lesson">5. Your blood pressure is one twenty over eighty, that's normal.<br><span class="note">你的血压是一百二比八十，正常。</span></div>
 <p><button onclick="printCard('pocket')">🖨️ 打印 / 保存口袋卡</button></p></div>
 
-<p class="note">免费体验版，只含第 1、2 课的样品。完整版入院到出院资料包 11 月 11 日之后上，包含 10 课的完整内容。</p>
+<p class="note">免费体验版，只含第 1、2 课的样品。完整版 11 月 11 日之后上，含 10 课完整内容。</p>
 <p class="note">学习交流，不构成诊疗建议；临床操作以本院制度和医嘱为准。</p>
 </div>
 <script>
@@ -128,7 +128,7 @@ function saveCheck(){var a=document.getElementById('ck1').checked,b=document.get
 </script>
 <script src="../audio/audio-data-fan.js?v=1"></script>
 <script>
-function voiceFail(){alert('这台设备暂时没声，先彻底关掉页面重开一次试试；还是没声就换 Chrome / Safari 打开。');}
+function voiceFail(){alert('这台设备暂时没声，先关掉页面重开一次试试；还是没声就换 Chrome / Safari 打开。');}
 var _audioEl=null,_blobUrls={};
 function playMp3(t){var b=window.__AUDIO&&window.__AUDIO[t];if(!b)return false;try{if(!_blobUrls[t]){var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);_blobUrls[t]=URL.createObjectURL(new Blob([a],{type:'audio/mpeg'}));}if(!_audioEl)_audioEl=new Audio();var r=0.9;try{var _e=document.getElementById('rate');if(_e)r=parseFloat(_e.value)||0.9;}catch(e){}_audioEl.playbackRate=r;_audioEl.src=_blobUrls[t];var p=_audioEl.play();if(p&&p.catch)p.catch(function(){speakTts(t);});return true;}catch(e){return false;}}
 function speakTts(t){if(!('speechSynthesis' in window)){voiceFail();return;}var u=new SpeechSynthesisUtterance(t);u.lang='en-US';try{var _e=document.getElementById('rate');if(_e)u.rate=parseFloat(_e.value)||0.9;else u.rate=0.9;}catch(e){u.rate=0.9;}var vs=[];try{vs=speechSynthesis.getVoices()||[];}catch(e){}for(var i=0;i<vs.length;i++){if(vs[i].lang&&vs[i].lang.indexOf('en-US')===0){u.voice=vs[i];break;}}if(!u.voice)for(var j=0;j<vs.length;j++){if(vs[j].lang&&vs[j].lang.indexOf('en')===0){u.voice=vs[j];break;}}var started=false;u.onstart=function(){started=true;};u.onerror=function(){voiceFail();};try{speechSynthesis.cancel();}catch(e){}speechSynthesis.speak(u);try{speechSynthesis.resume();}catch(e){}setTimeout(function(){if(!started&&!speechSynthesis.speaking&&!speechSynthesis.pending)voiceFail();},2000);}

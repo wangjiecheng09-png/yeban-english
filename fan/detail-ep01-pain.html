@@ -58,20 +58,20 @@ button.ghost,.btn.ghost{background:#fff;color:#0F5E5A;border:1.5px solid #0F5E5A
 <p><a class="homebtn" href="index.html">🌙 回课堂首页</a></p>
 <h1>第 1 课 · 疼痛评估</h1>
 <p class="sub">精讲视频 15 分钟 + 短视频速记版 · 第 1 课免费整节看</p>
-<div class="card videocard lesson-video"><h2>🎬 精讲视频（主视频）</h2><div class="video-slot" data-video="https://pub-8c7c714707454aa292f5d7d7857c9cd0.r2.dev/course-m1-lesson1-15min-v2-chattts-heart.mp4"><p class="note">正在检查视频…</p></div><p class="note">精讲 15 分钟左右，先看精讲学一遍，再看下面的短视频速记版过一遍。</p></div>
+<div class="card videocard lesson-video"><h2>🎬 精讲视频（主视频）</h2><div class="video-slot" data-video="https://pub-8c7c714707454aa292f5d7d7857c9cd0.r2.dev/course-m1-lesson1-15min-v2-chattts-heart.mp4"><p class="note">正在检查视频…</p></div><p class="note">15 分钟左右，先看精讲，再看短视频速记版过一遍。</p></div>
 <div class="card videocard lesson-video"><h2>⚡ 短视频速记版</h2><div class="video-slot" data-video="https://pub-8c7c714707454aa292f5d7d7857c9cd0.r2.dev/week1-ep01-pain-shortvideo-safe2.mp4"><p class="note">正在检查视频…</p></div><p class="note">1 分钟速记版：两句核心问法 + 关键词，睡前再过一遍。</p></div>
-<div class="card notes"><h2>📝 我的课堂笔记</h2><p class="note">记一句你自己的话、一个容易忘的词，或一个想问的问题。只存在你这台手机里。</p><textarea id="myNotes-ep01" placeholder="例如：sharp 是刺痛，dull 是钝痛，别混了。"></textarea><p><button onclick="saveFanNotes('ep01')">💾 保存笔记</button> <span id="notesState-ep01" class="note"></span></p></div>
-<div class="card"><h2>💬 讨论区</h2><p>本课讨论区还在准备中，敬请期待。</p><p class="note">想问的问题先记在上面“我的课堂笔记”里；讨论区上线后，问题和回答都会出现在这里，不会编造别人的提问。</p></div>
-<div class="card"><h2>📌 第 1 课重点 · 截图保存</h2><img id="keypointsImgFan" alt="第 1 课重点 · 疼痛评估" style="width:100%;border-radius:12px;display:block;margin-top:8px;background:#0F2A28"><p class="note">免费附赠，截图保存，下次查房直接用。</p></div>
+<div class="card notes"><h2>📝 我的课堂笔记</h2><p class="note">记一句你自己的话、一个容易忘的词，或一个想问的问题。只存这台手机里。</p><textarea id="myNotes-ep01" placeholder="例如：sharp 是刺痛，dull 是钝痛，别混了。"></textarea><p><button onclick="saveFanNotes('ep01')">💾 保存笔记</button> <span id="notesState-ep01" class="note"></span></p></div>
+<div class="card"><h2>💬 讨论区</h2><p>讨论区还在准备中，敬请期待。</p><p class="note">先把问题记在上面“我的课堂笔记”里；讨论区上线后，问题和回答会出现在这里，不会编造别人的提问。</p></div>
+<div class="card"><h2>📌 第 1 课重点 · 截图保存</h2><img id="keypointsImgFan" alt="第 1 课重点 · 疼痛评估" style="width:100%;border-radius:12px;display:block;margin-top:8px;background:#0F2A28"><p class="note">截图保存，下次查房直接用。</p></div>
 <div class="card"><h2>🧑‍🏫 去课堂练习</h2>
-<p>白板、测验、跟读、打勾都在原课里，这里不重复放一份，免得两处内容对不上。</p>
+<p>白板、测验、跟读、打勾都在原课里，这里不重复放，免得两处对不上。</p>
 <a class="btn btn-block" href="classroom-ep01-pain.html">去课堂练习：白板 · 测验 · 跟读 · 打勾 →</a></div>
-<div class="card"><h2>📖 下一课</h2><p>第 2–10 课在完整版里，免费体验先学好第 1 课。</p><p><a class="btn ghost" href="index.html">← 回粉丝首页</a></p></div>
+<div class="card"><h2>📖 下一课</h2><p>第 2–10 课在完整版里，先学好第 1 课。</p><p><a class="btn ghost" href="index.html">← 回粉丝首页</a></p></div>
 </div>
 <script src="../video/keypoints-ep01-data.js?v=1"></script>
 <script>(function(){var im=document.getElementById('keypointsImgFan');if(!im)return;try{var b=window.__KEYPOINTS_EP01;if(!b)return;var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);im.src=URL.createObjectURL(new Blob([a],{type:'image/png'}));}catch(e){}})();</script>
 <script>
-function saveFanNotes(key){try{var ta=document.getElementById("myNotes-"+key);localStorage.setItem('classroom-'+key+'-notes',ta.value);var st=document.getElementById("notesState-"+key);if(st)st.textContent="已保存 "+new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})+"（只存在这台手机里）";}catch(e){}}
+function saveFanNotes(key){try{var ta=document.getElementById("myNotes-"+key);localStorage.setItem('classroom-'+key+'-notes',ta.value);var st=document.getElementById("notesState-"+key);if(st)st.textContent="已保存 "+new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})+"（只存这台手机里）";}catch(e){}}
 try{var ta=document.getElementById("myNotes-ep01");var s=localStorage.getItem('classroom-ep01-notes');if(ta&&s)ta.value=s;}catch(e){}
 </script>
 <script>

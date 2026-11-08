@@ -66,7 +66,7 @@ button.opt:active{transform:scale(.99)}
 
 <p><label>语速 <input type="range" id="rate" min="0.7" max="1.1" step="0.1" value="0.9"> <span id="ratev">0.9</span></label>
 <button class="ghost" onclick="toggleZh()">中文开/关</button></p>
-<p id="voicehint" class="note" style="display:none">🔇 没听到声音？先把手机媒体音量调大，再点一次 🔊；如果还不行，彻底关掉页面重开，或在链接后加 ?v=2。</p>
+<p id="voicehint" class="note" style="display:none">🔇 没听到声音？先调大手机媒体音量，再点一次 🔊；还不行就关掉页面重开，或在链接后加 ?v=2。</p>
 <div class="card teacher"><h2>👩‍🏫 老师讲</h2>
 <div class="line"><div class="line-text"><div class="en">Let me check your blood pressure.</div><div class="zh">我给你量一下血压。</div></div><button onclick="speak('Let me check your blood pressure.')">🔊 朗读</button></div>
 <div class="line"><div class="line-text"><div class="en">Your blood pressure is one twenty over eighty, that&#x27;s normal.</div><div class="zh">你的血压是一百二比八十，正常。</div></div><button onclick="speak('Your blood pressure is one twenty over eighty, that&#x27;s normal.')">🔊 朗读</button></div>
@@ -75,7 +75,7 @@ button.opt:active{transform:scale(.99)}
 <p>跟读三遍，读顺了再往下走。重点词都在下面白板里，截图保存，下次查房直接用。</p></div>
 <div class="card" id="wordcardBox"><h2>🎬 先看一遍 · 单词卡</h2>
 <video id="wordcardVideo" controls playsinline preload="metadata" style="width:100%;max-width:320px;aspect-ratio:9/16;display:block;margin:0 auto;border-radius:12px;background:#0F2A28"></video>
-<p class="note">6 秒，blood pressure / normal / check——看一遍，再记下面的白板。</p></div>
+<p class="note">6 秒，blood pressure / normal / check——看一遍，再记白板。</p></div>
 <div class="board"><h2 style="color:#FFF7E8">📋 白板 · 截图保存</h2>
 <p><b>Let me check your blood pressure.</b><br>我给你量一下血压。</p>
 <p><b>Your blood pressure is one twenty over eighty, that&#x27;s normal.</b><br>你的血压是一百二比八十，正常。</p>
@@ -84,7 +84,7 @@ button.opt:active{transform:scale(.99)}
 <p>跟读：<button onclick="speak('Let me check your blood pressure. Your blood pressure is one twenty over eighty, that&#x27;s normal.')">🔊 整段跟读</button> 读完自己再说一遍，不用录音，顺了就行。</p>
 <div class="q"><b>1. 量血压，下面哪句能用？</b><br><button class="opt" onclick="quiz1(this,true)">Let me check your blood pressure.</button><button class="opt" onclick="quiz1(this,false)">Do you blood pressure?</button><span class="ans" id="q1"></span></div><div class="q"><b>2. normal 是什么意思？</b><br><button class="opt" onclick="quiz2(this,true)">正常</button><button class="opt" onclick="quiz2(this,false)">不正常</button><span class="ans" id="q2"></span></div>
 <div class="card" style="border-color:#E8A838"><h2>🧩 自己造句：把这句变成你的</h2>
-<p>句型：Your blood pressure is ___ over eighty.<br>填 one twenty（一百二），例如 one twenty</p>
+<p>句型：Your blood pressure is ___ over eighty.<br>填 one twenty（一百二）</p>
 <p><input id="myword" placeholder="填一个词" style="padding:8px;border-radius:8px;border:1.5px solid #0F5E5A;width:60%">
 <button onclick="makeSentence()">生成我的句子</button></p>
 <p id="mysent" class="ans"></p>
@@ -92,9 +92,9 @@ button.opt:active{transform:scale(.99)}
 <p class="note">这只是语言练习，不是问诊；真实情况以医生诊断和医嘱为准。</p></div>
 <div class="card"><h2>✅ 学完打勾 + 错题回炉</h2>
 <p id="progress">进度：还没完成本课小测</p>
-<p id="review" class="note">错过的题会先出现在这里，做对了再往下走。</p>
+<p id="review" class="note">错题会先出现在这里，做对了再往下走。</p>
 <p><button class="btn-block" onclick="markDone()">我学完了，打勾</button> <button class="ghost" onclick="clearProgress()">清除本课进度</button></p>
-<p><span id="homeHint" class="note">完成本课打勾后，从这里回首页。</span> <button class="btn-block" id="homeBtn" style="display:none" onclick="location.href='index.html'">✅ 已完成，回首页 →</button></p></div>
+<p><span id="homeHint" class="note">打勾后，从这里回首页。</span> <button class="btn-block" id="homeBtn" style="display:none" onclick="location.href='index.html'">✅ 已完成，回首页 →</button></p></div>
 <p><button onclick="window.print()">🖨️ 打印 / 保存这页白板</button></p>
 </div>
 </div>
@@ -113,7 +113,7 @@ document.addEventListener('pointerdown',function(){try{speechSynthesis.getVoices
 document.getElementById('rate').oninput=e=>{document.getElementById('ratev').textContent=e.target.value;};
 function toggleZh(){showZh=!showZh;document.querySelectorAll('.zh').forEach(el=>el.style.display=showZh?'block':'none');}
 let mistakes=JSON.parse(localStorage.getItem('classroom-ep02-mistakes')||'[]');
-function showProgress(){const done=localStorage.getItem('classroom-ep02-done');document.getElementById('progress').textContent=done?'进度：✅ 本课已完成（已打勾）':'进度：还没完成本课小测';document.getElementById('review').textContent=mistakes.length?('错题回炉：你之前错过 '+mistakes.join('、')+'，先把这几道做对再打勾。'):'错过的题会先出现在这里，做对了再打勾。';var hb=document.getElementById('homeBtn'),hh=document.getElementById('homeHint');if(hb)hb.style.display=done?'block':'none';if(hh)hh.textContent=done?'✅ 本课已完成，点下面回首页继续。':'完成本课打勾后，从这里回首页。';}
+function showProgress(){const done=localStorage.getItem('classroom-ep02-done');document.getElementById('progress').textContent=done?'进度：✅ 本课已完成（已打勾）':'进度：还没完成本课小测';document.getElementById('review').textContent=mistakes.length?('错题回炉：你错过 '+mistakes.join('、')+'，先把这几道做对再打勾。'):'错过的题会先出现在这里，做对了再打勾。';var hb=document.getElementById('homeBtn'),hh=document.getElementById('homeHint');if(hb)hb.style.display=done?'block':'none';if(hh)hh.textContent=done?'✅ 已完成，点下面回首页继续。':'打勾后，从这里回首页。';}
 function noteMistake(name,correct){if(!correct&&!mistakes.includes(name))mistakes.push(name);if(correct)mistakes=mistakes.filter(m=>m!==name);localStorage.setItem('classroom-ep02-mistakes',JSON.stringify(mistakes));showProgress();}
 function quiz1(el,correct){document.getElementById('q1').textContent=correct?' ✅ 对。':' ❌ 再想想。';noteMistake('第1题',correct);}function quiz2(el,correct){document.getElementById('q2').textContent=correct?' ✅ 对。':' ❌ 再想想。';noteMistake('第2题',correct);}
 function makeSentence(){const w=document.getElementById('myword').value.trim();if(!w){document.getElementById('mysent').textContent='先填一个词，再生成。';return;}const s='Your blood pressure is ___ over eighty.'.replace('___',w);const el=document.getElementById('mysent');el.textContent='你的句子：'+s;el.dataset.t=s;}
