@@ -55,6 +55,165 @@ details.transcript p{margin:10px 0}
 .pm-node.now .pm-dot{border-color:#0F5E5A;color:#0F5E5A;box-shadow:0 0 0 3px #FFE08A}
 .lockcard{border-style:dashed;background:#FFF7E8}
 .lockcard h2{color:#0F5E5A}
+
+/* ================= v2 · 今晚值班：查房路线 =================
+   在线上版样式之后追加。只加概念层（值班卡 + 走廊），不改线上版
+   已有的圆角、按钮形状、导航。 */
+
+/* ---- 值班卡：今晚的房间，深夜底 ---- */
+.card.shift{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+.card.shift h2{color:#FFE08A}
+.card.shift p{color:#FFF7E8}
+.card.shift p b{color:#FFF7E8}
+.card.shift .btn{background:#E8A838;color:#222;border-color:#E8A838}
+.card.shift .btn.ghost{background:transparent;color:#FFF7E8;border-color:rgba(255,247,232,.7)}
+
+/* ---- 查房路线：一条竖直的病房走廊，房间排在上面 ---- */
+.corridor{position:relative;padding:2px 0}
+.corridor::before{content:"";position:absolute;left:17px;top:12px;bottom:12px;width:2px;background:#0F5E5A;opacity:.35}
+.corridor .room{position:relative;display:block;margin:14px 0;padding-left:52px}
+.corridor a.room{display:flex;align-items:flex-start;gap:10px;text-decoration:none;color:#222;background:#fff;border:1.5px solid #E7DFC8;border-radius:14px;padding:14px 14px 14px 52px}
+.corridor a.room:active{transform:scale(.99)}
+.corridor .room-plate{position:absolute;left:0;top:12px;width:36px;height:36px;border-radius:10px;background:#fff;border:2px solid #0F5E5A;color:#0F5E5A;font-weight:700;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;z-index:1}
+.corridor .room-body{flex:1;min-width:0}
+.corridor .room-body b{font-size:17px}
+.corridor .room-en{color:#555;font-size:14px;margin-top:4px;display:block}
+.corridor .room-go{flex:none;color:#0F5E5A;font-weight:700;font-size:17px;line-height:1.4}
+/* 查过的房：金勾门牌 */
+.corridor .room.done .room-plate{background:#E8A838;border-color:#E8A838;color:#222}
+/* 正站着的那间房：门开着，透金光 */
+.corridor .room.now{border-color:#E8A838;background:#FFFBF0}
+.corridor .room.now .room-plate{background:#E8A838;border-color:#E8A838;color:#222;box-shadow:0 0 0 4px #FFE08A}
+/* 今天那一课：金色小牌 */
+.corridor .room.today::after{content:"今日一课";position:absolute;top:10px;right:12px;background:#E8A838;color:#222;font-size:12px;font-weight:700;border-radius:999px;padding:2px 8px;z-index:1}
+/* 首页房间有右箭头，小牌往左让一让 */
+.corridor a.room.today::after{right:44px}
+/* 走廊里的课行：门牌让位，按钮不动 */
+.corridor .lesson{padding-left:52px}
+/* 状态小牌不拆字：整块换行，不把"未解锁"拆成两行 */
+.corridor .room .tag,.corridor .room .done-tag{white-space:nowrap}
+
+/* ---- 课程页：学习路径的圆点改成房门牌 ---- */
+.pm-dot{border-radius:10px;width:36px;height:36px;line-height:36px;font-size:15px}
+.pm-node.done .pm-dot{background:#E8A838;border-color:#E8A838;color:#222}
+.pm-node.now .pm-dot{border-color:#0F5E5A;color:#0F5E5A;box-shadow:0 0 0 3px #FFE08A;background:#FFFBF0}
+/* 课程页的课表就是走廊 */
+#lessonList.corridor .lesson{padding-left:52px}
+#lessonList.corridor .lesson.now{border-color:#E8A838;background:#FFFBF0}
+
+/* ================= v3 · 今晚值班：细节 =================
+   追加在 v2 样式之后。只加细节层（打卡条、夜线、房门四态、
+   走廊尽头、月亮行），不动 v2 的概念和布局，不动线上版 token。 */
+
+/* ---- 值班卡顶部：打卡状态 + 一夜的时间线 ---- */
+.card.shift .shift-strip{font-size:13px;color:#FFE08A;margin:2px 0 8px}
+.nightline{margin:0 0 10px}
+.nightline .nl-track{position:relative;height:3px;background:rgba(255,247,232,.25);border-radius:99px}
+.nightline .nl-dot{position:absolute;top:50%;left:0;width:12px;height:12px;border-radius:50%;background:#E8A838;box-shadow:0 0 0 3px rgba(232,168,56,.35);transform:translate(-50%,-50%)}
+.nightline .nl-ticks{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,247,232,.7);margin-top:5px}
+
+/* ---- 走廊：已经走过的路变成金色（--walked 由 JS 按“正在查那间房”量出来） ---- */
+.corridor::after{content:"";position:absolute;left:17px;top:12px;height:var(--walked,0px);width:2px;background:#E8A838;z-index:0}
+
+/* ---- 房门四态：状态词贴在课名旁边 ---- */
+.corridor .room-state{font-size:12px;font-weight:700;color:#0F5E5A;margin-left:6px;white-space:nowrap}
+.corridor .room.done .room-state{color:#B98A1F}
+/* 正在查的那间：门半开——一半金（门板），一半米白（屋里透出的光），描边留金光圈 */
+.corridor .room.now .room-plate{background:linear-gradient(90deg,#E8A838 55%,#FFF7E8 55%);border-color:#E8A838}
+/* 关着的门：深夜色门牌（课程页里未解锁的房间） */
+.corridor .room.locked .room-plate{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+/* 正在查的那间永远半开着门——哪怕视频还没解锁，门也是开着的 */
+.corridor .room.now.locked .room-plate{background:linear-gradient(90deg,#E8A838 55%,#FFF7E8 55%);border-color:#E8A838;color:#0F5E5A}
+
+/* ---- 走廊尽头：天亮交班 ---- */
+.handover{text-align:center;color:#8A7F63;font-size:13px;margin:10px 0 2px}
+
+/* ---- 月亮行：连续值班几夜，就亮几个月亮（一周七夜） ---- */
+.moon-row{font-size:15px;letter-spacing:3px;line-height:1.4;margin:2px 0 0}
+
+/* ================= v4 · 今晚值班：打磨 =================
+   v3 的概念和细节不动。只修截图里看得见的 5 处弱点：
+   1 课程页状态词三重叠（完成标记与状态词重复出现）
+   2 顶栏"怎么用"说明墙太抢眼
+   3 底部导航第 5 个键"重开"在 390px 被裁
+   4 半开门牌是直切两色块，不像门开着
+   5 间距节奏：学习路径课名换行参差 + 房间卡片偏高 */
+
+/* ---- 2 说明文字退成脚注：字小一点、颜色淡一点、上面一道细线 ---- */
+.howto{font-size:12.5px !important;line-height:1.55 !important;color:#8A8271 !important;border-top:1px solid #E7DFC8;padding-top:8px;margin-top:10px}
+
+/* ---- 3 底部导航：五个键等分，字略小，第 5 个再也不会被裁 ---- */
+.nav{justify-content:flex-start}
+.nav button,.nav a{flex:1 1 0;min-width:0;font-size:14px;padding:8px 2px;white-space:nowrap;text-align:center}
+
+/* ---- 4 半开的门：斜着开，门缝一条暗线，号码留在金的那边 ---- */
+.corridor .room.now .room-plate,
+.corridor .room.now.locked .room-plate{background:linear-gradient(115deg,#E8A838 0 60%,#0F2A28 60% 63%,#FFF7E8 63% 100%);border-color:#E8A838;color:#0F5E5A}
+
+/* ---- 5a 学习路径：课名统一两行高，一行两行的不再参差 ---- */
+.pm-node a{display:block}
+.pm-label{display:block;min-height:2.7em;line-height:1.35;margin-top:2px}
+
+/* ---- 5b 房间卡片收紧一点：10 间走廊少拖一点 ---- */
+.corridor a.room{padding-top:12px;padding-bottom:12px}
+.corridor .room{margin:12px 0}
+.corridor .room-en{margin-top:2px}
+.corridor .lesson{padding-top:12px;padding-bottom:12px}
+
+/* ================= v5 · 今晚值班：再打磨 =================
+   v4 的概念、细节、打磨全部不动。只修截图里看得见的 5 处新弱点：
+   1 课程页：同一段锁说明在 9 间房里重复出现（"怎么解锁"卡片已有完整版）
+   2 顶栏"怎么用"仍挡在值班卡前面
+   3 首页三张下位卡片（继续学习/视频课/夜班重开）没带上值班感
+   4 宽屏上底部导航和课程栏拉满全宽，键位散开
+   5 月亮行亮月暗月难分 */
+
+/* ---- 2 "怎么用"收进可折叠条：默认只留一行标题，点开才看全文 ---- */
+details.howto summary{cursor:pointer;color:#0F5E5A;font-weight:700;font-size:13px;list-style:none}
+details.howto summary::-webkit-details-marker{display:none}
+details.howto summary::after{content:" ＋";color:#B98A1F}
+details.howto[open] summary::after{content:" －"}
+details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
+
+/* ---- 3 下位卡片也像走廊里的房间：金色门边 + 门牌图标 ---- */
+.card.night-room{border-left:3px solid #E8A838}
+.card.night-room h2{display:flex;align-items:center;gap:8px}
+.room-ico{flex:none;width:34px;height:34px;border-radius:10px;border:2px solid #0F5E5A;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:17px;line-height:1}
+
+/* ---- 4 宽屏上底栏收进 720px 内容列，居中悬浮 ---- */
+.nav{max-width:720px;margin-left:auto;margin-right:auto;border-radius:14px 14px 0 0}
+.coursebar{max-width:720px;margin-left:auto;margin-right:auto;border-radius:14px 14px 0 0}
+
+/* ---- 5 月亮行放大一点，亮月暗月一眼分得清 ---- */
+.moon-row{font-size:19px !important;letter-spacing:5px}
+
+/* ================= v6 · 今晚值班：再打磨 =================
+   v5 的概念、细节、打磨全部不动。只修截图里看得见的 4 处新弱点：
+   1 学习路径图在手机上横向滚动，7–10 号房藏在屏外
+   2 课程页 8 张信息卡还是普通白卡，没带上走廊的语言
+   3 夜线走过的夜还是暗的，月亮点小
+   4 页尾没有句号：收尾只是一行靠左的灰字 */
+
+/* ---- 1 学习路径图：窄屏改成两行 5 列的病房图，10 间全可见，不用横滑 ----
+   宽屏（720px+）本来就放得下 10 个点，一行不动。 */
+@media (max-width:719px){
+  .pathmap{flex-wrap:wrap;overflow-x:visible}
+  .pathmap .pm-node{flex:0 0 20%;min-width:0}
+}
+
+/* ---- 2 课程页信息卡也像走廊里的房间：金色门边 ----
+   :has(#pathMap) 只在课程页成立（首页没有 #pathMap），所以首页的卡片
+   一张都不会被误伤；不支持 :has() 的旧浏览器只是看不到这条金边，
+   其余样式照常，不会坏。 */
+.wrap:has(#pathMap) > .card{border-left:3px solid #E8A838}
+
+/* ---- 3 夜线：走过的夜涂成金色（跟走廊"走过的路变金色"同一条语言），
+   月亮点放大、光晕加强，一眼就看到夜走到哪了 ---- */
+.nightline .nl-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#E8A838;border-radius:99px}
+.nightline .nl-dot{width:16px;height:16px;box-shadow:0 0 0 3px rgba(232,168,56,.4),0 0 10px rgba(232,168,56,.8)}
+
+/* ---- 4 页尾收成正式页脚：细线 + 居中 + 小字，页面有个句号 ---- */
+.wrap > p.note:last-child{text-align:center;border-top:1px solid #E7DFC8;padding-top:12px;margin-top:4px;color:#8A8271;font-size:12.5px}
 </style></head>
 <body><div class="wrap">
 <p><a class="homebtn" href="index.html">🌙 回课堂首页</a></p>
@@ -96,7 +255,7 @@ details.transcript p{margin:10px 0}
 <p class="note">按顺序学：1 → 10；金色是已完成，描金边的是正在学的那课。点任意一课都能直接进（建议按顺序，不强制锁课）。</p>
 <div class="pathmap" id="pathMap"></div></div>
 <div class="card"><h2>10 节课，按顺序学</h2>
-<div id="lessonList"></div>
+<div id="lessonList" class="corridor"></div>
 </div>
 
 <div class="card"><h2>学完 10 课之后</h2>
@@ -114,6 +273,29 @@ details.transcript p{margin:10px 0}
 <nav class="coursebar"><a class="cb-link" href="video-courses.html">📚 课程目录</a><a class="cb-link" href="module-m1-review.html">📖 复习</a><a class="cb-cta" id="barCta" href="detail-ep01-pain.html">▶ 开始学习</a></nav>
 <script src="video/keypoints-ep01-data.js?v=1"></script>
 <script src="video/access.js"></script>
+<script>
+
+/* ---- v3 · 走廊细节：房间状态词 + 已经走过的金线 ---- */
+function markCorridorDetails(){
+  var corridors=document.querySelectorAll('.corridor');
+  corridors.forEach(function(c){
+    var rooms=c.querySelectorAll('.room[data-ep]');
+    rooms.forEach(function(r){
+      var st=r.querySelector('.room-state');
+      if(st){st.textContent=r.classList.contains('done')?'已查完':(r.classList.contains('now')?'查房中':'');}
+    });
+    var nowRoom=c.querySelector('.room.now');
+    var allDone=rooms.length>0&&c.querySelectorAll('.room.done').length===rooms.length;
+    var h=0;
+    try{
+      if(nowRoom){h=nowRoom.offsetTop+18;}
+      else if(allDone){h=c.offsetHeight-24;}
+    }catch(e){h=0;}
+    try{c.style.setProperty('--walked',Math.max(0,h)+'px');}catch(e){}
+  });
+}
+
+</script>
 <script>
 var lessons=[
 {n:1,t:"疼痛评估",f:"classroom-ep01-pain.html",d:"detail-ep01-pain.html",en:"On a scale of zero to ten, how bad is your pain?",zh:"从零到十分，你的疼痛有几分？",en2:"About seven, it's sharp.",zh2:"大概七分，是刺痛。"},
@@ -137,10 +319,10 @@ lessons.forEach(function(L,i){
   var d=isDone(i); if(d)doneCount++;
   if(!d&&firstTodo<0)firstTodo=i;
   var hasV=hasVideoAccess(L.n);
-  html+='<div class="lesson"><b>第 '+L.n+' 课 · '+L.t+'</b> '+(d?'<span class="done-tag">✅ 已完成</span>':'<span class="tag">未完成</span>')+' '+(hasV?(L.n===1?'<span class="tag">免费整节</span>':'<span class="tag">✅ 已解锁</span>'):'<span class="tag">🔒 未解锁</span>')+'<div class="en">'+L.en+'</div><div class="zh">'+L.zh+'</div><div class="en">'+L.en2+'</div><div class="zh">'+L.zh2+'</div>'+(hasV?'':'<p class="note">🔒 视频、讲稿、笔记、讨论区在详情页里，购买后解锁——单课、优惠包或所属合集都能开；会员只学文字，不开视频。</p>')+'<a class="btn" href="'+L.d+'">进详情页 →</a> <a class="btn ghost" href="'+L.f+'">课堂练习 →</a></div>';
+  html+='<div class="lesson room'+(d?' done':'')+(i===firstTodo?' now':'')+(!hasV?' locked':'')+'" data-ep="ep'+('0'+L.n).slice(-2)+'"><span class="room-plate">'+(d?'\u2713':L.n)+'</span><div class="room-body"><b>第 '+L.n+' 课 · '+L.t+'</b><span class="room-state">'+(d?'已查完':(i===firstTodo?'查房中':''))+'</span> '+(hasV?(L.n===1?'<span class="tag">免费整节</span>':'<span class="tag">✅ 已解锁</span>'):'<span class="tag">🔒 未解锁</span>')+'<div class="en">'+L.en+'</div><div class="zh">'+L.zh+'</div><div class="en">'+L.en2+'</div><div class="zh">'+L.zh2+'</div>'+'<a class="btn" href="'+L.d+'">进详情页 →</a> <a class="btn ghost" href="'+L.f+'">课堂练习 →</a></div></div>';
   if(L.n===1){html+='<div class="card"><h2>📌 第 1 课重点 · 截图保存</h2><img id="keypointsImgM1" alt="第 1 课重点 · 疼痛评估" style="width:100%;border-radius:12px;display:block;margin-top:8px;background:#0F2A28"><p class="note">免费附赠，截图保存，下次查房直接用。</p></div>';}
 });
-document.getElementById("lessonList").innerHTML=html;
+document.getElementById("lessonList").innerHTML=html+'<div class="handover">🌅 走廊尽头 · 天亮交班</div>';try{markCorridorDetails();}catch(e){}
 document.getElementById("progBar").style.width=(doneCount*10)+"%";
 document.getElementById("progText").textContent=doneCount===10?"✅ 10 课全学完了，去复习页拿总结小抄卡吧。":"已完成 "+doneCount+" / 10 课。";
 var cb=document.getElementById("continueBtn");
@@ -190,7 +372,7 @@ if(map&&typeof lessons!=="undefined"&&typeof isDone==="function"){
   var firstTodo=-1;var h="";
   lessons.forEach(function(L,i){var d=isDone(i);if(!d&&firstTodo<0)firstTodo=i;
     var cls=d?"done":(i===firstTodo?"now":"todo");
-    h+='<div class="pm-node '+cls+'"><a href="'+L.d+'"><div class="pm-dot">'+(d?"\u2713":L.n)+'</div>'+L.t+'</a></div>';});
+    h+='<div class="pm-node '+cls+'"><a href="'+L.d+'"><div class="pm-dot">'+(d?"\u2713":L.n)+'</div><span class="pm-label">'+L.t+'</span></a></div>';});
   map.innerHTML=h;
 }
 var mc=document.getElementById("moduleCheckin");

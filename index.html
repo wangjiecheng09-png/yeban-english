@@ -114,25 +114,201 @@ button.opt:active{transform:scale(.99)}
 #sec-home .card:nth-child(3){animation-delay:.46s}
 #sec-home .card:nth-child(4){animation-delay:.54s}
 @media (prefers-reduced-motion:reduce){.moon,.star,.anim-h,#sec-home .card{animation:none !important}}
+
+/* ================= v2 · 今晚值班：查房路线 =================
+   在线上版样式之后追加。只加概念层（值班卡 + 走廊），不改线上版
+   已有的圆角、按钮形状、导航。 */
+
+/* ---- 值班卡：今晚的房间，深夜底 ---- */
+.card.shift{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+.card.shift h2{color:#FFE08A}
+.card.shift p{color:#FFF7E8}
+.card.shift p b{color:#FFF7E8}
+.card.shift .btn{background:#E8A838;color:#222;border-color:#E8A838}
+.card.shift .btn.ghost{background:transparent;color:#FFF7E8;border-color:rgba(255,247,232,.7)}
+
+/* ---- 查房路线：一条竖直的病房走廊，房间排在上面 ---- */
+.corridor{position:relative;padding:2px 0}
+.corridor::before{content:"";position:absolute;left:17px;top:12px;bottom:12px;width:2px;background:#0F5E5A;opacity:.35}
+.corridor .room{position:relative;display:block;margin:14px 0;padding-left:52px}
+.corridor a.room{display:flex;align-items:flex-start;gap:10px;text-decoration:none;color:#222;background:#fff;border:1.5px solid #E7DFC8;border-radius:14px;padding:14px 14px 14px 52px}
+.corridor a.room:active{transform:scale(.99)}
+.corridor .room-plate{position:absolute;left:0;top:12px;width:36px;height:36px;border-radius:10px;background:#fff;border:2px solid #0F5E5A;color:#0F5E5A;font-weight:700;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;z-index:1}
+.corridor .room-body{flex:1;min-width:0}
+.corridor .room-body b{font-size:17px}
+.corridor .room-en{color:#555;font-size:14px;margin-top:4px;display:block}
+.corridor .room-go{flex:none;color:#0F5E5A;font-weight:700;font-size:17px;line-height:1.4}
+/* 查过的房：金勾门牌 */
+.corridor .room.done .room-plate{background:#E8A838;border-color:#E8A838;color:#222}
+/* 正站着的那间房：门开着，透金光 */
+.corridor .room.now{border-color:#E8A838;background:#FFFBF0}
+.corridor .room.now .room-plate{background:#E8A838;border-color:#E8A838;color:#222;box-shadow:0 0 0 4px #FFE08A}
+/* 今天那一课：金色小牌 */
+.corridor .room.today::after{content:"今日一课";position:absolute;top:10px;right:12px;background:#E8A838;color:#222;font-size:12px;font-weight:700;border-radius:999px;padding:2px 8px;z-index:1}
+/* 首页房间有右箭头，小牌往左让一让 */
+.corridor a.room.today::after{right:44px}
+/* 走廊里的课行：门牌让位，按钮不动 */
+.corridor .lesson{padding-left:52px}
+/* 状态小牌不拆字：整块换行，不把"未解锁"拆成两行 */
+.corridor .room .tag,.corridor .room .done-tag{white-space:nowrap}
+
+/* ---- 课程页：学习路径的圆点改成房门牌 ---- */
+.pm-dot{border-radius:10px;width:36px;height:36px;line-height:36px;font-size:15px}
+.pm-node.done .pm-dot{background:#E8A838;border-color:#E8A838;color:#222}
+.pm-node.now .pm-dot{border-color:#0F5E5A;color:#0F5E5A;box-shadow:0 0 0 3px #FFE08A;background:#FFFBF0}
+/* 课程页的课表就是走廊 */
+#lessonList.corridor .lesson{padding-left:52px}
+#lessonList.corridor .lesson.now{border-color:#E8A838;background:#FFFBF0}
+
+/* ================= v3 · 今晚值班：细节 =================
+   追加在 v2 样式之后。只加细节层（打卡条、夜线、房门四态、
+   走廊尽头、月亮行），不动 v2 的概念和布局，不动线上版 token。 */
+
+/* ---- 值班卡顶部：打卡状态 + 一夜的时间线 ---- */
+.card.shift .shift-strip{font-size:13px;color:#FFE08A;margin:2px 0 8px}
+.nightline{margin:0 0 10px}
+.nightline .nl-track{position:relative;height:3px;background:rgba(255,247,232,.25);border-radius:99px}
+.nightline .nl-dot{position:absolute;top:50%;left:0;width:12px;height:12px;border-radius:50%;background:#E8A838;box-shadow:0 0 0 3px rgba(232,168,56,.35);transform:translate(-50%,-50%)}
+.nightline .nl-ticks{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,247,232,.7);margin-top:5px}
+
+/* ---- 走廊：已经走过的路变成金色（--walked 由 JS 按“正在查那间房”量出来） ---- */
+.corridor::after{content:"";position:absolute;left:17px;top:12px;height:var(--walked,0px);width:2px;background:#E8A838;z-index:0}
+
+/* ---- 房门四态：状态词贴在课名旁边 ---- */
+.corridor .room-state{font-size:12px;font-weight:700;color:#0F5E5A;margin-left:6px;white-space:nowrap}
+.corridor .room.done .room-state{color:#B98A1F}
+/* 正在查的那间：门半开——一半金（门板），一半米白（屋里透出的光），描边留金光圈 */
+.corridor .room.now .room-plate{background:linear-gradient(90deg,#E8A838 55%,#FFF7E8 55%);border-color:#E8A838}
+/* 关着的门：深夜色门牌（课程页里未解锁的房间） */
+.corridor .room.locked .room-plate{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+/* 正在查的那间永远半开着门——哪怕视频还没解锁，门也是开着的 */
+.corridor .room.now.locked .room-plate{background:linear-gradient(90deg,#E8A838 55%,#FFF7E8 55%);border-color:#E8A838;color:#0F5E5A}
+
+/* ---- 走廊尽头：天亮交班 ---- */
+.handover{text-align:center;color:#8A7F63;font-size:13px;margin:10px 0 2px}
+
+/* ---- 月亮行：连续值班几夜，就亮几个月亮（一周七夜） ---- */
+.moon-row{font-size:15px;letter-spacing:3px;line-height:1.4;margin:2px 0 0}
+
+/* ================= v4 · 今晚值班：打磨 =================
+   v3 的概念和细节不动。只修截图里看得见的 5 处弱点：
+   1 课程页状态词三重叠（完成标记与状态词重复出现）
+   2 顶栏"怎么用"说明墙太抢眼
+   3 底部导航第 5 个键"重开"在 390px 被裁
+   4 半开门牌是直切两色块，不像门开着
+   5 间距节奏：学习路径课名换行参差 + 房间卡片偏高 */
+
+/* ---- 2 说明文字退成脚注：字小一点、颜色淡一点、上面一道细线 ---- */
+.howto{font-size:12.5px !important;line-height:1.55 !important;color:#8A8271 !important;border-top:1px solid #E7DFC8;padding-top:8px;margin-top:10px}
+
+/* ---- 3 底部导航：五个键等分，字略小，第 5 个再也不会被裁 ---- */
+.nav{justify-content:flex-start}
+.nav button,.nav a{flex:1 1 0;min-width:0;font-size:14px;padding:8px 2px;white-space:nowrap;text-align:center}
+
+/* ---- 4 半开的门：斜着开，门缝一条暗线，号码留在金的那边 ---- */
+.corridor .room.now .room-plate,
+.corridor .room.now.locked .room-plate{background:linear-gradient(115deg,#E8A838 0 60%,#0F2A28 60% 63%,#FFF7E8 63% 100%);border-color:#E8A838;color:#0F5E5A}
+
+/* ---- 5a 学习路径：课名统一两行高，一行两行的不再参差 ---- */
+.pm-node a{display:block}
+.pm-label{display:block;min-height:2.7em;line-height:1.35;margin-top:2px}
+
+/* ---- 5b 房间卡片收紧一点：10 间走廊少拖一点 ---- */
+.corridor a.room{padding-top:12px;padding-bottom:12px}
+.corridor .room{margin:12px 0}
+.corridor .room-en{margin-top:2px}
+.corridor .lesson{padding-top:12px;padding-bottom:12px}
+
+/* ================= v5 · 今晚值班：再打磨 =================
+   v4 的概念、细节、打磨全部不动。只修截图里看得见的 5 处新弱点：
+   1 课程页：同一段锁说明在 9 间房里重复出现（"怎么解锁"卡片已有完整版）
+   2 顶栏"怎么用"仍挡在值班卡前面
+   3 首页三张下位卡片（继续学习/视频课/夜班重开）没带上值班感
+   4 宽屏上底部导航和课程栏拉满全宽，键位散开
+   5 月亮行亮月暗月难分 */
+
+/* ---- 2 "怎么用"收进可折叠条：默认只留一行标题，点开才看全文 ---- */
+details.howto summary{cursor:pointer;color:#0F5E5A;font-weight:700;font-size:13px;list-style:none}
+details.howto summary::-webkit-details-marker{display:none}
+details.howto summary::after{content:" ＋";color:#B98A1F}
+details.howto[open] summary::after{content:" －"}
+details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
+
+/* ---- 3 下位卡片也像走廊里的房间：金色门边 + 门牌图标 ---- */
+.card.night-room{border-left:3px solid #E8A838}
+.card.night-room h2{display:flex;align-items:center;gap:8px}
+.room-ico{flex:none;width:34px;height:34px;border-radius:10px;border:2px solid #0F5E5A;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:17px;line-height:1}
+
+/* ---- 4 宽屏上底栏收进 720px 内容列，居中悬浮 ---- */
+.nav{max-width:720px;margin-left:auto;margin-right:auto;border-radius:14px 14px 0 0}
+.coursebar{max-width:720px;margin-left:auto;margin-right:auto;border-radius:14px 14px 0 0}
+
+/* ---- 5 月亮行放大一点，亮月暗月一眼分得清 ---- */
+.moon-row{font-size:19px !important;letter-spacing:5px}
+
+/* ================= v6 · 今晚值班：再打磨 =================
+   v5 的概念、细节、打磨全部不动。只修截图里看得见的 4 处新弱点：
+   1 学习路径图在手机上横向滚动，7–10 号房藏在屏外
+   2 课程页 8 张信息卡还是普通白卡，没带上走廊的语言
+   3 夜线走过的夜还是暗的，月亮点小
+   4 页尾没有句号：收尾只是一行靠左的灰字 */
+
+/* ---- 1 学习路径图：窄屏改成两行 5 列的病房图，10 间全可见，不用横滑 ----
+   宽屏（720px+）本来就放得下 10 个点，一行不动。 */
+@media (max-width:719px){
+  .pathmap{flex-wrap:wrap;overflow-x:visible}
+  .pathmap .pm-node{flex:0 0 20%;min-width:0}
+}
+
+/* ---- 2 课程页信息卡也像走廊里的房间：金色门边 ----
+   :has(#pathMap) 只在课程页成立（首页没有 #pathMap），所以首页的卡片
+   一张都不会被误伤；不支持 :has() 的旧浏览器只是看不到这条金边，
+   其余样式照常，不会坏。 */
+.wrap:has(#pathMap) > .card{border-left:3px solid #E8A838}
+
+/* ---- 3 夜线：走过的夜涂成金色（跟走廊"走过的路变金色"同一条语言），
+   月亮点放大、光晕加强，一眼就看到夜走到哪了 ---- */
+.nightline .nl-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#E8A838;border-radius:99px}
+.nightline .nl-dot{width:16px;height:16px;box-shadow:0 0 0 3px rgba(232,168,56,.4),0 0 10px rgba(232,168,56,.8)}
+
+/* ---- 4 页尾收成正式页脚：细线 + 居中 + 小字，页面有个句号 ---- */
+.wrap > p.note:last-child{text-align:center;border-top:1px solid #E7DFC8;padding-top:12px;margin-top:4px;color:#8A8271;font-size:12.5px}
 </style>
 </head><body><div class="wrap">
 <div class="sky" aria-hidden="true"><span class="moon"></span><span class="star s1"></span><span class="star s2"></span><span class="star s3"></span><span class="star s4"></span><span class="star s5"></span></div>
 <h1 class="anim-h d1">夜班英语课堂</h1>
 <p class="sub anim-h d2">每天一个临床场景 · 护士英语一句即用 · 错 vs 对，截图保存，下次查房直接用</p>
-<p class="note anim-h d3">怎么用：苹果手机在微信里直接打开就能听、能学；想像 App 那样放桌面图标，就在自带浏览器 Safari 里打开，再点分享 → 添加到主屏幕。安卓手机在微信里听不到声，要在 Chrome 里打开（微信里点 … → 在浏览器打开）再听、再加图标。</p>
+<details class="note anim-h d3 howto"><summary>怎么用</summary><p>苹果手机在微信里直接打开就能听、能学；想像 App 那样放桌面图标，就在自带浏览器 Safari 里打开，再点分享 → 添加到主屏幕。安卓手机在微信里听不到声，要在 Chrome 里打开（微信里点 … → 在浏览器打开）再听、再加图标。</p></details>
 
 <div id="sec-home" class="section show">
-<div class="card"><h2>📌 今日一课</h2>
+<div class="card shift"><h2>📌 今日一课</h2>
+<p class="shift-strip"><span id="shiftState">🌙 今晚值班 · 19:00 打卡上班</span></p>
+<div class="nightline" aria-hidden="true"><div class="nl-track"><span class="nl-fill" id="nightFill"></span><span class="nl-dot" id="nightDot"></span></div><div class="nl-ticks"><span>19:00</span><span>0:00</span><span>07:00</span></div></div>
 <p><b id="todayTitle">第 4 课 · 输液</b><br><span id="todayLines">I'm going to start an IV drip for you.（我要给你输液了）<br>It may feel a little cold.（可能会感觉有点凉）</span></p>
 <a class="btn" id="todayBtn" href="classroom-ep04-iv-drip.html">开始第 4 课 →</a>
 <a class="btn ghost" href="today.html">今日一课直达 →</a></div>
-<div class="card"><h2>↩️ 继续学习</h2>
+<div class="card"><h2>🗺️ 入院到出院</h2>
+<p class="note">按病人走的路排：入院 → 住院日常 → 操作 → 出院。每天一课，10 天走完一个夜班的完整流程。</p>
+<div class="corridor" id="homeCorridor">
+<a class="room" data-ep="ep01" href="classroom-ep01-pain.html"><span class="room-plate">1</span><span class="room-body"><b>第 1 课 · 疼痛评估</b><span class="room-state"></span><span class="room-en">On a scale of zero to ten, how bad is your pain? / About seven, it's sharp.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep02" href="classroom-ep02-vital-signs.html"><span class="room-plate">2</span><span class="room-body"><b>第 2 课 · 生命体征</b><span class="room-state"></span><span class="room-en">Let me check your blood pressure. / Your blood pressure is one twenty over eighty, that's normal.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep03" href="classroom-ep03-allergies.html"><span class="room-plate">3</span><span class="room-body"><b>第 3 课 · 入院问过敏史</b><span class="room-state"></span><span class="room-en">Do you have any allergies? / I'm allergic to penicillin.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep04" href="classroom-ep04-iv-drip.html"><span class="room-plate">4</span><span class="room-body"><b>第 4 课 · 输液</b><span class="room-state"></span><span class="room-en">I'm going to start an IV drip for you. / It may feel a little cold.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep05" href="classroom-ep05-dressing.html"><span class="room-plate">5</span><span class="room-body"><b>第 5 课 · 换药</b><span class="room-state"></span><span class="room-en">I need to change your dressing. / Please tell me if it hurts.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep06" href="classroom-ep06-identity-check.html"><span class="room-plate">6</span><span class="room-body"><b>第 6 课 · 给药核对</b><span class="room-state"></span><span class="room-en">Please tell me your name and date of birth.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep07" href="classroom-ep07-postop.html"><span class="room-plate">7</span><span class="room-body"><b>第 7 课 · 术后观察</b><span class="room-state"></span><span class="room-en">How are you feeling after the operation? / A bit dizzy, but okay.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep08" href="classroom-ep08-fasting.html"><span class="room-plate">8</span><span class="room-body"><b>第 8 课 · 术前禁食</b><span class="room-state"></span><span class="room-en">You need to fast before surgery. / No food or water after midnight.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep09" href="classroom-ep09-callbell.html"><span class="room-plate">9</span><span class="room-body"><b>第 9 课 · 防跌倒呼叫铃</b><span class="room-state"></span><span class="room-en">Please press the call bell if you need help. / Don't get up alone.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep10" href="classroom-ep10-discharge.html"><span class="room-plate">10</span><span class="room-body"><b>第 10 课 · 出院宣教</b><span class="room-state"></span><span class="room-en">Take this medicine twice a day after meals. / Come back for a follow-up in one week.</span></span><span class="room-go">→</span></a>
+<div class="handover">🌅 走廊尽头 · 天亮交班</div>
+</div></div>
+<div class="card night-room"><h2><span class="room-ico">↩️</span> 继续学习</h2>
 <p id="continue">还没开始任何一课，先从第 1 课试试。</p>
 <a class="btn ghost" id="continueBtn" href="classroom-ep01-pain.html">第 1 课 · 疼痛评估</a></div>
-<div class="card"><h2>🎬 视频课</h2>
+<div class="card night-room"><h2><span class="room-ico">🎬</span> 视频课</h2>
 <p>一门课学完一整套：按课、按顺序学，每门课结尾有一次复习和一张总结小抄卡。12 门课，先上 1 门，后面做好一门、开一门。</p>
 <a class="btn" href="video-courses.html">看看 12 门课 →</a></div>
-<div class="card"><h2>🎮 夜班重开（游戏）</h2>
+<div class="card night-room"><h2><span class="room-ico">🎮</span> 夜班重开（游戏）</h2>
 <p>单独的互动游戏分类，跟课堂分开：选一句 → 看后果 → 选错了倒带重开，选对才过关。</p>
 <p>第 1 关 · 发药核对，免费玩；后面关卡敬请期待。</p>
 <a class="btn" href="night-reopen/index.html">开始玩第 1 关 →</a></div>
@@ -141,53 +317,54 @@ button.opt:active{transform:scale(.99)}
 <div id="sec-lessons" class="section">
 <div class="card"><h2>🔍 搜索</h2>
 <p><input type="text" id="q" placeholder="搜一句英文、一个单词、一个场景，例如：输液、allergy、血压" oninput="doSearch()"></p>
-<p class="note">想按场景找课，直接搜场景词，例如：入院场景、给药输液、输液、过敏。试试搜：输液、allergy、penicillin、cold、血压</p>
+<p class="note howto">想按场景找课，直接搜场景词，例如：入院场景、给药输液、输液、过敏。试试搜：输液、allergy、penicillin、cold、血压</p>
 <div id="searchResult"></div></div>
 <div class="card"><h2>📚 课程</h2>
 <div id="lessonList">
 <div class="group" id="group-week1">
 <button class="group-head" onclick="toggleGroup('group-week1')" aria-expanded="true"><span>入院到出院</span><span class="group-meta">10 课 · 已发布</span><span class="group-arrow">▼</span></button>
-<div class="group-body">
-<div class="lesson" data-cat="week1" data-kw="第1课 疼痛评估 pain sharp dull On a scale of zero to ten how bad is your pain About seven sharp">
-<b>第 1 课 · 疼痛评估</b><br>
+<div class="group-body corridor">
+<div class="lesson room" data-cat="week1" data-kw="第1课 疼痛评估 pain sharp dull On a scale of zero to ten how bad is your pain About seven sharp" data-ep="ep01"><span class="room-plate">1</span>
+<b>第 1 课 · 疼痛评估</b><span class="room-state"></span><br>
 <span>On a scale of zero to ten, how bad is your pain? / About seven, it's sharp.</span><br>
 <a class="btn" href="classroom-ep01-pain.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1" data-kw="第2课 生命体征 血压 blood pressure normal Let me check your blood pressure">
-<b>第 2 课 · 生命体征</b><br>
+<div class="lesson room" data-cat="week1" data-kw="第2课 生命体征 血压 blood pressure normal Let me check your blood pressure" data-ep="ep02"><span class="room-plate">2</span>
+<b>第 2 课 · 生命体征</b><span class="room-state"></span><br>
 <span>Let me check your blood pressure. / Your blood pressure is one twenty over eighty, that's normal.</span><br>
 <a class="btn" href="classroom-ep02-vital-signs.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1 admission" data-kw="第3课 入院问过敏史 入院场景 allergy allergic penicillin 青霉素 过敏 Do you have any allergies">
-<b>第 3 课 · 入院问过敏史</b> <span class="tag">入院场景</span><br>
+<div class="lesson room" data-cat="week1 admission" data-kw="第3课 入院问过敏史 入院场景 allergy allergic penicillin 青霉素 过敏 Do you have any allergies" data-ep="ep03"><span class="room-plate">3</span>
+<b>第 3 课 · 入院问过敏史</b><span class="room-state"></span> <span class="tag">入院场景</span><br>
 <span>Do you have any allergies? / I'm allergic to penicillin.</span><br>
 <a class="btn" href="classroom-ep03-allergies.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1 iv" data-kw="第4课 输液 给药输液 IV drip cold 凉 I'm going to start an IV drip for you It may feel a little cold">
-<b>第 4 课 · 输液</b> <span class="tag">给药输液</span><br>
+<div class="lesson room" data-cat="week1 iv" data-kw="第4课 输液 给药输液 IV drip cold 凉 I'm going to start an IV drip for you It may feel a little cold" data-ep="ep04"><span class="room-plate">4</span>
+<b>第 4 课 · 输液</b><span class="room-state"></span> <span class="tag">给药输液</span><br>
 <span>I'm going to start an IV drip for you. / It may feel a little cold.</span><br>
 <a class="btn" href="classroom-ep04-iv-drip.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1" data-kw="第5课 换药 dressing hurt change your dressing Please tell me if it hurts">
-<b>第 5 课 · 换药</b><br>
+<div class="lesson room" data-cat="week1" data-kw="第5课 换药 dressing hurt change your dressing Please tell me if it hurts" data-ep="ep05"><span class="room-plate">5</span>
+<b>第 5 课 · 换药</b><span class="room-state"></span><br>
 <span>I need to change your dressing. / Please tell me if it hurts.</span><br>
 <a class="btn" href="classroom-ep05-dressing.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1" data-kw="第6课 给药核对 身份 date of birth name medicine dose Please tell me your name and date of birth">
-<b>第 6 课 · 给药核对</b><br>
+<div class="lesson room" data-cat="week1" data-kw="第6课 给药核对 身份 date of birth name medicine dose Please tell me your name and date of birth" data-ep="ep06"><span class="room-plate">6</span>
+<b>第 6 课 · 给药核对</b><span class="room-state"></span><br>
 <span>Please tell me your name and date of birth.</span><br>
 <a class="btn" href="classroom-ep06-identity-check.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1" data-kw="第7课 术后观察 operation dizzy How are you feeling after the operation A bit dizzy">
-<b>第 7 课 · 术后观察</b><br>
+<div class="lesson room" data-cat="week1" data-kw="第7课 术后观察 operation dizzy How are you feeling after the operation A bit dizzy" data-ep="ep07"><span class="room-plate">7</span>
+<b>第 7 课 · 术后观察</b><span class="room-state"></span><br>
 <span>How are you feeling after the operation? / A bit dizzy, but okay.</span><br>
 <a class="btn" href="classroom-ep07-postop.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1" data-kw="第8课 术前禁食 fast surgery midnight No food or water after midnight">
-<b>第 8 课 · 术前禁食</b><br>
+<div class="lesson room" data-cat="week1" data-kw="第8课 术前禁食 fast surgery midnight No food or water after midnight" data-ep="ep08"><span class="room-plate">8</span>
+<b>第 8 课 · 术前禁食</b><span class="room-state"></span><br>
 <span>You need to fast before surgery. / No food or water after midnight.</span><br>
 <a class="btn" href="classroom-ep08-fasting.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1" data-kw="第9课 防跌倒 呼叫铃 call bell alone press Please press the call bell if you need help Don't get up alone">
-<b>第 9 课 · 防跌倒呼叫铃</b><br>
+<div class="lesson room" data-cat="week1" data-kw="第9课 防跌倒 呼叫铃 call bell alone press Please press the call bell if you need help Don't get up alone" data-ep="ep09"><span class="room-plate">9</span>
+<b>第 9 课 · 防跌倒呼叫铃</b><span class="room-state"></span><br>
 <span>Please press the call bell if you need help. / Don't get up alone.</span><br>
 <a class="btn" href="classroom-ep09-callbell.html">进入课堂 →</a></div>
-<div class="lesson" data-cat="week1" data-kw="第10课 出院宣教 twice a day follow-up medicine after meals Take this medicine twice a day after meals Come back for a follow-up">
-<b>第 10 课 · 出院宣教</b><br>
+<div class="lesson room" data-cat="week1" data-kw="第10课 出院宣教 twice a day follow-up medicine after meals Take this medicine twice a day after meals Come back for a follow-up" data-ep="ep10"><span class="room-plate">10</span>
+<b>第 10 课 · 出院宣教</b><span class="room-state"></span><br>
 <span>Take this medicine twice a day after meals. / Come back for a follow-up in one week.</span><br>
 <a class="btn" href="classroom-ep10-discharge.html">进入课堂 →</a></div>
+<div class="handover">🌅 走廊尽头 · 天亮交班</div>
 </div>
 </div>
 <div class="group" id="group-basic">
@@ -223,7 +400,7 @@ button.opt:active{transform:scale(.99)}
 
 
 <div id="sec-courses" class="section">
-<div class="card"><h2>🎬 视频课</h2>
+<div class="card night-room"><h2><span class="room-ico">🎬</span> 视频课</h2>
 <p>一门课学完一整套：按课、按顺序学，每门课结尾有一次复习和一张总结小抄卡。入院到出院已经做完，先上；后面做好一门、开一门。</p>
 <div class="lesson">
 <b>入院到出院</b> <span class="tag">10 节 · 已上线</span><br>
@@ -271,6 +448,7 @@ button.opt:active{transform:scale(.99)}
 <div class="card hero-my"><h2>👤 我的学习</h2>
 <p>你好，<b id="userNameDisplay">夜班学员</b></p>
 <p class="hero-row"><span class="streak">🔥 <b id="streakNum">0</b> 天连续打卡</span><button class="gold" id="checkinBtn" onclick="doCheckin()">✅ 今日打卡</button></p>
+<p class="moon-row" id="moonRow" aria-hidden="true"></p>
 <p class="note" style="color:#FFE08A"><span id="todayCheckinState">今天还没打卡</span> · 打卡只存本机，换设备重算；断了从 1 重新数。</p></div>
 <div class="card member-card" id="memberCard"><h2>💎 我的会员</h2>
 <p class="member-row">当前身份：<span class="tier tier-free" id="memberTier">普通用户</span></p>
@@ -292,7 +470,7 @@ button.opt:active{transform:scale(.99)}
 <div class="card"><h2>🏅 我的徽章</h2>
 <div class="badge-grid" id="badgeGrid"></div>
 <p class="note">徽章按本机进度自动点亮，换设备要重新攒。</p></div>
-<div class="card"><h2>↩️ 继续学习</h2>
+<div class="card night-room"><h2><span class="room-ico">↩️</span> 继续学习</h2>
 <p id="continueMy">还没开始任何一课，先从第 1 课试试。</p>
 <a class="btn" id="continueMyBtn" href="classroom-ep01-pain.html">第 1 课 · 疼痛评估</a></div>
 <div class="card"><h2>📚 我的课程</h2>
@@ -452,7 +630,7 @@ function renderMyMistakes(){var html='';var any=false;
 MY_KEYS.forEach(function(k){var mm=JSON.parse(localStorage.getItem('classroom-'+k+'-mistakes')||'[]');if(mm.length){any=true;var nm=MY_NAMES[k];var title=Array.isArray(nm)?nm[0]:nm;var href=Array.isArray(nm)?nm[1]:('classroom-'+k+'-'+({'ep01':'pain','ep02':'vital-signs','ep03':'allergies','ep04':'iv-drip','ep05':'dressing','ep06':'identity-check','ep07':'postop','ep08':'fasting','ep09':'callbell','ep10':'discharge'}[k])+'.html');html+='<p><b>'+title+'</b>：'+mm.join('、')+' <a href="'+href+'">回炉 →</a></p>';}});
 document.getElementById('myMistakes').innerHTML=any?html:'<p class="note">还没有错题，做题错了会记在这里。</p>';}
 function loadMy(){var done=myDoneCount(),all=myAllDoneCount(),streak=calcStreak(getCheckins());var t=shanghaiToday();var days=getCheckins();
-document.getElementById('streakNum').textContent=streak;
+document.getElementById('streakNum').textContent=streak;try{renderMoonRow(streak);}catch(e){}
 var st=document.getElementById('todayCheckinState');var cb=document.getElementById('checkinBtn');
 if(days.indexOf(t.key)>=0){st.textContent='✅ 今天已打卡，连续 '+streak+' 天';cb.textContent='✅ 今天已打卡';cb.disabled=true;}else{st.textContent='今天还没打卡';cb.textContent='✅ 今日打卡';cb.disabled=false;}
 var pct1=Math.round(done/MY_TOTAL*100),pctA=Math.round(all/230*100);
@@ -462,7 +640,82 @@ document.getElementById('allProgText').textContent='已学 '+all+' / 230 节 · 
 document.getElementById('allBar').style.width=pctA+'%';
 renderCal();renderBadges();renderMember();renderCal();renderBadges();renderMyCourses();renderMyMistakes();updateContinue();}
 function clearAllProgress(){['classroom-ep01-done','classroom-ep01-mistakes','classroom-ep02-done','classroom-ep02-mistakes','classroom-ep03-done','classroom-ep03-mistakes','classroom-ep04-done','classroom-ep04-mistakes','classroom-ep05-done','classroom-ep05-mistakes','classroom-ep06-done','classroom-ep06-mistakes','classroom-ep07-done','classroom-ep07-mistakes','classroom-ep08-done','classroom-ep08-mistakes','classroom-ep09-done','classroom-ep09-mistakes','classroom-ep10-done','classroom-ep10-mistakes','classroom-a1-done','classroom-a1-mistakes'].forEach(k=>localStorage.removeItem(k));loadMy();}
-updateToday();updateContinue();loadMy();doSearch();
+
+
+/* ---- v3 · 值班卡：打卡状态 + 一夜的时间线（19:00→07:00）---- */
+function markShift(){
+  var st=document.getElementById('shiftState'),dot=document.getElementById('nightDot');
+  if(!st||!dot)return;
+  var now=new Date(),h=now.getHours(),m=now.getMinutes();
+  try{
+    var parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(now);
+    parts.forEach(function(p){if(p.type==='hour')h=+p.value;if(p.type==='minute')m=+p.value;});
+    if(h===24)h=0;
+  }catch(e){}
+  var p=0,night=false;
+  if(h>=19){p=(h-19+m/60)/12;night=true;}
+  else if(h<7){p=(h+5+m/60)/12;night=true;}
+  dot.style.left=(p*100).toFixed(1)+'%';
+  var fl=document.getElementById('nightFill');if(fl)fl.style.width=(p*100).toFixed(1)+'%';
+  var checked=false;
+  try{var days=getCheckins();var t=shanghaiToday();checked=days.indexOf(t.key)>=0;}catch(e){}
+  st.textContent=checked?(night?'\u2705 \u5df2\u6253\u5361\u4e0a\u73ed \u00b7 \u4eca\u665a\u503c\u73ed\u4e2d':'\u2705 \u4eca\u5929\u5df2\u6253\u5361'):(night?'\uD83C\uDF19 \u4eca\u665a\u503c\u73ed \u00b7 \u8fd8\u6ca1\u6253\u5361':'\uD83C\uDF19 \u4eca\u665a 19:00 \u4e0a\u73ed');
+}
+
+/* ---- v3 · 月亮行：连续值班几夜，就亮几个月亮（一周七夜）---- */
+function renderMoonRow(streak){
+  var el=document.getElementById('moonRow');
+  if(!el)return;
+  var n=Math.max(0,Math.min(7,streak|0)),s='';
+  for(var i=0;i<7;i++)s+=i<n?'\uD83C\uDF15':'\uD83C\uDF11';
+  el.textContent=s;
+}
+
+/* ---- v3 · 切 tab 后重算金线（隐藏的走廊量不到高度）---- */
+try{
+  var _showSecV3=showSec;
+  showSec=function(b,s){_showSecV3(b,s);try{markCorridorDetails();}catch(e){}};
+}catch(e){}
+
+/* ---- v3 · 走廊细节：房间状态词 + 已经走过的金线 ---- */
+function markCorridorDetails(){
+  var corridors=document.querySelectorAll('.corridor');
+  corridors.forEach(function(c){
+    var rooms=c.querySelectorAll('.room[data-ep]');
+    rooms.forEach(function(r){
+      var st=r.querySelector('.room-state');
+      if(st){st.textContent=r.classList.contains('done')?'已查完':(r.classList.contains('now')?'查房中':'');}
+    });
+    var nowRoom=c.querySelector('.room.now');
+    var allDone=rooms.length>0&&c.querySelectorAll('.room.done').length===rooms.length;
+    var h=0;
+    try{
+      if(nowRoom){h=nowRoom.offsetTop+18;}
+      else if(allDone){h=c.offsetHeight-24;}
+    }catch(e){h=0;}
+    try{c.style.setProperty('--walked',Math.max(0,h)+'px');}catch(e){}
+  });
+}
+
+/* ---- v2 · 查房路线：给房间标状态（已完成 / 正在学 / 今日一课）---- */
+function markCorridor(){
+  var rooms=document.querySelectorAll('.corridor .room[data-ep]');
+  if(!rooms.length)return;
+  function epDone(ep){try{return !!localStorage.getItem('classroom-'+ep+'-done');}catch(e){return false;}}
+  var eps=['ep01','ep02','ep03','ep04','ep05','ep06','ep07','ep08','ep09','ep10'];
+  var firstTodo=null;
+  for(var i=0;i<eps.length;i++){if(!epDone(eps[i])){firstTodo=eps[i];break;}}
+  var todayEp=null;
+  try{var L=todayLesson();var m=/classroom-(ep\d+)-/.exec(L[2]||'');if(m)todayEp=m[1];}catch(e){}
+  rooms.forEach(function(r){
+    var ep=r.getAttribute('data-ep');
+    var plate=r.querySelector('.room-plate');
+    if(epDone(ep)){r.classList.add('done');if(plate)plate.textContent='\u2713';}
+    if(ep===firstTodo)r.classList.add('now');
+    if(ep===todayEp)r.classList.add('today');
+  });
+}
+updateToday();updateContinue();loadMy();doSearch();try{markCorridor();}catch(e){}try{markShift();}catch(e){}try{markCorridorDetails();}catch(e){}
 /* hash 直达必须放在最后：showSec('sec-my') 会调 loadMy → myDoneCount 用 MY_NAMES/MY_KEYS，放在前面会在赋值前抛错、中断整个脚本（REDEEM_CODES 等都未定义） */
 (function(){var h=(location.hash||'').slice(1);if(h&&document.getElementById(h)){var bs=document.querySelectorAll('.nav button');for(var i=0;i<bs.length;i++){if((bs[i].getAttribute('onclick')||'').indexOf("'"+h+"'")>=0){showSec(bs[i],h);break;}}}})();
 </script><!-- pages-rebuild --><script>/* 维护开关：maintenance.json 里 maintenance 为 true 时才跳转，平时不影响页面 */(function(){try{fetch("maintenance.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){if(d&&d.maintenance&&location.pathname.indexOf("maintenance.html")<0){location.replace("maintenance.html")}}).catch(function(){})}catch(e){}})();</script></body></html>
