@@ -99,8 +99,8 @@ if (!lesson) {
     : LESSONS["2026-11-11"];
 }
 var _ref="";try{_ref=document.referrer||"";}catch(e){}
-/* 从粉丝版来：第 1、2 课去 fan 课堂（文字免费），第 3-10 课回 fan 首页（锁定列表）；其余情况去原课 */
-var _fromFan = _ref.indexOf("/fan/")>=0;
+/* 从粉丝版来，或无 referrer（微信等内置浏览器不带 referrer，今日链接主要发给粉丝）：第 1、2 课去 fan 课堂（文字免费），第 3-10 课回 fan 首页（锁定列表）；其余情况去原课 */
+var _fromFan = _ref.indexOf("/fan/")>=0 || _ref==="";
 var target = lesson[2];
 if(_fromFan){
   if(lesson[0]==="ep01") target="fan/classroom-ep01-pain.html";
