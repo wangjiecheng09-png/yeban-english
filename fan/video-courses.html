@@ -53,12 +53,180 @@ button.ghost,.btn.ghost{background:#fff;color:#0F5E5A;border:1.5px solid #0F5E5A
 .coursebar a.cb-cta{flex:1 1 auto;min-width:0;justify-content:center;background:#E8A838;color:#222;font-weight:bold;border-color:#E8A838;border-radius:999px;font-size:14px;padding:10px 12px;white-space:normal;text-align:center;line-height:1.25}
 .homebtn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:10px 16px;border-radius:999px;background:#0F2A28;color:#FFE08A;font-size:14px;font-weight:bold;text-decoration:none;border:1.5px solid #0F2A28}
 .homebtn:active{transform:scale(.97)}
+
+/* ================= v2 · 今晚值班：查房路线 =================
+   在线上版样式之后追加。只加概念层（值班卡 + 走廊），不改线上版
+   已有的圆角、按钮形状、导航。 */
+
+/* ---- 值班卡：今晚的房间，深夜底 ---- */
+.card.shift{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+.card.shift h2{color:#FFE08A}
+.card.shift p{color:#FFF7E8}
+.card.shift p b{color:#FFF7E8}
+.card.shift .btn{background:#E8A838;color:#222;border-color:#E8A838}
+.card.shift .btn.ghost{background:transparent;color:#FFF7E8;border-color:rgba(255,247,232,.7)}
+
+/* ---- 查房路线：一条竖直的病房走廊，房间排在上面 ---- */
+.corridor{position:relative;padding:2px 0}
+.corridor::before{content:"";position:absolute;left:17px;top:12px;bottom:12px;width:2px;background:#0F5E5A;opacity:.35}
+.corridor .room{position:relative;display:block;margin:14px 0;padding-left:52px}
+.corridor a.room{display:flex;align-items:flex-start;gap:10px;text-decoration:none;color:#222;background:#fff;border:1.5px solid #E7DFC8;border-radius:14px;padding:14px 14px 14px 52px}
+.corridor a.room:active{transform:scale(.99)}
+.corridor .room-plate{position:absolute;left:0;top:12px;width:36px;height:36px;border-radius:10px;background:#fff;border:2px solid #0F5E5A;color:#0F5E5A;font-weight:700;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;z-index:1}
+.corridor .room-body{flex:1;min-width:0}
+.corridor .room-body b{font-size:17px}
+.corridor .room-en{color:#555;font-size:14px;margin-top:4px;display:block}
+.corridor .room-go{flex:none;color:#0F5E5A;font-weight:700;font-size:17px;line-height:1.4}
+/* 查过的房：金勾门牌 */
+.corridor .room.done .room-plate{background:#E8A838;border-color:#E8A838;color:#222}
+/* 正站着的那间房：门开着，透金光 */
+.corridor .room.now{border-color:#E8A838;background:#FFFBF0}
+.corridor .room.now .room-plate{background:#E8A838;border-color:#E8A838;color:#222;box-shadow:0 0 0 4px #FFE08A}
+/* 今天那一课：金色小牌 */
+.corridor .room.today::after{content:"今日一课";position:absolute;top:10px;right:12px;background:#E8A838;color:#222;font-size:12px;font-weight:700;border-radius:999px;padding:2px 8px;z-index:1}
+/* 首页房间有右箭头，小牌往左让一让 */
+.corridor a.room.today::after{right:44px}
+/* 走廊里的课行：门牌让位，按钮不动 */
+.corridor .lesson{padding-left:52px}
+/* 状态小牌不拆字：整块换行，不把"未解锁"拆成两行 */
+.corridor .room .tag,.corridor .room .done-tag{white-space:nowrap}
+
+/* ---- 课程页：学习路径的圆点改成房门牌 ---- */
+.pm-dot{border-radius:10px;width:36px;height:36px;line-height:36px;font-size:15px}
+.pm-node.done .pm-dot{background:#E8A838;border-color:#E8A838;color:#222}
+.pm-node.now .pm-dot{border-color:#0F5E5A;color:#0F5E5A;box-shadow:0 0 0 3px #FFE08A;background:#FFFBF0}
+/* 课程页的课表就是走廊 */
+#lessonList.corridor .lesson{padding-left:52px}
+#lessonList.corridor .lesson.now{border-color:#E8A838;background:#FFFBF0}
+
+/* ================= v3 · 今晚值班：细节 =================
+   追加在 v2 样式之后。只加细节层（打卡条、夜线、房门四态、
+   走廊尽头、月亮行），不动 v2 的概念和布局，不动线上版 token。 */
+
+/* ---- 值班卡顶部：打卡状态 + 一夜的时间线 ---- */
+.card.shift .shift-strip{font-size:13px;color:#FFE08A;margin:2px 0 8px}
+.nightline{margin:0 0 10px}
+.nightline .nl-track{position:relative;height:3px;background:rgba(255,247,232,.25);border-radius:99px}
+.nightline .nl-dot{position:absolute;top:50%;left:0;width:12px;height:12px;border-radius:50%;background:#E8A838;box-shadow:0 0 0 3px rgba(232,168,56,.35);transform:translate(-50%,-50%)}
+.nightline .nl-ticks{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,247,232,.7);margin-top:5px}
+
+/* ---- 走廊：已经走过的路变成金色（--walked 由 JS 按“正在查那间房”量出来） ---- */
+.corridor::after{content:"";position:absolute;left:17px;top:12px;height:var(--walked,0px);width:2px;background:#E8A838;z-index:0}
+
+/* ---- 房门四态：状态词贴在课名旁边 ---- */
+.corridor .room-state{font-size:12px;font-weight:700;color:#0F5E5A;margin-left:6px;white-space:nowrap}
+.corridor .room.done .room-state{color:#B98A1F}
+/* 正在查的那间：门半开——一半金（门板），一半米白（屋里透出的光），描边留金光圈 */
+.corridor .room.now .room-plate{background:linear-gradient(90deg,#E8A838 55%,#FFF7E8 55%);border-color:#E8A838}
+/* 关着的门：深夜色门牌（课程页里未解锁的房间） */
+.corridor .room.locked .room-plate{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+/* 正在查的那间永远半开着门——哪怕视频还没解锁，门也是开着的 */
+.corridor .room.now.locked .room-plate{background:linear-gradient(90deg,#E8A838 55%,#FFF7E8 55%);border-color:#E8A838;color:#0F5E5A}
+
+/* ---- 走廊尽头：天亮交班 ---- */
+.handover{text-align:center;color:#8A7F63;font-size:13px;margin:10px 0 2px}
+
+/* ---- 月亮行：连续值班几夜，就亮几个月亮（一周七夜） ---- */
+.moon-row{font-size:15px;letter-spacing:3px;line-height:1.4;margin:2px 0 0}
+
+/* ================= v4 · 今晚值班：打磨 =================
+   v3 的概念和细节不动。只修截图里看得见的 5 处弱点：
+   1 课程页状态词三重叠（完成标记与状态词重复出现）
+   2 顶栏"怎么用"说明墙太抢眼
+   3 底部导航第 5 个键"重开"在 390px 被裁
+   4 半开门牌是直切两色块，不像门开着
+   5 间距节奏：学习路径课名换行参差 + 房间卡片偏高 */
+
+/* ---- 2 说明文字退成脚注：字小一点、颜色淡一点、上面一道细线 ---- */
+.howto{font-size:12.5px !important;line-height:1.55 !important;color:#8A8271 !important;border-top:1px solid #E7DFC8;padding-top:8px;margin-top:10px}
+
+/* ---- 3 底部导航：五个键等分，字略小，第 5 个再也不会被裁 ---- */
+.nav{justify-content:flex-start}
+.nav button,.nav a{flex:1 1 0;min-width:0;font-size:14px;padding:8px 2px;white-space:nowrap;text-align:center}
+
+/* ---- 4 半开的门：斜着开，门缝一条暗线，号码留在金的那边 ---- */
+.corridor .room.now .room-plate,
+.corridor .room.now.locked .room-plate{background:linear-gradient(115deg,#E8A838 0 60%,#0F2A28 60% 63%,#FFF7E8 63% 100%);border-color:#E8A838;color:#0F5E5A}
+
+/* ---- 5a 学习路径：课名统一两行高，一行两行的不再参差 ---- */
+.pm-node a{display:block}
+.pm-label{display:block;min-height:2.7em;line-height:1.35;margin-top:2px}
+
+/* ---- 5b 房间卡片收紧一点：10 间走廊少拖一点 ---- */
+.corridor a.room{padding-top:12px;padding-bottom:12px}
+.corridor .room{margin:12px 0}
+.corridor .room-en{margin-top:2px}
+.corridor .lesson{padding-top:12px;padding-bottom:12px}
+
+/* ================= v5 · 今晚值班：再打磨 =================
+   v4 的概念、细节、打磨全部不动。只修截图里看得见的 5 处新弱点：
+   1 课程页：同一段锁说明在 9 间房里重复出现（"怎么解锁"卡片已有完整版）
+   2 顶栏"怎么用"仍挡在值班卡前面
+   3 首页三张下位卡片（继续学习/视频课/夜班重开）没带上值班感
+   4 宽屏上底部导航和课程栏拉满全宽，键位散开
+   5 月亮行亮月暗月难分 */
+
+/* ---- 2 "怎么用"收进可折叠条：默认只留一行标题，点开才看全文 ---- */
+details.howto summary{cursor:pointer;color:#0F5E5A;font-weight:700;font-size:13px;list-style:none}
+details.howto summary::-webkit-details-marker{display:none}
+details.howto summary::after{content:" ＋";color:#B98A1F}
+details.howto[open] summary::after{content:" －"}
+details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
+
+/* ---- 3 下位卡片也像走廊里的房间：金色门边 + 门牌图标 ---- */
+.card.night-room{border-left:3px solid #E8A838}
+.card.night-room h2{display:flex;align-items:center;gap:8px}
+.room-ico{flex:none;width:34px;height:34px;border-radius:10px;border:2px solid #0F5E5A;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:17px;line-height:1}
+
+/* ---- 4 宽屏上底栏收进 720px 内容列，居中悬浮 ---- */
+.nav{max-width:720px;margin-left:auto;margin-right:auto;border-radius:14px 14px 0 0}
+.coursebar{max-width:720px;margin-left:auto;margin-right:auto;border-radius:14px 14px 0 0}
+
+/* ---- 5 月亮行放大一点，亮月暗月一眼分得清 ---- */
+.moon-row{font-size:19px !important;letter-spacing:5px}
+
+/* ================= v6 · 今晚值班：再打磨 =================
+   v5 的概念、细节、打磨全部不动。只修截图里看得见的 4 处新弱点：
+   1 学习路径图在手机上横向滚动，7–10 号房藏在屏外
+   2 课程页 8 张信息卡还是普通白卡，没带上走廊的语言
+   3 夜线走过的夜还是暗的，月亮点小
+   4 页尾没有句号：收尾只是一行靠左的灰字 */
+
+/* ---- 1 学习路径图：窄屏改成两行 5 列的病房图，10 间全可见，不用横滑 ----
+   宽屏（720px+）本来就放得下 10 个点，一行不动。 */
+@media (max-width:719px){
+  .pathmap{flex-wrap:wrap;overflow-x:visible}
+  .pathmap .pm-node{flex:0 0 20%;min-width:0}
+}
+
+/* ---- 2 课程页信息卡也像走廊里的房间：金色门边 ----
+   :has(#pathMap) 只在课程页成立（首页没有 #pathMap），所以首页的卡片
+   一张都不会被误伤；不支持 :has() 的旧浏览器只是看不到这条金边，
+   其余样式照常，不会坏。 */
+.wrap:has(#pathMap) > .card{border-left:3px solid #E8A838}
+
+/* ---- 3 夜线：走过的夜涂成金色（跟走廊"走过的路变金色"同一条语言），
+   月亮点放大、光晕加强，一眼就看到夜走到哪了 ---- */
+.nightline .nl-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#E8A838;border-radius:99px}
+.nightline .nl-dot{width:16px;height:16px;box-shadow:0 0 0 3px rgba(232,168,56,.4),0 0 10px rgba(232,168,56,.8)}
+
+/* ---- 4 页尾收成正式页脚：细线 + 居中 + 小字，页面有个句号 ---- */
+.wrap > p.note:last-child{text-align:center;border-top:1px solid #E7DFC8;padding-top:12px;margin-top:4px;color:#8A8271;font-size:12.5px}
+
+
+/* ================= fan-build · 粉丝版适配 =================
+   只补粉丝版结构需要的三条，其余全部复用 v2–v6 原层。 */
+.lesson.room{position:relative}
+#searchResult .lesson.room{padding-left:52px}
+.group-body.corridor::before,.group-body.corridor::after{left:29px}
+
+.course,.course.locked{border-left:3px solid #E8A838}
 </style></head>
 <body><div class="wrap">
 <p><a class="homebtn" href="index.html">🌙 回课堂首页</a></p>
 <h1>🎬 视频课</h1>
 <p class="sub">12 门视频课正在完善中，暂未开放。先免费体验第 1 课。</p>
-<div class="card"><h2>🔒 视频课正在完善中</h2><p>先免费体验第 1 课，完整版 11 月 11 日之后上。</p><a class="btn gold btn-block" href="detail-ep01-pain.html">🎁 免费体验第 1 课 →</a></div>
+<div class="card night-room"><h2><span class="room-ico">🔒</span> 视频课正在完善中</h2><p>先免费体验第 1 课，完整版 11 月 11 日之后上。</p><a class="btn gold btn-block" href="detail-ep01-pain.html">🎁 免费体验第 1 课 →</a></div>
 <p><input type="text" class="filter" id="courseFilter" placeholder="🔍 搜一门课，例如：急诊、儿科、采血" oninput="filterCourses()"></p>
 <p class="note" id="filterNote"></p>
 <div id="courseList">
