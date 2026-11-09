@@ -302,6 +302,12 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 .lockcard p{font-size:15px;line-height:1.7;color:#444}
 .lockcard .lockbtns{display:flex;gap:8px;margin-top:10px}
 .lockcard .lockbtns a,.lockcard .lockbtns button{flex:1;text-align:center}
+/* ---- 锁定预览列表：医学词库未解锁时可看全部词表、不可背 ---- */
+.locked-list{margin-top:12px;border-top:1px dashed #E8A838;padding-top:8px}
+.locked-list-head{font-size:14px;color:#B98A1F;font-weight:700;margin:0 0 6px}
+.locked-word{display:flex;justify-content:space-between;gap:12px;padding:7px 2px;border-bottom:1px solid #F3E6C8;font-size:15px}
+.locked-word .lw-en{font-weight:700;color:#999}
+.locked-word .lw-zh{color:#888;text-align:right}
 </style></head>
 <body><div class="wrap">
 <p><a class="homebtn" href="index.html">🌙 回课堂首页</a></p>
@@ -311,7 +317,7 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 <div class="card deck" id="deckMed" onclick="openDeck('medical')"><h2>🩺 医学英语</h2><p class="deck-meta">602 个词 · 临床常用</p><p class="deck-prog" id="medProg">已掌握 0 / 602</p><p><span class="btn">开始背 →</span></p></div>
 <div class="card deck" id="deckGen" onclick="openDeck('general')"><h2>📖 通用英语</h2><p class="deck-meta">748 个词 · 日常通用</p><p class="deck-prog" id="genProg">已掌握 0 / 748</p><p><span class="btn">开始背 →</span></p></div>
 </div>
-<div class="card lockcard" id="medLock" hidden><h2>🔒 医学英语 · 会员专享</h2><p>医学词库是会员内容。开通会员，或买断任意单课（附赠医学词汇手册），就能解锁全部 602 个词。通用英语免费，不用开通也能背。</p><p>已开通？先在「我的」里用兑换码兑换，回来这里就开了。</p><p class="lockbtns"><button onclick="openDeck('general')">先背免费的通用英语 →</button><button class="ghost" onclick="location.href='index.html#sec-my'">去「我的」看看会员 →</button></p><p><button class="ghost" onclick="hideMedLock()">← 回词库</button></p></div>
+<div class="card lockcard" id="medLock" hidden><h2>🔒 医学英语 · 会员专享</h2><p>医学词库是会员内容。开通会员，或买断任意单课（附赠医学词汇手册），就能解锁全部 602 个词。通用英语免费，不用开通也能背。</p><p>已开通？先在「我的」里用兑换码兑换，回来这里就开了。</p><p class="lockbtns"><button onclick="openDeck('general')">先背免费的通用英语 →</button><button class="ghost" onclick="location.href='index.html#sec-my'">去「我的」看看会员 →</button></p><div class="locked-list" id="lockedMedList"></div><p><button class="ghost" onclick="hideMedLock()">← 回词库</button></p></div>
 <div id="deckView" hidden>
 <p><button class="ghost" onclick="backToDecks()">← 选词库</button></p>
 <div class="card"><h2 id="deckTitle"></h2><div class="bar"><div id="progFill"></div></div><p class="note" id="progText"></p><p class="note" id="posText"></p></div>
@@ -346,7 +352,19 @@ function shanghaiTodayKey(){try{var ps=new Intl.DateTimeFormat("en-CA",{timeZone
    会员（文字会员，在期未过期）或任意买断（单课包附赠医学词汇手册）都能进；
    到期会员、普通用户都进不了。 */
 function hasMedAccess(){try{var e=JSON.parse(localStorage.getItem("yeban-entitlement")||"{}");if(!e||typeof e!=="object")return false;var b=e.buyout||[];if(b.length)return true;if(e.vip&&e.vip.until&&e.vip.until>=shanghaiTodayKey())return true;return false;}catch(err){return false;}}
-function showMedLock(){document.getElementById("deckPick").hidden=true;document.getElementById("medLock").hidden=false;}
+/* 锁定预览：未解锁时把医学词表全部显示出来（英文 + 中文），灰色带 🔒，
+   只能看，不能翻卡、不能标记、进度不计。点词条什么都不做。 */
+function renderLockedList(){
+  var box = document.getElementById("lockedMedList");
+  if(!box || box.childElementCount) return;
+  var list = WORD_DECKS.medical || [];
+  var h = '<p class="locked-list-head">🔒 全部 ' + list.length + ' 个医学词（锁定预览，仅可查看）</p>';
+  for(var i=0;i<list.length;i++){
+    h += '<div class="locked-word"><span class="lw-en">🔒 ' + esc(list[i].word) + '</span><span class="lw-zh">' + esc(list[i].zh) + '</span></div>';
+  }
+  box.innerHTML = h;
+}
+function showMedLock(){renderLockedList();document.getElementById("deckPick").hidden=true;document.getElementById("medLock").hidden=false;}
 function hideMedLock(){document.getElementById("medLock").hidden=true;document.getElementById("deckPick").hidden=false;refreshDeckPick();}
 function refreshDeckPick(){
   var m = WORD_DECKS.medical || [];
