@@ -273,6 +273,13 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 
 /* ---- 4 页尾收成正式页脚：细线 + 居中 + 小字，页面有个句号 ---- */
 .wrap > p.note:last-child{text-align:center;border-top:1px solid #E7DFC8;padding-top:12px;margin-top:4px;color:#8A8271;font-size:12.5px}
+
+/* ================= v7 · 月亮行：没亮的月亮改成空心圈 =================
+   弱点（截图里看得见）：月亮行在深色"我的学习"卡上，未亮的 🌑 是深盘贴
+   深底，1x 下几乎数不出亮了几夜。v5 只放大到 19px，没解决对比度。
+   改法：亮的仍是金色实月 🌕，没亮的改成米白描边的空心圈——亮/暗一眼
+   分得清，7 夜一周照样数得出来。只改显示，不动打卡数据、不动文案。 */
+.moon-row .moon-off{display:inline-block;width:1em;height:1em;border:2px solid rgba(255,247,232,.6);border-radius:50%;vertical-align:-.1em;box-sizing:border-box}
 </style>
 </head><body><div class="wrap">
 <div class="sky" aria-hidden="true"><span class="moon"></span><span class="star s1"></span><span class="star s2"></span><span class="star s3"></span><span class="star s4"></span><span class="star s5"></span></div>
@@ -499,8 +506,8 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 <button class="active" onclick="showSec(this,'sec-home')">🏠 首页</button>
 <button onclick="showSec(this,'sec-lessons')">📚 课程</button>
 <button onclick="showSec(this,'sec-courses')">🎬 视频课</button>
+<button onclick="location.href='words.html'">🔤 背单词</button>
 <button onclick="showSec(this,'sec-my')">👤 我的</button>
-<button onclick="location.href='night-reopen/index.html'">🎮 重开</button>
 </nav>
 <script>
 function showSec(btn,id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));document.getElementById(id).classList.add('show');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(id==='sec-my')loadMy();try{if(history.replaceState)history.replaceState(null,'','#'+id);}catch(e){}}
@@ -667,8 +674,8 @@ function renderMoonRow(streak){
   var el=document.getElementById('moonRow');
   if(!el)return;
   var n=Math.max(0,Math.min(7,streak|0)),s='';
-  for(var i=0;i<7;i++)s+=i<n?'\uD83C\uDF15':'\uD83C\uDF11';
-  el.textContent=s;
+  for(var i=0;i<7;i++)s+=i<n?'\uD83C\uDF15':'<span class="moon-off" aria-hidden="true"></span>';
+  el.innerHTML=s;
 }
 
 /* ---- v3 · 切 tab 后重算金线（隐藏的走廊量不到高度）---- */

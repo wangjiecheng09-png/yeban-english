@@ -53,13 +53,65 @@ button.ghost,.btn.ghost{background:#fff;color:#0F5E5A;border:1.5px solid #0F5E5A
 .pm-node.now .pm-dot{border-color:#0F5E5A;color:#0F5E5A;box-shadow:0 0 0 3px #FFE08A}
 .lockcard{border-style:dashed;background:#FFF7E8}
 .lockcard h2{color:#0F5E5A}
+
+/* ============ 床边一课（详情页改版，追加在原有样式之后） ============ */
+/* ================= 床边一课 · 详情页 =================
+   概念：走廊把你带到门口，这页是门里面的 15 分钟——你站在床边。
+   看场景（精讲）→ 速记 → 记下来（笔记+重点）→ 自己说一遍（去练习），
+   然后出门进下一间房。只加概念层，不动线上版已有的圆角、按钮、导航；
+   金色门边、门牌、状态词沿用 v2–v6 走廊同一套语言。 */
+
+/* ---- 房门头：大门牌 + 第 N 间房 + 状态牌 ---- */
+.room-head{display:flex;gap:14px;align-items:flex-start;margin:10px 0 2px}
+.room-plate-big{flex:none;width:56px;height:56px;border-radius:14px;background:#fff;border:2px solid #0F5E5A;color:#0F5E5A;font-size:26px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+.room-plate-big.done{background:#E8A838;border-color:#E8A838;color:#222}
+.room-plate-big.locked{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+.room-plate-big.now{background:#E8A838;border-color:#E8A838;color:#222;box-shadow:0 0 0 4px #FFE08A}
+.room-head-body{flex:1;min-width:0}
+.room-head-eyebrow{font-size:13px;color:#B98A1F;font-weight:700;letter-spacing:.5px}
+.room-head h1{margin:2px 0}
+.room-head .sub{margin:0}
+.room-state-chip{flex:none;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap;margin-top:4px}
+.room-state-chip.done{background:#E8A838;color:#222}
+.room-state-chip.now{background:#fff;color:#0F5E5A;border:1.5px solid #0F5E5A}
+.room-state-chip.locked{background:#0F2A28;color:#FFF7E8}
+
+/* ---- 床边步骤：看精讲 → 速记 → 记笔记 → 去练习 ----
+   四个门牌连成一条金线，就是这 15 分钟的查房路线。 */
+html{scroll-behavior:smooth}
+.bedside-steps{display:flex;position:relative;margin:16px 0 4px;padding:0 2px}
+.bedside-steps::before{content:"";position:absolute;left:28px;right:28px;top:18px;height:2px;background:#E8A838;opacity:.55;z-index:0}
+.bedside-steps a{flex:1;min-width:0;text-align:center;text-decoration:none;color:#0F5E5A;font-size:13px;font-weight:700;position:relative;z-index:1}
+.bedside-steps .bs-num{display:flex;width:36px;height:36px;margin:0 auto 4px;border-radius:10px;background:#fff;border:2px solid #0F5E5A;color:#0F5E5A;font-size:16px;font-weight:700;line-height:1;align-items:center;justify-content:center}
+.bedside-steps a:active .bs-num{background:#FFE08A}
+.bedside-steps a[hidden]{display:none}
+
+/* ---- 卡片都带上金色门边（走廊的语言）；目标卡片留一点滚动余量 ---- */
+.wrap > .card,#detailRoot .card{border-left:3px solid #E8A838}
+#step-watch,#step-recap,#step-notes,#step-practice{scroll-margin-top:12px}
+
+/* ---- 出门：去课堂练习是这间房的门，出门前自己说一遍 ----
+   深夜底 + 金按钮，沿用 v2 值班卡同一套。 */
+.card.door-out{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+.card.door-out h2{color:#FFE08A}
+.card.door-out p{color:#FFF7E8}
+.card.door-out .btn{background:#E8A838;color:#222;border-color:#E8A838}
+
+/* ---- 页尾收口：固定底栏只在首页/课程页存在，详情页没有固定底栏，
+   原模板留的 90px 底边距是死空间（实测最后一卡后 104px 空白，
+   锁定的短页上占了整页约 10%）。收到 24px，页面在“上一课/下一课”
+   卡后正常收尾。 ---- */
+body{padding-bottom:24px}
+
 </style></head>
 <body><div class="wrap">
 <p><a class="homebtn" href="index.html">🌙 回课堂首页</a> <a class="btn ghost" href="module-m1.html">← 回课程索引</a></p>
+<div class="room-head"><div class="room-plate-big" id="roomPlate">10</div><div class="room-head-body"><div class="room-head-eyebrow">第 10 间房 · 入院到出院</div>
 <h1>第 10 课 · 出院宣教</h1>
-<p class="sub">精讲视频 15 分钟 + 短视频速记版 · 入院到出院 第 10 / 10 课</p>
+<p class="sub">精讲视频 15 分钟 + 短视频速记版 · 入院到出院 第 10 / 10 课</p></div><span class="room-state-chip" id="roomStateChip" hidden></span></div>
+<nav class="bedside-steps" id="bedsideSteps" aria-label="本课步骤"><a href="#step-watch" data-step="watch"><span class="bs-num">1</span>看精讲</a><a href="#step-recap" data-step="recap"><span class="bs-num">2</span>速记</a><a href="#step-notes" data-step="notes"><span class="bs-num">3</span>记笔记</a><a href="#step-practice" data-step="practice"><span class="bs-num">4</span>去练习</a></nav>
 <div id="detailRoot"><p class="note">正在加载本课内容…</p></div>
-<div class="card"><h2>🧑‍🏫 去课堂练习</h2>
+<div class="card door-out" id="step-practice"><h2>🧑‍🏫 去课堂练习</h2>
 <p>白板、测验、跟读、打勾都在原课里，这里不重复放一份，免得两处内容对不上。</p>
 <a class="btn btn-block" href="classroom-ep10-discharge.html">去课堂练习：白板 · 测验 · 跟读 · 打勾 →</a></div>
 <div class="card"><h2>📖 上一课 / 下一课</h2><p><a class="btn ghost" href="detail-ep09-callbell.html">← 上一课：第 9 课 · 防跌倒呼叫铃</a></p><p><a class="btn ghost" href="module-m1.html">← 回课程索引</a></p></div>
@@ -77,16 +129,12 @@ function saveDetailNotes(key){try{var ta=document.getElementById("myNotes-"+key)
 var key='ep'+('0'+LESSON_N).slice(-2);
 var hasV=hasVideoAccess(LESSON_N),hasT=hasTextAccess(LESSON_N);
 var h='';
-if(!hasV&&!hasT){
+if(!hasV){
   h+='<div class="card lockcard"><h2>🔒 第 '+LESSON_N+' 课还没解锁</h2><p>第 1 课免费整节看；第 2–10 课购买后解锁——单课、优惠包或所属合集都能开；会员只学文字，不开视频。</p><p class="note">已买过？先在「我的」里用兑换码兑换，回来这里就开了；到期了会自动变回普通用户。</p></div>';
 }else{
-  if(hasV){
-    h+='<div class="card videocard lesson-video"><h2>🎬 精讲视频（主视频）</h2><div class="video-slot" data-video="'+LECTURE_URL+'"><p class="note">正在检查视频…</p></div><p class="note">精讲 15 分钟左右，先看精讲学一遍，再看下面的短视频速记版过一遍。</p></div>';
-    h+='<div class="card videocard lesson-video"><h2>⚡ 短视频速记版</h2><div class="video-slot" data-video="'+SHORT_URL+'"><p class="note">正在检查视频…</p></div><p class="note">1 分钟速记版：两句核心问法 + 关键词，睡前再过一遍。</p></div>';
-  }else{
-    h+='<div class="card videocard lesson-video"><h2>🎬 精讲视频（主视频）</h2><p class="note">视频需购买后看；文字已开放。</p></div>';
-  }
-  h+='<div class="card notes"><h2>📝 我的课堂笔记</h2><p class="note">记一句你自己的话、一个容易忘的词，或一个想问的问题。只存在你这台手机里。</p><textarea id="myNotes-'+key+'" placeholder="例如：今天最容易忘的词是哪个？记下来。"></textarea><p><button data-k="'+key+'" onclick="saveDetailNotes(this.dataset.k)">💾 保存笔记</button> <span id="notesState-'+key+'" class="note"></span></p></div>';
+  h+='<div class="card videocard lesson-video" id="step-watch"><h2>🎬 精讲视频（主视频）</h2><div class="video-slot" data-video="'+LECTURE_URL+'"><p class="note">正在检查视频…</p></div><p class="note">精讲 15 分钟左右，先看精讲学一遍，再看下面的短视频速记版过一遍。</p></div>';
+  h+='<div class="card videocard lesson-video" id="step-recap"><h2>⚡ 短视频速记版</h2><div class="video-slot" data-video="'+SHORT_URL+'"><p class="note">正在检查视频…</p></div><p class="note">1 分钟速记版：两句核心问法 + 关键词，睡前再过一遍。</p></div>';
+  h+='<div class="card notes" id="step-notes"><h2>📝 我的课堂笔记</h2><p class="note">记一句你自己的话、一个容易忘的词，或一个想问的问题。只存在你这台手机里。</p><textarea id="myNotes-'+key+'" placeholder="例如：今天最容易忘的词是哪个？记下来。"></textarea><p><button data-k="'+key+'" onclick="saveDetailNotes(this.dataset.k)">💾 保存笔记</button> <span id="notesState-'+key+'" class="note"></span></p></div>';
   h+='<div class="card"><h2>💬 讨论区</h2><p>本课讨论区还在准备中，敬请期待。</p><p class="note">想问的问题先记在上面“我的课堂笔记”里；讨论区上线后，问题和回答都会出现在这里，不会编造别人的提问。</p></div>';
   
 }
@@ -129,5 +177,39 @@ var slots=document.querySelectorAll(".video-slot");
 for(var i=0;i<slots.length;i++)setupSlot(slots[i]);
 })();
 </script>
-<script>/* 维护开关：maintenance.json 里 maintenance 为 true 时才跳转，平时不影响页面 */(function(){try{fetch("maintenance.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){if(d&&d.maintenance&&location.pathname.indexOf("maintenance.html")<0){location.replace("maintenance.html")}}).catch(function(){})}catch(e){}})();
+<script>/* 维护开关：maintenance.json 里 maintenance 为 true 时才跳转，平时不影响页面 */(function(){try{fetch("maintenance.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){if(d&&d.maintenance&&location.pathname.indexOf("maintenance.html")<0){location.replace("maintenance.html")}}).catch(function(){})}catch(e){}})();</script>
+<script>
+/* ---- 床边一课：房间状态（门牌 + 状态牌）与步骤导航 ----
+   状态只读本机已有数据（classroom-epXX-done、hasVideoAccess），与走廊同一套逻辑；
+   全部包在 try/catch 里，任何一步失败都不会影响页面。
+   新规则（用户决定 2026-11-09）：没有视频权限一律锁——会员只学文字，不进详情页；
+   锁优先于“已查完”（练习页是开放的，会员也可能有打勾记录，但详情页仍是锁的）；
+   “查房中”只在有视频权限时出现。 */
+(function(){
+try{
+  var N=LESSON_N;
+  var key='ep'+('0'+N).slice(-2);
+  var doneKeys=["classroom-ep01-done","classroom-ep02-done","classroom-ep03-done","classroom-ep04-done","classroom-ep05-done","classroom-ep06-done","classroom-ep07-done","classroom-ep08-done","classroom-ep09-done","classroom-ep10-done"];
+  function isDone(i){try{return !!localStorage.getItem(doneKeys[i]);}catch(e){return false;}}
+  var done=isDone(N-1), firstTodo=-1;
+  for(var i=0;i<10;i++){if(!isDone(i)){firstTodo=i;break;}}
+  var hasV=false;
+  try{hasV=hasVideoAccess(N);}catch(e){}
+  var plate=document.getElementById('roomPlate');
+  var chip=document.getElementById('roomStateChip');
+  if(plate&&chip){
+    if(!hasV){plate.classList.add('locked');chip.textContent='🔒 未解锁';chip.classList.add('locked');chip.hidden=false;}
+    else if(done){plate.textContent='✓';plate.classList.add('done');chip.textContent='已查完';chip.classList.add('done');chip.hidden=false;}
+    else if(firstTodo===N-1){plate.classList.add('now');chip.textContent='查房中';chip.classList.add('now');chip.hidden=false;}
+  }
+  var rail=document.getElementById('bedsideSteps');
+  if(rail){
+    if(document.querySelector('#detailRoot .lockcard')){rail.style.display='none';}
+    else{var links=rail.querySelectorAll('a[data-step]');for(var j=0;j<links.length;j++){var t=document.getElementById(links[j].getAttribute('href').slice(1));if(!t)links[j].hidden=true;}
+    /* 藏掉的步骤不占号：可见步骤按顺序重新编号。只改显示的数字，data-step 不动。 */
+    var vis=rail.querySelectorAll('a[data-step]:not([hidden]) .bs-num');for(var k=0;k<vis.length;k++){vis[k].textContent=String(k+1);}}
+  }
+}catch(e){}
+})();
+</script>
 </body></html>
