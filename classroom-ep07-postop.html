@@ -89,5 +89,12 @@ if(typeof _md==="function"){window.markDone=function(){_md();try{if(localStorage
 refreshCheckin();
 })();
 </script>
-<script>/* 维护开关：maintenance.json 里 maintenance 为 true 时才跳转，平时不影响页面 */(function(){try{fetch("maintenance.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){if(d&&d.maintenance&&location.pathname.indexOf("maintenance.html")<0){location.replace("maintenance.html")}}).catch(function(){})}catch(e){}})();</script><nav class="nav"><a href="index.html">🏠 首页</a><a href="index.html#sec-lessons" class="active">📚 课程</a><a href="video-courses.html">🎬 视频课</a><a href="index.html#sec-my">👤 我的</a><a href="night-reopen/index.html">🎮 重开</a></nav>
+<script>/* 维护开关：maintenance.json 里 maintenance 为 true 时才跳转，平时不影响页面 */(function(){try{fetch("maintenance.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){if(d&&d.maintenance&&location.pathname.indexOf("maintenance.html")<0){location.replace("maintenance.html")}}).catch(function(){})}catch(e){}})();</script><nav class="nav"><a href="index.html">🏠 首页</a><a href="index.html#sec-lessons" class="active">📚 课程</a><a href="video-courses.html">🎬 视频课</a><a href="words.html">🔤 背单词</a><a href="index.html#sec-my">👤 我的</a></nav>
+<script src="video/access.js"></script>
+<script>
+/* 付费课文锁：只有买断本课或在期会员才能看本课全文；第 1、2 课免费。access.js 没加载到时默认只放行第 1 课。 */
+if(typeof hasTextAccess!=="function"){window.hasTextAccess=function(n){return n===1;};}
+var LESSON_N=7;
+(function(){try{if(!hasTextAccess(LESSON_N)){var w=document.querySelector('.wrap');if(w){w.innerHTML='<p><a class="homebtn" href="index.html">🌙 回课堂首页</a></p><div class="card lockcard"><h2>🔒 第 '+LESSON_N+' 课还没解锁</h2><p>第 1、2 课免费；第 3–10 课需要开通会员（文字全开）或买断本课。</p><p class="note">已买过？先在「我的」里用兑换码兑换，回来这里就开了。</p><p><a class="btn" href="index.html">回课堂首页 →</a></p></div>';}}}catch(e){}})();
+</script>
 </body></html>

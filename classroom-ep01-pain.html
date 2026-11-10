@@ -140,5 +140,5 @@ if(typeof _md==="function"){window.markDone=function(){_md();try{if(localStorage
 refreshCheckin();
 })();
 </script>
-<script>/* 维护开关：maintenance.json 里 maintenance 为 true 时才跳转，平时不影响页面 */(function(){try{fetch("maintenance.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){if(d&&d.maintenance&&location.pathname.indexOf("maintenance.html")<0){location.replace("maintenance.html")}}).catch(function(){})}catch(e){}})();</script><nav class="nav"><a href="index.html">🏠 首页</a><a href="index.html#sec-lessons" class="active">📚 课程</a><a href="video-courses.html">🎬 视频课</a><a href="index.html#sec-my">👤 我的</a><a href="night-reopen/index.html">🎮 重开</a></nav>
+<script>/* 维护开关：maintenance.json 里 maintenance 为 true 时才跳转，平时不影响页面 */(function(){try{fetch("maintenance.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){if(d&&d.maintenance&&location.pathname.indexOf("maintenance.html")<0){location.replace("maintenance.html")}}).catch(function(){})}catch(e){}})();</script><nav class="nav"><a href="index.html">🏠 首页</a><a href="index.html#sec-lessons" class="active">📚 课程</a><a href="video-courses.html">🎬 视频课</a><a href="words.html">🔤 背单词</a><a href="index.html#sec-my">👤 我的</a></nav>
 </body></html>
