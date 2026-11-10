@@ -41,7 +41,7 @@ input[type=text]{width:100%;box-sizing:border-box;padding:10px;border-radius:10p
 .classmate{border-left:6px solid #E8A838}
 .line{display:flex;width:100%;gap:12px;align-items:flex-start;background:#FFF7E8;border-radius:12px;padding:12px 14px;margin:10px 0}
 .line-text{flex:1;min-width:0}
-.line button{flex:none;margin:0;padding:8px 12px;min-height:40px}
+.line button{flex:none;margin:0;padding:8px 12px;min-height:44px}
 .en{font-size:17px}
 .zh{color:#555;font-size:14px;margin-top:4px}
 .board{background:#0F5E5A;color:#FFF7E8;border-radius:16px;padding:16px;margin:14px 0}
@@ -88,7 +88,7 @@ button.opt:active{transform:scale(.99)}
 <div class="q"><b>1. 疼痛几分，下面哪句能用？</b><br><button class="opt" onclick="quiz1(this,true)">On a scale of zero to ten, how bad is your pain?</button><button class="opt" onclick="quiz1(this,false)">Do you pain?</button><span class="ans" id="q1"></span></div><div class="q"><b>2. sharp 是什么意思？</b><br><button class="opt" onclick="quiz2(this,true)">刺痛</button><button class="opt" onclick="quiz2(this,false)">钝痛</button><span class="ans" id="q2"></span></div>
 <div class="card" style="border-color:#E8A838"><h2>🧩 自己造句：把这句变成你的</h2>
 <p>句型：About seven, it&#x27;s ___.<br>填 sharp（刺痛）或 dull（钝痛），例如 sharp</p>
-<p><input id="myword" placeholder="填一个词" style="padding:8px;border-radius:8px;border:1.5px solid #0F5E5A;width:60%">
+<p><input id="myword" placeholder="填一个词" style="padding:8px;border-radius:8px;border:1.5px solid #0F5E5A;width:60%;min-height:44px">
 <button onclick="makeSentence()">生成我的句子</button></p>
 <p id="mysent" class="ans"></p>
 <p><button class="ghost" onclick="if(document.getElementById('mysent').dataset.t){speak(document.getElementById('mysent').dataset.t)}">🔊 朗读我的句子</button></p>
