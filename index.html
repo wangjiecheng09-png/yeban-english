@@ -18,7 +18,7 @@ button.ghost,.btn.ghost{background:#fff;color:#0F5E5A;border:1.5px solid #0F5E5A
 button.active{background:#E8A838;color:#222}
 button.warn{background:#C0392B}
 .btn-block{display:block;width:100%;text-align:center;margin:10px 0}
-input[type=text]{width:100%;box-sizing:border-box;padding:10px;border-radius:10px;border:1.5px solid #0F5E5A;font-size:16px}
+input[type=text],input[type=email]{width:100%;box-sizing:border-box;padding:10px;border-radius:10px;border:1.5px solid #0F5E5A;font-size:16px}
 .lesson{border:1.5px solid #E7DFC8;border-radius:14px;padding:14px;margin:10px 0;background:#fff}
 .lesson b{font-size:17px}
 .tag{color:#0F5E5A;font-size:13px}
@@ -92,6 +92,9 @@ button.opt:active{transform:scale(.99)}
 #redeemMsg{font-size:16px;font-weight:bold;min-height:22px;margin:8px 0}
 #redeemMsg.ok{color:#0F5E5A}
 #redeemMsg.err{color:#C0392B}
+#loginMsg{font-size:15px;min-height:22px;margin:8px 0}
+#loginMsg.ok{color:#0F5E5A;font-weight:bold}
+#loginMsg.err{color:#C0392B}
 /* ---- 首页进入动画（2026-11-06）：纯 CSS，只动 transform/opacity，全程 <1s，无开屏 ---- */
 .sky{position:absolute;top:0;right:4px;width:120px;height:44px;pointer-events:none;z-index:1}
 .moon{position:absolute;top:2px;right:8px;width:36px;height:36px;border-radius:50%;background:#E8A838;box-shadow:0 0 16px 4px rgba(232,168,56,.45);animation:moonRise .7s ease-out both}
@@ -315,10 +318,10 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 <div class="card night-room"><h2><span class="room-ico">🎬</span> 视频课</h2>
 <p>一门课学完一整套：按课、按顺序学，每门课结尾有一次复习和一张总结小抄卡。12 门课，先上 1 门，后面做好一门、开一门。</p>
 <a class="btn" href="video-courses.html">看看 12 门课 →</a></div>
-<div class="card night-room"><h2><span class="room-ico">🌙</span> 夜班重生（互动短剧）</h2>
-<p>互动短剧：选 A 还是选 B？选错了，这一夜重来。跟着一个病人从入院走到出院，每集一个夜班险情。</p>
-<p>第 1 集 · 半夜那一摔 / 第 2 集 · 发错药的那一夜，免费看。</p>
-<a class="btn" href="night-drama/ep01.html">开始看第 1 集 →</a></div>
+<div class="card night-room"><h2><span class="room-ico">🎮</span> 夜班重开（游戏）</h2>
+<p>单独的互动游戏分类，跟课堂分开：选一句 → 看后果 → 选错了倒带重开，选对才过关。</p>
+<p>第 1 关 · 发药核对，免费玩；后面关卡敬请期待。</p>
+<a class="btn" href="night-reopen/index.html">开始玩第 1 关 →</a></div>
 </div>
 
 <div id="sec-lessons" class="section">
@@ -464,6 +467,22 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 <p class="member-row" id="memberCollLine" style="display:none">已购合集：<b id="memberCollList"></b>（买断，不限期）</p>
 <p class="member-row">会员到期时间：<b id="memberUntil">未开通会员</b></p>
 <p class="note">买断（单课、优惠包、合集）不限期，不算会员；会员只学文字，不解锁视频；会员到期后自动变回普通用户。会员到期时间按兑换那天算：月会员 30 天、季会员 90 天、年会员 365 天。</p></div>
+<div class="card" id="loginCard"><h2>🔐 登录账号 <span class="badge" id="loginSoonTag">即将开通</span></h2>
+<div id="loginStateOut">
+<p>登录后，进度、打卡和已购内容跟着账号走，换设备也不丢。不用密码，邮箱收一封登录链接，点开就登录了。</p>
+<p><input type="email" id="loginEmailInput" placeholder="输入邮箱，例如：name@example.com"></p>
+<p><button class="btn btn-block" id="loginSendBtn" onclick="sendLoginLink()">发送登录链接</button></p>
+<p id="loginMsg" class="note"></p></div>
+<div id="loginStateIn" style="display:none">
+<p>已登录：<b id="loginEmailShow"></b></p>
+<p><button class="btn ghost" onclick="logoutUser()">退出登录</button></p></div></div>
+<div class="card member-card" id="redeemCard"><h2>🎟️ 兑换码</h2>
+<p><input type="text" id="redeemInput" maxlength="32" placeholder="输入兑换码"></p>
+<p><button class="btn gold btn-block" onclick="redeemCode()">兑换</button></p>
+<p id="redeemMsg" class="note"></p>
+<p id="redeemState" class="note"></p>
+<p class="note">现在是本机验证：码只在这台设备上生效，换设备要重新兑。登录开通后，权益跟着账号走。</p>
+<p class="note">兑换没反应？把页面彻底关掉重开再试（微信会留着旧页面）。</p></div>
 <div class="card"><h2>📈 我的进度</h2>
 <p class="prog-row"><b>入院到出院</b><span class="prog-num" id="m1ProgText">0 / 10 节</span></p>
 <div class="bar"><div id="m1Bar"></div></div>
@@ -490,15 +509,11 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 <a class="btn ghost" href="fan/free-pack.html">领免费体验包 →</a></div>
 <div class="card"><h2>⚙️ 设置</h2><p>用户名称：<input type="text" id="userNameInput" maxlength="20" placeholder="给自己起个名字，例如：小夜"> <button class="btn" onclick="saveUserName()">保存</button></p>
 <p id="userNameMsg" class="note"></p>
-<p>兑换码：<input type="text" id="redeemInput" maxlength="32" placeholder="输入兑换码"> <button class="btn gold" onclick="redeemCode()">兑换</button></p>
-<p id="redeemMsg" class="note"></p>
-<p id="redeemState" class="note"></p>
-<p class="note">兑换码现在是本机验证（没有服务器），以后会上服务器验码；一个码只能用一次。买断码开单课、优惠包或合集（不限期），会员码开会员（会员只学文字，不解锁视频）。如果点了兑换没反应，先把页面彻底关掉重开再试（微信会留着旧页面）。</p>
 
 <p><button class="ghost" onclick="clearAllProgress()">清除本机全部课堂进度</button>
 <button class="ghost" onclick="clearCheckins()">清除本机打卡记录</button>
 <button class="ghost" onclick="clearMembership()">清除本机会员与兑换记录（测试用）</button></p>
-<p class="note">说明：没有登录账号，进度、错题、打卡只存在你这台手机 / 这台电脑的浏览器里，换设备要重新学。学习交流，不构成诊疗建议；临床操作以本院制度和医嘱为准。</p></div>
+<p class="note">登录即将开通。开通之前，进度、错题、打卡只存在这台设备上；开通之后登录，跟着账号走，换设备也不丢。学习交流，不构成诊疗建议；临床操作以本院制度和医嘱为准。</p></div>
 </div>
 <p class="note">总站链接固定不变：https://wangjiecheng09-png.github.io/yeban-english/ —— 以后新课、部门合集、学生课都往这里加。</p>
 </div>
@@ -509,6 +524,8 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 <button onclick="location.href='words.html'">🔤 背单词</button>
 <button onclick="showSec(this,'sec-my')">👤 我的</button>
 </nav>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="video/auth.js"></script>
 <script>
 function showSec(btn,id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));document.getElementById(id).classList.add('show');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(id==='sec-my')loadMy();try{if(history.replaceState)history.replaceState(null,'','#'+id);}catch(e){}}
 function toggleGroup(id){var g=document.getElementById(id);if(!g)return;var body=g.querySelector('.group-body');var head=g.querySelector('.group-head');var arrow=g.querySelector('.group-arrow');var open=body.style.display==='none';body.style.display=open?'block':'none';if(arrow)arrow.textContent=open?'▼':'▶';if(head)head.setAttribute('aria-expanded',open?'true':'false');}
@@ -604,6 +621,25 @@ saveEntitlement(ent);inp.value='';renderMember();
 try{var mc=document.getElementById('memberCard');if(mc)mc.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}}
 function saveUserName(){var inp=document.getElementById('userNameInput');var v=(inp.value||'').trim().slice(0,20);try{localStorage.setItem('yeban-username',v);}catch(err){}document.getElementById('userNameMsg').textContent=v?'已保存：'+v:'已清空，用默认名字“夜班学员”。';renderMember();}
 function clearMembership(){localStorage.removeItem('yeban-entitlement');localStorage.removeItem('yeban-used-codes');renderMember();document.getElementById('redeemMsg').textContent='本机会员与兑换记录已清除（测试用）。';}
+/* ---- 登录：魔法链接（邮箱收链接，点开就登录；服务器开关在 video/auth.js，未开时只显示“即将开通”） ---- */
+function loginServerOn(){return (typeof window.YebanServerAvailable==='function')&&window.YebanServerAvailable();}
+function sendLoginLink(){var msg=document.getElementById('loginMsg');var em=(document.getElementById('loginEmailInput').value||'').trim();
+if(!loginServerOn()){msg.className='err';msg.textContent='登录功能即将开通。现在先用兑换码开课，进度存在本机；开通后登录，权益跟着账号走。';return;}
+if(!em||em.indexOf('@')<0||em.lastIndexOf('.')<em.indexOf('@')){msg.className='err';msg.textContent='先填一个能收邮件的邮箱。';return;}
+msg.className='note';msg.textContent='正在发…';
+YebanAuth.login(em).then(function(r){
+if(r&&r.error){msg.className='err';msg.textContent='发送失败：'+(r.error.message||'请稍后再试。');}
+else{msg.className='ok';msg.textContent='登录链接已发到 '+em+'，点开就登录了，再回到这个页面。';}
+}).catch(function(){msg.className='err';msg.textContent='发送失败，请稍后再试。';});}
+function updateLoginUI(){var out=document.getElementById('loginStateOut'),inn=document.getElementById('loginStateIn');
+var tag=document.getElementById('loginSoonTag');if(tag)tag.style.display=loginServerOn()?'none':'inline-block';
+if(!out||!inn)return;
+if(!loginServerOn()){out.style.display='block';inn.style.display='none';return;}
+YebanAuth.currentUser().then(function(u){
+if(u&&u.email){out.style.display='none';inn.style.display='block';document.getElementById('loginEmailShow').textContent=u.email;}
+else{out.style.display='block';inn.style.display='none';}
+}).catch(function(){out.style.display='block';inn.style.display='none';});}
+function logoutUser(){if(!loginServerOn())return;YebanAuth.logout().then(function(){updateLoginUI();renderMember();});}
 
 
 var MY_NAMES={'ep01':'第 1 课 · 疼痛评估','ep02':'第 2 课 · 生命体征','ep03':'第 3 课 · 入院问过敏史','ep04':'第 4 课 · 输液','ep05':'第 5 课 · 换药','ep06':'第 6 课 · 给药核对','ep07':'第 7 课 · 术后观察','ep08':'第 8 课 · 术前禁食','ep09':'第 9 课 · 防跌倒呼叫铃','ep10':'第 10 课 · 出院宣教'};
@@ -645,7 +681,7 @@ document.getElementById('m1ProgText').textContent='已学 '+done+' / '+MY_TOTAL+
 document.getElementById('m1Bar').style.width=pct1+'%';
 document.getElementById('allProgText').textContent='已学 '+all+' / 230 节 · '+pctA+'%';
 document.getElementById('allBar').style.width=pctA+'%';
-renderCal();renderBadges();renderMember();renderCal();renderBadges();renderMyCourses();renderMyMistakes();updateContinue();}
+renderCal();renderBadges();renderMember();renderCal();renderBadges();renderMyCourses();renderMyMistakes();updateContinue();updateLoginUI();}
 function clearAllProgress(){['classroom-ep01-done','classroom-ep01-mistakes','classroom-ep02-done','classroom-ep02-mistakes','classroom-ep03-done','classroom-ep03-mistakes','classroom-ep04-done','classroom-ep04-mistakes','classroom-ep05-done','classroom-ep05-mistakes','classroom-ep06-done','classroom-ep06-mistakes','classroom-ep07-done','classroom-ep07-mistakes','classroom-ep08-done','classroom-ep08-mistakes','classroom-ep09-done','classroom-ep09-mistakes','classroom-ep10-done','classroom-ep10-mistakes','classroom-a1-done','classroom-a1-mistakes'].forEach(k=>localStorage.removeItem(k));loadMy();}
 
 
