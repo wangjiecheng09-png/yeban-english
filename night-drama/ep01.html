@@ -333,11 +333,13 @@ function ringBell(){
   try{
     var AC = window.AudioContext || window.webkitAudioContext;
     if(AC){
-      var ctx = new AC();
+      if(!window._bellCtx){ window._bellCtx = new AC(); }
+      var ctx = window._bellCtx;
+      if(ctx.state === 'suspended'){ ctx.resume(); }
       var o = ctx.createOscillator(); var g = ctx.createGain();
       o.connect(g); g.connect(ctx.destination);
       o.frequency.value = 880; o.type = 'sine';
-      g.gain.setValueAtTime(0.12, ctx.currentTime);
+      g.gain.setValueAtTime(0.15, ctx.currentTime);
       g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
       o.start(); o.stop(ctx.currentTime + 0.6);
     }
