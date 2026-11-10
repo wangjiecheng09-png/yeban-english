@@ -318,10 +318,10 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 <div class="card night-room"><h2><span class="room-ico">🎬</span> 视频课</h2>
 <p>一门课学完一整套：按课、按顺序学，每门课结尾有一次复习和一张总结小抄卡。12 门课，先上 1 门，后面做好一门、开一门。</p>
 <a class="btn" href="video-courses.html">看看 12 门课 →</a></div>
-<div class="card night-room"><h2><span class="room-ico">🎮</span> 夜班重开（游戏）</h2>
-<p>单独的互动游戏分类，跟课堂分开：选一句 → 看后果 → 选错了倒带重开，选对才过关。</p>
-<p>第 1 关 · 发药核对，免费玩；后面关卡敬请期待。</p>
-<a class="btn" href="night-reopen/index.html">开始玩第 1 关 →</a></div>
+<div class="card night-room"><h2><span class="room-ico">🌙</span> 夜班重生（互动短剧）</h2>
+<p>互动短剧：选 A 还是选 B？选错了，这一夜重来。跟着一个病人从入院走到出院，每集一个夜班险情。</p>
+<p>第 1 集 · 半夜那一摔 / 第 2 集 · 发错药的那一夜，免费看。</p>
+<a class="btn" href="night-drama/ep01.html">开始看第 1 集 →</a></div>
 </div>
 
 <div id="sec-lessons" class="section">
@@ -527,7 +527,7 @@ details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="video/auth.js"></script>
 <script>
-function showSec(btn,id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));document.getElementById(id).classList.add('show');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(id==='sec-my')loadMy();try{if(history.replaceState)history.replaceState(null,'','#'+id);}catch(e){}}
+function showSec(btn,id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));document.getElementById(id).classList.add('show');window.scrollTo(0,0);document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(id==='sec-my')loadMy();try{if(history.replaceState)history.replaceState(null,'','#'+id);}catch(e){}}
 function toggleGroup(id){var g=document.getElementById(id);if(!g)return;var body=g.querySelector('.group-body');var head=g.querySelector('.group-head');var arrow=g.querySelector('.group-arrow');var open=body.style.display==='none';body.style.display=open?'block':'none';if(arrow)arrow.textContent=open?'▼':'▶';if(head)head.setAttribute('aria-expanded',open?'true':'false');}
 function doSearch(){const q=document.getElementById('q').value.trim().toLowerCase();const out=document.getElementById('searchResult');if(!q){out.innerHTML='<p class="note">输入关键词，上面课程里能搜到的都会列出来。</p>';return;}const hits=[];document.querySelectorAll('#lessonList .lesson').forEach(el=>{if(el.dataset.kw.toLowerCase().includes(q))hits.push(el.outerHTML);});out.innerHTML=hits.length?hits.join(''):'<p>没搜到“'+document.getElementById('q').value+'”，换个词试试，例如：输液、allergy、cold。</p>';}
 var LESSONS_BY_DATE={"2026-11-02":["第 1 课 · 疼痛评估","On a scale of zero to ten, how bad is your pain?（从零到十分，你的疼痛有几分？）<br>About seven, it's sharp.（大概七分，是刺痛。）","classroom-ep01-pain.html"],"2026-11-03":["第 2 课 · 生命体征","Let me check your blood pressure.（我给你量一下血压。）<br>Your blood pressure is one twenty over eighty, that's normal.（你的血压是一百二比八十，正常。）","classroom-ep02-vital-signs.html"],"2026-11-04":["第 3 课 · 入院问过敏史","Do you have any allergies?（你对什么过敏吗？）<br>Yes, I'm allergic to penicillin.（是的，我对青霉素过敏。）","classroom-ep03-allergies.html"],"2026-11-05":["第 4 课 · 输液","I'm going to start an IV drip for you.（我要给你输液了）<br>It may feel a little cold.（可能会感觉有点凉）","classroom-ep04-iv-drip.html"],"2026-11-06":["第 5 课 · 换药","I need to change your dressing.（我需要给你换药。）<br>Please tell me if it hurts.（如果疼请告诉我。）","classroom-ep05-dressing.html"],"2026-11-07":["第 6 课 · 给药核对","Please tell me your name and date of birth.（请告诉我你的姓名和出生日期。）<br>Let me check the medicine name and dose.（再核对药名和剂量。）","classroom-ep06-identity-check.html"],"2026-11-08":["第 7 课 · 术后观察","How are you feeling after the operation?（手术后你感觉怎么样？）<br>A bit dizzy, but okay.（有点晕，但还好。）","classroom-ep07-postop.html"],"2026-11-09":["第 8 课 · 术前禁食","You need to fast before surgery.（手术前你需要禁食。）<br>No food or water after midnight.（午夜之后不要吃东西，也不要喝水。）","classroom-ep08-fasting.html"],"2026-11-10":["第 9 课 · 防跌倒呼叫铃","Please press the call bell if you need help.（需要帮助请按呼叫铃。）<br>Don't get up alone.（不要自己一个人起来。）","classroom-ep09-callbell.html"],"2026-11-11":["第 10 课 · 出院宣教","Take this medicine twice a day after meals.（这个药每天吃两次，饭后吃。）<br>Come back for a follow-up in one week.（一周后回来复查。）","classroom-ep10-discharge.html"]};
