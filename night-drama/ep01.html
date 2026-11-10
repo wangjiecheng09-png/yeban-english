@@ -247,7 +247,8 @@ function show(id){
   window.scrollTo(0,0);
 }
 function go(id){ show(id); if(id in FATES){ onEnding(id); } }
-function choose(c, id){ path.push(c); go(id); }
+var _lastChooseTarget = '';
+function choose(c, id){ if(id === _lastChooseTarget){ return; } _lastChooseTarget = id; path.push(c); go(id); }
 function readEndings(){
   try{
     var raw = localStorage.getItem(EP_KEY);
