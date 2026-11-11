@@ -72,7 +72,7 @@ button.gold{background:#E8A838;color:#222}
 .check-progress{font-size:14px;color:#0F5E5A;font-weight:bold;text-align:center}
 .check-done{color:#1E7B34;font-weight:bold;text-align:center}
 </style></head><body><div class="wrap">
-<p><a class="homebtn" href="../index.html">🌙 回课堂首页</a></p>
+<p><a class="homebtn" href="../fan/index.html" onclick="goHomeDrama();return false;">🌙 回课堂首页</a><script>/* 回课堂：从粉丝版来、或无 referrer（直接打开/分享链接）回 fan 首页，其余回总站首页 */function goHomeDrama(){var r="";try{r=document.referrer||"";}catch(e){}location.href=(r.indexOf("/fan/")>=0||r==="")?"../fan/index.html":"../index.html";}try{var b=document.querySelector("a.homebtn");if(b)b.href=(function(){var r="";try{r=document.referrer||"";}catch(e){}return (r.indexOf("/fan/")>=0||r==="")?"../fan/index.html":"../index.html";})();}catch(e){}</script></p>
 <div class="hero">
 <p class="hero-kicker">🌙 夜班重生 · 互动短剧 · 免费</p>
 <h1>第 2 集 · 发错药的那一夜</h1>
