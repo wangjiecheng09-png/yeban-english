@@ -97,9 +97,7 @@ html{scroll-behavior:smooth}
 .card.door-out p{color:#FFF7E8}
 .card.door-out .btn{background:#E8A838;color:#222;border-color:#E8A838}
 
-/* ---- 页尾收口：固定底栏只在首页/课程页存在，详情页没有固定底栏，
-   原来留的 90px 底边距是死空间（实测最后一卡后 104px 空白，
-   锁定的短页上占了整页约 10%）。收到 24px，页面在“上一课/下一课”
+/* ---- 页尾收口：详情页没有固定底栏，底边距 24px，页面在“上一课/下一课”
    卡后正常收尾。 ---- */
 body{padding-bottom:24px}
 
@@ -118,7 +116,7 @@ body{padding-bottom:24px}
 <div class="card door-out" id="step-practice"><h2>🧑‍🏫 去课堂练习</h2>
 <p>白板、测验、跟读、打勾都在原课里，这里不重复放，免得两处对不上。</p>
 <a class="btn btn-block" href="classroom-ep01-pain.html">去课堂练习：白板 · 测验 · 跟读 · 打勾 →</a></div>
-<div class="card"><h2>📖 下一课</h2><p>第 2–10 课在完整版里，先学好第 1 课。</p><p><a class="btn ghost" href="index.html">← 回粉丝首页</a></p></div>
+<div class="card"><h2>📖 下一课</h2><p><a class="btn ghost" href="classroom-ep02-vital-signs.html">下一课：第 2 课 · 测生命体征 →</a></p><p>第 3–10 课在完整版里，先学好第 1、2 课。</p><p><a class="btn ghost" href="index.html">← 回粉丝首页</a></p></div>
 </div>
 <script src="../video/keypoints-ep01-data.js?v=1"></script>
 <script>(function(){var im=document.getElementById('keypointsImgFan');if(!im)return;try{var b=window.__KEYPOINTS_EP01;if(!b)return;var s=atob(b),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);im.src=URL.createObjectURL(new Blob([a],{type:'image/png'}));}catch(e){}})();</script>
