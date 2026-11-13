@@ -73,13 +73,13 @@ button.opt:active{transform:scale(.99)}
 <h2>🌙 夜里 02:10 · 病房</h2>
 <p>你要给 12 床发药。病人半睡半醒，床头卡上写着姓名、床号、住院号，手腕上还戴着腕带。你手里是他的药——发，还是不发？</p>
 <p><b>你先说哪句？</b></p>
-<div class="choice" role="button" tabindex="0" onclick="choose('wrong')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();choose('wrong')}"><span class="choice-letter">A</span><span class="choice-text"><span class="en">Please tell me your name and date of birth.</span><span class="zh">请告诉我你的姓名和出生日期。</span></span><span class="choice-listen" role="button" aria-label="先听这句" tabindex="0" onclick="event.stopPropagation();speak('Please tell me your name and date of birth.')">🔊 听这句</span></div>
+<div class="choice" role="button" tabindex="0" onclick="choose('wrong')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();choose('wrong')}"><span class="choice-letter">A</span><span class="choice-text"><span class="en">Are you Bed 12?</span><span class="zh">你是 12 床吗？</span></span><span class="choice-listen" role="button" aria-label="先听这句" tabindex="0" onclick="event.stopPropagation();speak('Are you Bed 12?')">🔊 听这句</span></div>
 <div class="choice" role="button" tabindex="0" onclick="choose('right')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();choose('right')}"><span class="choice-letter">B</span><span class="choice-text"><span class="en">Please tell me your full name, your bed number, and your hospital number.</span><span class="zh">请告诉我你的姓名、床号和住院号。</span></span><span class="choice-listen" role="button" aria-label="先听这句" tabindex="0" onclick="event.stopPropagation();speak('Please tell me your full name, your bed number, and your hospital number.')">🔊 听这句</span></div>
 </div>
 
 <div class="card hidden" id="consequence">
 <h2>⏪ 后果</h2>
-<div class="line"><div class="line-text"><div class="en">You gave the medicine to the wrong patient.</div><div class="zh">药发错人了。只问姓名和出生日期不够——没对床号和住院号，没看床头卡和腕带。12 床刚换过病人，同名的人也不少。</div></div></div>
+<div class="line"><div class="line-text"><div class="en">You gave the medicine to the wrong patient.</div><div class="zh">药发错人了。只问一句'你是 12 床吗'，他半睡半醒，点个头就当是了——没让他自己说姓名、床号、住院号，没看床头卡和腕带。12 床刚换过病人，同名的人也不少。</div></div></div>
 <p><b>倒带重来：</b>回到发药前，这次按中国的规矩核对全——姓名、床号、住院号，再看腕带。</p>
 <button class="warn" onclick="replay()">↩️ 重开这一夜</button> <a data-home href="../fan/index.html" onclick="goHome();return false;"><button class="ghost">🏠 回课堂</button></a>
 </div>
@@ -88,9 +88,9 @@ button.opt:active{transform:scale(.99)}
 <h2>✅ 过关</h2>
 <div class="line"><div class="line-text"><div class="en">Please tell me your full name, your bed number, and your hospital number.</div><div class="zh">请告诉我你的姓名、床号和住院号。</div></div></div>
 <div class="line"><div class="line-text"><div class="en">Let me check your wristband as well.</div><div class="zh">我再核对一下你的腕带。</div></div></div>
-<div class="line"><div class="line-text"><div class="en">Let me check the medicine name and dose.</div><div class="zh">再核对药名和剂量。</div></div></div>
+<div class="line"><div class="line-text"><div class="en">Let me check the medicine bag.</div><div class="zh">我再看一下药袋。</div></div></div>
 <p>三查七对：发药前至少用两种身份识别方式，住院号是病人唯一的编号，床号不能单独作依据。先看床头卡，再让病人自己说姓名、床号、住院号，最后核对腕带。</p>
-<p><button onclick="speak('Please tell me your full name, your bed number, and your hospital number. Let me check your wristband as well. Let me check the medicine name and dose.')">🔊 朗读这三句</button></p>
+<p><button onclick="speak('Please tell me your full name, your bed number, and your hospital number. Let me check your wristband as well. Let me check the medicine bag.')">🔊 朗读这三句</button></p>
 <p><button class="ghost" onclick="location.reload()">↻ 再玩一次</button> <a data-home href="../fan/index.html" onclick="goHome();return false;"><button>🏠 回夜班英语课堂</button></a></p>
 <div id="level2Card"><p class="note" style="color:#0F5E5A">第 2 关 · 输液 🔒 会员 / 买断专享</p></div>
 </div>
