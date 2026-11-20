@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="avatar.png"><link rel="apple-touch-icon" href="avatar.png"><meta property="og:title" content="夜班英语课堂"><meta property="og:image" content="https://wangjiecheng09-png.github.io/yeban-english/avatar.png">
+<title>夜班英语课堂 · 总站</title>
+<style>body{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#FFF7E8;color:#222;margin:0;padding:16px 16px 90px;min-height:100vh;box-sizing:border-box;font-size:16px;line-height:1.6}
+:root{--teal:#0F5E5A;--teal-deep:#0B4743;--night:#0F2A28;--cream:#FFF7E8;--paper:#fff;--ink:#222;--muted:#666;--gold:#E8A838;--gold-soft:#FFE08A;--danger:#C0392B;--line:#E7DFC8;--strip:#FFF7E8;--r-card:16px;--r-inner:12px;--shadow:0 2px 10px rgba(15,42,40,.08)}
+*{box-sizing:border-box}
+.wrap{max-width:720px;margin:0 auto;position:relative}
+h1{color:#0F5E5A;font-size:24px;line-height:1.3;margin:8px 0 4px}
+h2{color:#0F5E5A;font-size:18px;line-height:1.4}
+.sub{color:#666;font-size:14px}
+.card{background:#fff;border:2px solid #0F5E5A;border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 2px 10px rgba(15,42,40,.08)}
+.card h2{color:#0F5E5A;font-size:18px;margin:0 0 8px}
+button,.btn{background:#0F5E5A;color:#fff;border:0;border-radius:999px;padding:11px 18px;margin:4px 4px 4px 0;cursor:pointer;text-decoration:none;display:inline-block;font-size:15px;line-height:1.4;min-height:44px}
+button:active,.btn:active{transform:scale(.97)}
+button:focus-visible,.btn:focus-visible,a:focus-visible{outline:3px solid #E8A838;outline-offset:2px}
+button.ghost,.btn.ghost{background:#fff;color:#0F5E5A;border:1.5px solid #0F5E5A}
+button.active{background:#E8A838;color:#222}
+button.warn{background:#C0392B}
+.btn-block{display:block;width:100%;text-align:center;margin:10px 0}
+input[type=text],input[type=email]{width:100%;box-sizing:border-box;padding:10px;border-radius:10px;border:1.5px solid #0F5E5A;font-size:16px}
+.lesson{border:1.5px solid #E7DFC8;border-radius:14px;padding:14px;margin:10px 0;background:#fff}
+.lesson b{font-size:17px}
+.tag{color:#0F5E5A;font-size:13px}
+.note{font-size:13px;color:#666}
+.soon{color:#999}
+.nav{position:fixed;left:0;right:0;bottom:0;background:#0F5E5A;display:flex;justify-content:space-around;padding:10px 0 calc(10px + env(safe-area-inset-bottom));z-index:10}
+.nav button{background:none;color:#FFF7E8;font-size:15px;margin:0;padding:8px 6px;min-height:44px}
+.nav button.active{color:#FFD97A;font-weight:bold}
+.section{display:none}
+.section.show{display:block}
+.group{border:2px solid #0F5E5A;border-radius:16px;margin:12px 0;overflow:hidden;background:#fff}
+.group-head{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;border-radius:0;margin:0;padding:13px 14px;font-size:17px;font-weight:bold;box-sizing:border-box}
+.group-head .group-meta{font-size:13px;font-weight:normal;color:#FFE08A;white-space:nowrap}
+.group-head .group-arrow{font-size:15px;white-space:nowrap}
+.group-head.ghost{background:#fff;color:#0F5E5A}
+.group-body{padding:2px 12px 12px}
+.teacher{border-left:6px solid #0F5E5A}
+.classmate{border-left:6px solid #E8A838}
+.line{display:flex;width:100%;gap:12px;align-items:flex-start;background:#FFF7E8;border-radius:12px;padding:12px 14px;margin:10px 0}
+.line-text{flex:1;min-width:0}
+.line button{flex:none;margin:0;padding:8px 12px;min-height:40px}
+.en{font-size:17px}
+.zh{color:#555;font-size:14px;margin-top:4px}
+.board{background:#0F5E5A;color:#FFF7E8;border-radius:16px;padding:16px;margin:14px 0}
+.board h2{color:#FFF7E8}
+.vocab{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.vocab div{background:#FFF7E8;color:#222;border-radius:10px;padding:10px 12px;min-height:56px;display:flex;flex-direction:column;justify-content:center}
+a{color:#0F5E5A}
+.hidden{display:none}
+.badge{display:inline-block;background:#FFE08A;color:#222;border-radius:999px;padding:2px 10px;font-size:13px}
+.q{margin:14px 0}
+.q b{display:block;margin-bottom:4px}
+.opt{display:block;width:100%;text-align:left;background:#fff;color:#222;border:2px solid #0F5E5A;border-radius:14px;padding:14px 16px;margin:10px 0;min-height:56px;font-size:16px}
+button.opt:active{transform:scale(.99)}
+.wordrow{display:flex;width:100%;gap:12px;align-items:center;background:#FFF7E8;border-radius:10px;padding:10px 14px;margin:8px 0}
+.wordrow span{flex:1;min-width:0}
+.wordrow button{flex:none;margin:0;padding:6px 10px;min-height:36px;font-size:14px}
+.hero-my{background:#0F2A28;color:#FFF7E8;border-color:#0F2A28}
+.hero-my h2{color:#FFE08A}
+.hero-my{padding:12px 16px}
+.hero-my p{margin:6px 0}
+.hero-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hero-row .streak{font-size:20px}
+.hero-row button{margin:0}
+.member-card{background:#FFFBF0;border-color:#E8A838}
+.prog-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:10px 0 0}
+.prog-row .prog-num{font-weight:bold;white-space:nowrap}
+.prog-row+.bar{margin:6px 0 4px}
+.streak{font-size:22px}
+.bar{height:12px;background:#E7DFC8;border-radius:999px;overflow:hidden;margin:8px 0}
+.bar>div{height:100%;background:#0F5E5A;width:0%}
+.cal{width:100%;border-collapse:collapse;text-align:center;font-size:14px}
+.cal th{color:#666;font-weight:normal;padding:6px 0}
+.cal td{padding:8px 0;border-radius:8px}
+.cal td.hit{background:#FFE08A;font-weight:bold;color:#222}
+.cal td.today{outline:2px solid #E8A838}
+.cal td.dim{color:#ccc}
+.badge-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.badge-cell{background:#FFF7E8;border:1.5px solid #E8A838;border-radius:12px;padding:12px;text-align:center}
+.badge-cell.locked{background:#f5f5f5;border-color:#ddd;color:#999}
+.badge-cell .ic{font-size:28px}
+.mycourse{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px solid #E7DFC8;padding:10px 0}
+.mycourse:last-child{border-bottom:0}
+.btn.gold{background:#E8A838;color:#222}
+.tier{font-weight:bold;padding:4px 12px;border-radius:999px;font-size:15px}
+.tier-free{background:#EDEBE3;color:#666}
+.tier-month{background:#0F5E5A;color:#fff}
+.tier-quarter{background:#E8A838;color:#222}
+.tier-year{background:#0F2A28;color:#FFD97A}
+.member-row{margin:6px 0}
+#redeemMsg{font-size:16px;font-weight:bold;min-height:22px;margin:8px 0}
+#redeemMsg.ok{color:#0F5E5A}
+#redeemMsg.err{color:#C0392B}
+#loginMsg{font-size:15px;min-height:22px;margin:8px 0}
+#loginMsg.ok{color:#0F5E5A;font-weight:bold}
+#loginMsg.err{color:#C0392B}
+/* ---- 首页进入动画（2026-11-06）：纯 CSS，只动 transform/opacity，全程 <1s，无开屏 ---- */
+.sky{position:absolute;top:0;right:4px;width:120px;height:44px;pointer-events:none;z-index:1}
+.moon{position:absolute;top:2px;right:8px;width:36px;height:36px;border-radius:50%;background:#E8A838;box-shadow:0 0 16px 4px rgba(232,168,56,.45);animation:moonRise .7s ease-out both}
+.star{position:absolute;border-radius:50%;background:#E8A838;box-shadow:0 0 6px 1px rgba(232,168,56,.5);animation:starIn .5s ease-out both}
+.star.s1{top:4px;right:56px;width:7px;height:7px;animation-delay:.12s}
+.star.s2{top:22px;right:66px;width:5px;height:5px;animation-delay:.20s}
+.star.s3{top:32px;right:46px;width:6px;height:6px;animation-delay:.28s}
+.star.s4{top:10px;right:88px;width:4px;height:4px;animation-delay:.36s}
+.star.s5{top:34px;right:80px;width:5px;height:5px;animation-delay:.44s}
+@keyframes moonRise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes starIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.anim-h{animation:riseIn .5s ease-out both}
+.anim-h.d1{animation-delay:.05s}
+.anim-h.d2{animation-delay:.15s}
+.anim-h.d3{animation-delay:.25s}
+#sec-home .card{animation:riseIn .4s ease-out both}
+#sec-home .card:nth-child(1){animation-delay:.30s}
+#sec-home .card:nth-child(2){animation-delay:.38s}
+#sec-home .card:nth-child(3){animation-delay:.46s}
+#sec-home .card:nth-child(4){animation-delay:.54s}
+@media (prefers-reduced-motion:reduce){.moon,.star,.anim-h,#sec-home .card{animation:none !important}}
+
+/* ================= v2 · 今晚值班：查房路线 =================
+   在线上版样式之后追加。只加概念层（值班卡 + 走廊），不改线上版
+   已有的圆角、按钮形状、导航。 */
+
+/* ---- 值班卡：今晚的房间，深夜底 ---- */
+.card.shift{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+.card.shift h2{color:#FFE08A}
+.card.shift p{color:#FFF7E8}
+.card.shift p b{color:#FFF7E8}
+.card.shift .btn{background:#E8A838;color:#222;border-color:#E8A838}
+.card.shift .btn.ghost{background:transparent;color:#FFF7E8;border-color:rgba(255,247,232,.7)}
+
+/* ---- 查房路线：一条竖直的病房走廊，房间排在上面 ---- */
+.corridor{position:relative;padding:2px 0}
+.corridor::before{content:"";position:absolute;left:17px;top:12px;bottom:12px;width:2px;background:#0F5E5A;opacity:.35}
+.corridor .room{position:relative;display:block;margin:14px 0;padding-left:52px}
+.corridor a.room{display:flex;align-items:flex-start;gap:10px;text-decoration:none;color:#222;background:#fff;border:1.5px solid #E7DFC8;border-radius:14px;padding:14px 14px 14px 52px}
+.corridor a.room:active{transform:scale(.99)}
+.corridor .room-plate{position:absolute;left:0;top:12px;width:36px;height:36px;border-radius:10px;background:#fff;border:2px solid #0F5E5A;color:#0F5E5A;font-weight:700;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;z-index:1}
+.corridor .room-body{flex:1;min-width:0}
+.corridor .room-body b{font-size:17px}
+.corridor .room-en{color:#555;font-size:14px;margin-top:4px;display:block}
+.corridor .room-go{flex:none;color:#0F5E5A;font-weight:700;font-size:17px;line-height:1.4}
+/* 查过的房：金勾门牌 */
+.corridor .room.done .room-plate{background:#E8A838;border-color:#E8A838;color:#222}
+/* 正站着的那间房：门开着，透金光 */
+.corridor .room.now{border-color:#E8A838;background:#FFFBF0}
+.corridor .room.now .room-plate{background:#E8A838;border-color:#E8A838;color:#222;box-shadow:0 0 0 4px #FFE08A}
+/* 今天那一课：金色小牌 */
+.corridor .room.today::after{content:"今日一课";position:absolute;top:10px;right:12px;background:#E8A838;color:#222;font-size:12px;font-weight:700;border-radius:999px;padding:2px 8px;z-index:1}
+/* 首页房间有右箭头，小牌往左让一让 */
+.corridor a.room.today::after{right:44px}
+/* 走廊里的课行：门牌让位，按钮不动 */
+.corridor .lesson{padding-left:52px}
+/* 状态小牌不拆字：整块换行，不把"未解锁"拆成两行 */
+.corridor .room .tag,.corridor .room .done-tag{white-space:nowrap}
+
+/* ---- 课程页：学习路径的圆点改成房门牌 ---- */
+.pm-dot{border-radius:10px;width:36px;height:36px;line-height:36px;font-size:15px}
+.pm-node.done .pm-dot{background:#E8A838;border-color:#E8A838;color:#222}
+.pm-node.now .pm-dot{border-color:#0F5E5A;color:#0F5E5A;box-shadow:0 0 0 3px #FFE08A;background:#FFFBF0}
+/* 课程页的课表就是走廊 */
+#lessonList.corridor .lesson{padding-left:52px}
+#lessonList.corridor .lesson.now{border-color:#E8A838;background:#FFFBF0}
+
+/* ================= v3 · 今晚值班：细节 =================
+   追加在 v2 样式之后。只加细节层（打卡条、夜线、房门四态、
+   走廊尽头、月亮行），不动 v2 的概念和布局，不动线上版 token。 */
+
+/* ---- 值班卡顶部：打卡状态 + 一夜的时间线 ---- */
+.card.shift .shift-strip{font-size:13px;color:#FFE08A;margin:2px 0 8px}
+.nightline{margin:0 0 10px}
+.nightline .nl-track{position:relative;height:3px;background:rgba(255,247,232,.25);border-radius:99px}
+.nightline .nl-dot{position:absolute;top:50%;left:0;width:12px;height:12px;border-radius:50%;background:#E8A838;box-shadow:0 0 0 3px rgba(232,168,56,.35);transform:translate(-50%,-50%)}
+.nightline .nl-ticks{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,247,232,.7);margin-top:5px}
+
+/* ---- 走廊：已经走过的路变成金色（--walked 由 JS 按“正在查那间房”量出来） ---- */
+.corridor::after{content:"";position:absolute;left:17px;top:12px;height:var(--walked,0px);width:2px;background:#E8A838;z-index:0}
+
+/* ---- 房门四态：状态词贴在课名旁边 ---- */
+.corridor .room-state{font-size:12px;font-weight:700;color:#0F5E5A;margin-left:6px;white-space:nowrap}
+.corridor .room.done .room-state{color:#B98A1F}
+/* 正在查的那间：门半开——一半金（门板），一半米白（屋里透出的光），描边留金光圈 */
+.corridor .room.now .room-plate{background:linear-gradient(90deg,#E8A838 55%,#FFF7E8 55%);border-color:#E8A838}
+/* 关着的门：深夜色门牌（课程页里未解锁的房间） */
+.corridor .room.locked .room-plate{background:#0F2A28;border-color:#0F2A28;color:#FFF7E8}
+/* 正在查的那间永远半开着门——哪怕视频还没解锁，门也是开着的 */
+.corridor .room.now.locked .room-plate{background:linear-gradient(90deg,#E8A838 55%,#FFF7E8 55%);border-color:#E8A838;color:#0F5E5A}
+
+/* ---- 走廊尽头：天亮交班 ---- */
+.handover{text-align:center;color:#8A7F63;font-size:13px;margin:10px 0 2px}
+
+/* ---- 月亮行：连续值班几夜，就亮几个月亮（一周七夜） ---- */
+.moon-row{font-size:15px;letter-spacing:3px;line-height:1.4;margin:2px 0 0}
+
+/* ================= v4 · 今晚值班：打磨 =================
+   v3 的概念和细节不动。只修截图里看得见的 5 处弱点：
+   1 课程页状态词三重叠（完成标记与状态词重复出现）
+   2 顶栏"怎么用"说明墙太抢眼
+   3 底部导航第 5 个键"重开"在 390px 被裁
+   4 半开门牌是直切两色块，不像门开着
+   5 间距节奏：学习路径课名换行参差 + 房间卡片偏高 */
+
+/* ---- 2 说明文字退成脚注：字小一点、颜色淡一点、上面一道细线 ---- */
+.howto{font-size:12.5px !important;line-height:1.55 !important;color:#8A8271 !important;border-top:1px solid #E7DFC8;padding-top:8px;margin-top:10px}
+
+/* ---- 3 底部导航：五个键等分，字略小，第 5 个再也不会被裁 ---- */
+.nav{justify-content:flex-start}
+.nav button,.nav a{flex:1 1 0;min-width:0;font-size:14px;padding:8px 2px;white-space:nowrap;text-align:center}
+
+/* ---- 4 半开的门：斜着开，门缝一条暗线，号码留在金的那边 ---- */
+.corridor .room.now .room-plate,
+.corridor .room.now.locked .room-plate{background:linear-gradient(115deg,#E8A838 0 60%,#0F2A28 60% 63%,#FFF7E8 63% 100%);border-color:#E8A838;color:#0F5E5A}
+
+/* ---- 5a 学习路径：课名统一两行高，一行两行的不再参差 ---- */
+.pm-node a{display:block}
+.pm-label{display:block;min-height:2.7em;line-height:1.35;margin-top:2px}
+
+/* ---- 5b 房间卡片收紧一点：10 间走廊少拖一点 ---- */
+.corridor a.room{padding-top:12px;padding-bottom:12px}
+.corridor .room{margin:12px 0}
+.corridor .room-en{margin-top:2px}
+.corridor .lesson{padding-top:12px;padding-bottom:12px}
+
+/* ================= v5 · 今晚值班：再打磨 =================
+   v4 的概念、细节、打磨全部不动。只修截图里看得见的 5 处新弱点：
+   1 课程页：同一段锁说明在 9 间房里重复出现（"怎么解锁"卡片已有完整版）
+   2 顶栏"怎么用"仍挡在值班卡前面
+   3 首页三张下位卡片（继续学习/视频课/夜班重开）没带上值班感
+   4 宽屏上底部导航和课程栏拉满全宽，键位散开
+   5 月亮行亮月暗月难分 */
+
+/* ---- 2 "怎么用"收进可折叠条：默认只留一行标题，点开才看全文 ---- */
+details.howto summary{cursor:pointer;color:#0F5E5A;font-weight:700;font-size:13px;list-style:none}
+details.howto summary::-webkit-details-marker{display:none}
+details.howto summary::after{content:" ＋";color:#B98A1F}
+details.howto[open] summary::after{content:" －"}
+details.howto p{font-size:12.5px;line-height:1.55;color:#8A8271;margin:8px 0 0}
+
+/* ---- 3 下位卡片也像走廊里的房间：金色门边 + 门牌图标 ---- */
+.card.night-room{border-left:3px solid #E8A838}
+.card.night-room h2{display:flex;align-items:center;gap:8px}
+.room-ico{flex:none;width:34px;height:34px;border-radius:10px;border:2px solid #0F5E5A;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:17px;line-height:1}
+
+/* ---- 4 宽屏上底栏收进 720px 内容列，居中悬浮 ---- */
+.nav{max-width:720px;margin-left:auto;margin-right:auto;border-radius:14px 14px 0 0}
+.coursebar{max-width:720px;margin-left:auto;margin-right:auto;border-radius:14px 14px 0 0}
+
+/* ---- 5 月亮行放大一点，亮月暗月一眼分得清 ---- */
+.moon-row{font-size:19px !important;letter-spacing:5px}
+
+/* ================= v6 · 今晚值班：再打磨 =================
+   v5 的概念、细节、打磨全部不动。只修截图里看得见的 4 处新弱点：
+   1 学习路径图在手机上横向滚动，7–10 号房藏在屏外
+   2 课程页 8 张信息卡还是普通白卡，没带上走廊的语言
+   3 夜线走过的夜还是暗的，月亮点小
+   4 页尾没有句号：收尾只是一行靠左的灰字 */
+
+/* ---- 1 学习路径图：窄屏改成两行 5 列的病房图，10 间全可见，不用横滑 ----
+   宽屏（720px+）本来就放得下 10 个点，一行不动。 */
+@media (max-width:719px){
+  .pathmap{flex-wrap:wrap;overflow-x:visible}
+  .pathmap .pm-node{flex:0 0 20%;min-width:0}
+}
+
+/* ---- 2 课程页信息卡也像走廊里的房间：金色门边 ----
+   :has(#pathMap) 只在课程页成立（首页没有 #pathMap），所以首页的卡片
+   一张都不会被误伤；不支持 :has() 的旧浏览器只是看不到这条金边，
+   其余样式照常，不会坏。 */
+.wrap:has(#pathMap) > .card{border-left:3px solid #E8A838}
+
+/* ---- 3 夜线：走过的夜涂成金色（跟走廊"走过的路变金色"同一条语言），
+   月亮点放大、光晕加强，一眼就看到夜走到哪了 ---- */
+.nightline .nl-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#E8A838;border-radius:99px}
+.nightline .nl-dot{width:16px;height:16px;box-shadow:0 0 0 3px rgba(232,168,56,.4),0 0 10px rgba(232,168,56,.8)}
+
+/* ---- 4 页尾收成正式页脚：细线 + 居中 + 小字，页面有个句号 ---- */
+.wrap > p.note:last-child{text-align:center;border-top:1px solid #E7DFC8;padding-top:12px;margin-top:4px;color:#8A8271;font-size:12.5px}
+
+/* ================= v7 · 月亮行：没亮的月亮改成空心圈 =================
+   弱点（截图里看得见）：月亮行在深色"我的学习"卡上，未亮的 🌑 是深盘贴
+   深底，1x 下几乎数不出亮了几夜。v5 只放大到 19px，没解决对比度。
+   改法：亮的仍是金色实月 🌕，没亮的改成米白描边的空心圈——亮/暗一眼
+   分得清，7 夜一周照样数得出来。只改显示，不动打卡数据、不动文案。 */
+.moon-row .moon-off{display:inline-block;width:1em;height:1em;border:2px solid rgba(255,247,232,.6);border-radius:50%;vertical-align:-.1em;box-sizing:border-box}
+</style>
+</head><body><div class="wrap">
+<div class="sky" aria-hidden="true"><span class="moon"></span><span class="star s1"></span><span class="star s2"></span><span class="star s3"></span><span class="star s4"></span><span class="star s5"></span></div>
+<h1 class="anim-h d1">夜班英语课堂</h1>
+<p class="sub anim-h d2">每天一个临床场景 · 护士英语一句即用 · 错 vs 对，截图保存，下次查房直接用</p>
+<details class="note anim-h d3 howto"><summary>怎么用</summary><p>苹果手机在微信里直接打开就能听、能学；想像 App 那样放桌面图标，就在自带浏览器 Safari 里打开，再点分享 → 添加到主屏幕。安卓手机在微信里听不到声，要在 Chrome 里打开（微信里点 … → 在浏览器打开）再听、再加图标。</p></details>
+
+<div id="sec-home" class="section show">
+<div class="card shift"><h2>📌 今日一课</h2>
+<p class="shift-strip"><span id="shiftState">🌙 今晚值班 · 19:00 打卡上班</span></p>
+<div class="nightline" aria-hidden="true"><div class="nl-track"><span class="nl-fill" id="nightFill"></span><span class="nl-dot" id="nightDot"></span></div><div class="nl-ticks"><span>19:00</span><span>0:00</span><span>07:00</span></div></div>
+<p><b id="todayTitle">第 4 课 · 输液</b><br><span id="todayLines">I'm going to start an IV drip for you.（我要给你输液了）<br>It may feel a little cold.（可能会感觉有点凉）</span></p>
+<a class="btn" id="todayBtn" href="classroom-ep04-iv-drip.html">开始第 4 课 →</a>
+<a class="btn ghost" href="today.html">今日一课直达 →</a></div>
+<div class="card"><h2>🗺️ 入院到出院</h2>
+<p class="note">按病人走的路排：入院 → 住院日常 → 操作 → 出院。每天一课，10 天走完一个夜班的完整流程。</p>
+<div class="corridor" id="homeCorridor">
+<a class="room" data-ep="ep01" href="classroom-ep01-pain.html"><span class="room-plate">1</span><span class="room-body"><b>第 1 课 · 疼痛评估</b><span class="room-state"></span><span class="room-en">On a scale of zero to ten, how bad is your pain? / About seven, it's sharp.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep02" href="classroom-ep02-vital-signs.html"><span class="room-plate">2</span><span class="room-body"><b>第 2 课 · 生命体征</b><span class="room-state"></span><span class="room-en">Let me check your blood pressure. / Your blood pressure is one twenty over eighty, that's normal.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep03" href="classroom-ep03-allergies.html"><span class="room-plate">3</span><span class="room-body"><b>第 3 课 · 入院问过敏史</b><span class="room-state"></span><span class="room-en">Do you have any allergies? / I'm allergic to penicillin.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep04" href="classroom-ep04-iv-drip.html"><span class="room-plate">4</span><span class="room-body"><b>第 4 课 · 输液</b><span class="room-state"></span><span class="room-en">I'm going to start an IV drip for you. / It may feel a little cold.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep05" href="classroom-ep05-dressing.html"><span class="room-plate">5</span><span class="room-body"><b>第 5 课 · 换药</b><span class="room-state"></span><span class="room-en">I need to change your dressing. / Please tell me if it hurts.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep06" href="classroom-ep06-identity-check.html"><span class="room-plate">6</span><span class="room-body"><b>第 6 课 · 给药核对</b><span class="room-state"></span><span class="room-en">Please tell me your name and date of birth.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep07" href="classroom-ep07-postop.html"><span class="room-plate">7</span><span class="room-body"><b>第 7 课 · 术后观察</b><span class="room-state"></span><span class="room-en">How are you feeling after the operation? / A bit dizzy, but okay.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep08" href="classroom-ep08-fasting.html"><span class="room-plate">8</span><span class="room-body"><b>第 8 课 · 术前禁食</b><span class="room-state"></span><span class="room-en">You need to fast before surgery. / No food or water after midnight.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep09" href="classroom-ep09-callbell.html"><span class="room-plate">9</span><span class="room-body"><b>第 9 课 · 防跌倒呼叫铃</b><span class="room-state"></span><span class="room-en">Please press the call bell if you need help. / Don't get up alone.</span></span><span class="room-go">→</span></a>
+<a class="room" data-ep="ep10" href="classroom-ep10-discharge.html"><span class="room-plate">10</span><span class="room-body"><b>第 10 课 · 出院宣教</b><span class="room-state"></span><span class="room-en">Take this medicine twice a day after meals. / Come back for a follow-up in one week.</span></span><span class="room-go">→</span></a>
+<div class="handover">🌅 走廊尽头 · 天亮交班</div>
+</div></div>
+<div class="card night-room"><h2><span class="room-ico">↩️</span> 继续学习</h2>
+<p id="continue">还没开始任何一课，先从第 1 课试试。</p>
+<a class="btn ghost" id="continueBtn" href="classroom-ep01-pain.html">第 1 课 · 疼痛评估</a></div>
+<div class="card night-room"><h2><span class="room-ico">🎬</span> 视频课</h2>
+<p>一门课学完一整套：按课、按顺序学，每门课结尾有一次复习和一张总结小抄卡。12 门课，先上 1 门，后面做好一门、开一门。</p>
+<a class="btn" href="video-courses.html">看看 12 门课 →</a></div>
+<div class="card night-room"><h2><span class="room-ico">🌙</span> 夜班重生（互动短剧）</h2>
+<p>互动短剧：选 A 还是选 B？选错了，这一夜重来。跟着一个病人从入院走到出院，每集一个夜班险情。</p>
+<p>第 1 集 · 半夜那一摔 / 第 2 集 · 发错药的那一夜，免费看。</p>
+<a class="btn" href="night-drama/ep01.html">开始看第 1 集 →</a></div>
+</div>
+
+<div id="sec-lessons" class="section">
+<div class="card"><h2>🔍 搜索</h2>
+<p><input type="text" id="q" placeholder="搜一句英文、一个单词、一个场景，例如：输液、allergy、血压" oninput="doSearch()"></p>
+<p class="note howto">想按场景找课，直接搜场景词，例如：入院场景、给药输液、输液、过敏。试试搜：输液、allergy、penicillin、cold、血压</p>
+<div id="searchResult"></div></div>
+<div class="card"><h2>📚 课程</h2>
+<div id="lessonList">
+<div class="group" id="group-week1">
+<button class="group-head" onclick="toggleGroup('group-week1')" aria-expanded="true"><span>入院到出院</span><span class="group-meta">10 课 · 已发布</span><span class="group-arrow">▼</span></button>
+<div class="group-body corridor">
+<div class="lesson room" data-cat="week1" data-kw="第1课 疼痛评估 pain sharp dull On a scale of zero to ten how bad is your pain About seven sharp" data-ep="ep01"><span class="room-plate">1</span>
+<b>第 1 课 · 疼痛评估</b><span class="room-state"></span><br>
+<span>On a scale of zero to ten, how bad is your pain? / About seven, it's sharp.</span><br>
+<a class="btn" href="classroom-ep01-pain.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1" data-kw="第2课 生命体征 血压 blood pressure normal Let me check your blood pressure" data-ep="ep02"><span class="room-plate">2</span>
+<b>第 2 课 · 生命体征</b><span class="room-state"></span><br>
+<span>Let me check your blood pressure. / Your blood pressure is one twenty over eighty, that's normal.</span><br>
+<a class="btn" href="classroom-ep02-vital-signs.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1 admission" data-kw="第3课 入院问过敏史 入院场景 allergy allergic penicillin 青霉素 过敏 Do you have any allergies" data-ep="ep03"><span class="room-plate">3</span>
+<b>第 3 课 · 入院问过敏史</b><span class="room-state"></span> <span class="tag">入院场景</span><br>
+<span>Do you have any allergies? / I'm allergic to penicillin.</span><br>
+<a class="btn" href="classroom-ep03-allergies.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1 iv" data-kw="第4课 输液 给药输液 IV drip cold 凉 I'm going to start an IV drip for you It may feel a little cold" data-ep="ep04"><span class="room-plate">4</span>
+<b>第 4 课 · 输液</b><span class="room-state"></span> <span class="tag">给药输液</span><br>
+<span>I'm going to start an IV drip for you. / It may feel a little cold.</span><br>
+<a class="btn" href="classroom-ep04-iv-drip.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1" data-kw="第5课 换药 dressing hurt change your dressing Please tell me if it hurts" data-ep="ep05"><span class="room-plate">5</span>
+<b>第 5 课 · 换药</b><span class="room-state"></span><br>
+<span>I need to change your dressing. / Please tell me if it hurts.</span><br>
+<a class="btn" href="classroom-ep05-dressing.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1" data-kw="第6课 给药核对 身份 date of birth name medicine dose Please tell me your name and date of birth" data-ep="ep06"><span class="room-plate">6</span>
+<b>第 6 课 · 给药核对</b><span class="room-state"></span><br>
+<span>Please tell me your name and date of birth.</span><br>
+<a class="btn" href="classroom-ep06-identity-check.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1" data-kw="第7课 术后观察 operation dizzy How are you feeling after the operation A bit dizzy" data-ep="ep07"><span class="room-plate">7</span>
+<b>第 7 课 · 术后观察</b><span class="room-state"></span><br>
+<span>How are you feeling after the operation? / A bit dizzy, but okay.</span><br>
+<a class="btn" href="classroom-ep07-postop.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1" data-kw="第8课 术前禁食 fast surgery midnight No food or water after midnight" data-ep="ep08"><span class="room-plate">8</span>
+<b>第 8 课 · 术前禁食</b><span class="room-state"></span><br>
+<span>You need to fast before surgery. / No food or water after midnight.</span><br>
+<a class="btn" href="classroom-ep08-fasting.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1" data-kw="第9课 防跌倒 呼叫铃 call bell alone press Please press the call bell if you need help Don't get up alone" data-ep="ep09"><span class="room-plate">9</span>
+<b>第 9 课 · 防跌倒呼叫铃</b><span class="room-state"></span><br>
+<span>Please press the call bell if you need help. / Don't get up alone.</span><br>
+<a class="btn" href="classroom-ep09-callbell.html">进入课堂 →</a></div>
+<div class="lesson room" data-cat="week1" data-kw="第10课 出院宣教 twice a day follow-up medicine after meals Take this medicine twice a day after meals Come back for a follow-up" data-ep="ep10"><span class="room-plate">10</span>
+<b>第 10 课 · 出院宣教</b><span class="room-state"></span><br>
+<span>Take this medicine twice a day after meals. / Come back for a follow-up in one week.</span><br>
+<a class="btn" href="classroom-ep10-discharge.html">进入课堂 →</a></div>
+<div class="handover">🌅 走廊尽头 · 天亮交班</div>
+</div>
+</div>
+<div class="group" id="group-basic">
+<button class="group-head" onclick="toggleGroup('group-basic')" aria-expanded="true"><span>基础合集 · 护士通用</span><span class="group-meta">已上线 1 课 · 其余筹备中</span><span class="group-arrow">▼</span></button>
+<div class="group-body">
+<div class="lesson" data-cat="basic" data-kw="基础合集 A1 采血 空腹 fasting breakfast blood sample blood test Did you eat breakfast today">
+<b>基础合集 A1 · 采血前问空腹</b> <span class="tag">基础合集</span><br>
+<span>Did you eat breakfast today? / I need a fasting blood sample this morning.</span><br>
+<a class="btn" href="classroom-a1-blood-fasting.html">进入课堂 →</a></div>
+<div class="lesson" data-cat="basic" data-kw="基础合集 采血 取药 送药 检查单 手卫生 尿标本 翻身">
+<b>基础合集 · 其余筹备中</b> <span class="tag soon">基础合集</span><br>
+<span class="soon">采血、取药送药、检查单、手卫生、尿标本、翻身防压疮……所有护士每天都用得上的基本功，每天一句，陆续上线。</span></div>
+</div>
+</div>
+<div class="group" id="group-emergency">
+<button class="group-head ghost" onclick="toggleGroup('group-emergency')" aria-expanded="false"><span>急诊科</span><span class="group-meta">筹备中 · 0 课</span><span class="group-arrow">▶</span></button>
+<div class="group-body" style="display:none">
+<div class="lesson" data-cat="" data-kw="急诊科 部门合集">
+<b>急诊科 · 筹备中</b> <span class="tag soon">部门合集</span><br>
+<span class="soon">按评论点名最多的科室先做，同样收进这个总站；格式跟入院到出院这门课一样，每天一个临床场景、一句即用。</span></div>
+</div>
+</div>
+<div class="group" id="group-surgery">
+<button class="group-head ghost" onclick="toggleGroup('group-surgery')" aria-expanded="false"><span>外科</span><span class="group-meta">筹备中 · 0 课</span><span class="group-arrow">▶</span></button>
+<div class="group-body" style="display:none">
+<div class="lesson" data-cat="" data-kw="外科 部门合集">
+<b>外科 · 筹备中</b> <span class="tag soon">部门合集</span><br>
+<span class="soon">按评论点名最多的科室先做，同样收进这个总站；格式跟入院到出院这门课一样，每天一个临床场景、一句即用。</span></div>
+</div>
+</div>
+</div></div>
+</div>
+
+
+<div id="sec-courses" class="section">
+<div class="card night-room"><h2><span class="room-ico">🎬</span> 视频课</h2>
+<p>一门课学完一整套：按课、按顺序学，每门课结尾有一次复习和一张总结小抄卡。入院到出院已经做完，先上；后面做好一门、开一门。</p>
+<div class="lesson">
+<b>入院到出院</b> <span class="tag">10 节 · 已上线</span><br>
+<span>从病人入院到出院，夜班里最常说的 10 个场景：疼痛评估、生命体征、过敏史、输液、换药、给药核对、术后观察、术前禁食、防跌倒呼叫铃、出院宣教。</span><br>
+<a class="btn" href="module-m1.html">开始学习 →</a></div>
+<div class="lesson">
+<b>护士基本功 · 采血取药</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">采血、取药送药、检查单、交接班、手卫生、标本、翻身，再到入院介绍、协助进食、口腔护理、冰敷、转移轮椅、意识评估——所有护士每天都用得上的基本功。</span></div>
+<div class="lesson">
+<b>急诊英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">分诊主诉、胸痛优先、发烧先问、等医生，再到受伤经过、呼吸困难、伤口清洗、拍片做 CT、心电监护、止痛针、留观转归、出院回家。</span></div>
+<div class="lesson">
+<b>外科英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">术前禁食再确认、取下首饰假牙、术后伤口观察、术后下床，再到术前洗澡、知情同意、核对部位、术后恶心、深呼吸咳嗽、进食、发烧、出血、排气、拔尿管、拆线复查。</span></div>
+<div class="lesson">
+<b>手术室英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">术前访视、进室核对、麻醉前、术后复苏、引流管，再到巡回接送、换手术衣、躺手术台、回病房，以及器械护士备器械台、铺无菌单、清点、递器械、术中配合、标本送检。</span></div>
+<div class="lesson">
+<b>分诊英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">分诊第一句、量体征、分级告知、分流，再到发病时间、用药史、血氧、是否怀孕、是否有人陪、意识、分级告知、挂号指路、留观等候、拿号、病情变化、复评、安抚等待。</span></div>
+<div class="lesson">
+<b>体检英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">体检前说明、问诊病史、听诊深呼吸、腹部检查、体检结束，再到身高体重、视力听力、胸片憋气、摸脉搏、皮肤、淋巴、口腔、听心跳、叩诊、水肿、跟手指、握力、弯腰、结果解读。</span></div>
+<div class="lesson">
+<b>内科英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">吸氧、心电图、雾化吸入、测血糖，再到咳痰拍背、胸痛放射、腿肿、心脏药、腹痛、食欲、大便、尿量、排尿疼、糖尿病饮食、低血糖、胰岛素、头痛、睡眠、手麻。</span></div>
+<div class="lesson">
+<b>儿科英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">安抚孩子、打针、请家长配合、孩子发烧，再到称体重、量身高、喂药、雾化、咳嗽、腹泻、喝水、出疹子、喂奶、预防接种、接种后观察、宝宝睡眠、退烧药、精神状态、检查耳朵、脱水观察。</span></div>
+<div class="lesson">
+<b>妇产科英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">产前检查、末次月经、胎动、宫缩、破水、宫口、分娩呼吸、无痛分娩，再到产后出血、子宫复旧、母乳喂养、乳房胀痛、产后排尿、新生儿哭声、黄疸、产后情绪、妇科检查、月经、产后避孕。</span></div>
+<div class="lesson">
+<b>心内科英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">胸痛性质、胸痛时间、伴随症状、动态心电图、心肌酶、硝酸甘油，再到心梗卧床、心衰端坐位、每日称体重、限盐限水、利尿药、心律不齐、起搏器、导管室、术后腿直、活动、戒烟、复查带药、阿司匹林。</span></div>
+<div class="lesson">
+<b>内分泌科英语</b> <span class="tag soon">20 节 · 敬请期待</span><br>
+<span class="soon">空腹血糖、糖化血红蛋白、口服降糖药、胰岛素部位轮换、胰岛素保存、低血糖处理、低血糖复测，再到随身带糖、糖尿病足、足部护理、视力模糊、饮食定量、加餐、甲状腺肿大、甲亢甲减、激素药、钙片、运动、复查。</span></div>
+<p class="note">学完是本课的结课记录，<b>不是执业资格、不是职称、不是学历</b>。学习交流，不构成诊疗建议；临床操作以本院制度和医嘱为准。</p>
+</div>
+</div>
+
+
+<div id="sec-my" class="section">
+<div class="card hero-my"><h2>👤 我的学习</h2>
+<p>你好，<b id="userNameDisplay">夜班学员</b></p>
+<p class="hero-row"><span class="streak">🔥 <b id="streakNum">0</b> 天连续打卡</span><button class="gold" id="checkinBtn" onclick="doCheckin()">✅ 今日打卡</button></p>
+<p class="moon-row" id="moonRow" aria-hidden="true"></p>
+<p class="note" style="color:#FFE08A"><span id="todayCheckinState">今天还没打卡</span> · 打卡只存本机，换设备重算；断了从 1 重新数。</p></div>
+<div class="card member-card" id="memberCard"><h2>💎 我的会员</h2>
+<p class="member-row">当前身份：<span class="tier tier-free" id="memberTier">普通用户</span></p>
+<p class="member-row" id="memberLessonLine" style="display:none">已购单课：<b id="memberLessonList"></b>（买断，不限期）</p>
+<p class="member-row" id="memberBundleLine" style="display:none">已购优惠包：<b>入院到出院 + 护士基本功</b>（买断，不限期）</p>
+<p class="member-row" id="memberCollLine" style="display:none">已购合集：<b id="memberCollList"></b>（买断，不限期）</p>
+<p class="member-row">会员到期时间：<b id="memberUntil">未开通会员</b></p>
+<p class="note">买断（单课、优惠包、合集）不限期，不算会员；会员只学文字，不解锁视频；会员到期后自动变回普通用户。会员到期时间按兑换那天算：月会员 30 天、季会员 90 天、年会员 365 天。</p></div>
+<div class="card" id="loginCard"><h2>🔐 登录账号 <span class="badge" id="loginSoonTag">即将开通</span></h2>
+<div id="loginStateOut">
+<p>登录后，进度、打卡和已购内容跟着账号走，换设备也不丢。不用密码，邮箱收一封登录链接，点开就登录了。</p>
+<p><input type="email" id="loginEmailInput" placeholder="输入邮箱，例如：name@example.com"></p>
+<p><button class="btn btn-block" id="loginSendBtn" onclick="sendLoginLink()">发送登录链接</button></p>
+<p id="loginMsg" class="note"></p></div>
+<div id="loginStateIn" style="display:none">
+<p>已登录：<b id="loginEmailShow"></b></p>
+<p><button class="btn ghost" onclick="logoutUser()">退出登录</button></p></div></div>
+<div class="card member-card" id="redeemCard"><h2>🎟️ 兑换码</h2>
+<p><input type="text" id="redeemInput" maxlength="32" placeholder="输入兑换码"></p>
+<p><button class="btn gold btn-block" onclick="redeemCode()">兑换</button></p>
+<p id="redeemMsg" class="note"></p>
+<p id="redeemState" class="note"></p>
+<p class="note">现在是本机验证：码只在这台设备上生效，换设备要重新兑。登录开通后，权益跟着账号走。</p>
+<p class="note">兑换没反应？把页面彻底关掉重开再试（微信会留着旧页面）。</p></div>
+<div class="card"><h2>📈 我的进度</h2>
+<p class="prog-row"><b>入院到出院</b><span class="prog-num" id="m1ProgText">0 / 10 节</span></p>
+<div class="bar"><div id="m1Bar"></div></div>
+<p class="prog-row"><b>全部 12 门课</b><span class="prog-num" id="allProgText">0 / 230 节</span></p>
+<div class="bar"><div id="allBar"></div></div>
+<p class="note">230 节是 12 门课的总数；已上线 11 节（入院到出院 10 节 + 基础合集 1 节），其余做好一门、开一门。</p></div>
+<div class="card"><h2>📅 打卡日历</h2>
+<p><button class="ghost" onclick="calShift(-1)">‹ 上月</button> <b id="calTitle"></b> <button class="ghost" onclick="calShift(1)">下月 ›</button></p>
+<div id="calBox"></div>
+<p class="note">金色的是打过卡的日子；今天有金边。只能打今天的卡，不能补以前的。</p></div>
+<div class="card"><h2>🏅 我的徽章</h2>
+<div class="badge-grid" id="badgeGrid"></div>
+<p class="note">徽章按本机进度自动点亮，换设备要重新攒。</p></div>
+<div class="card night-room"><h2><span class="room-ico">↩️</span> 继续学习</h2>
+<p id="continueMy">还没开始任何一课，先从第 1 课试试。</p>
+<a class="btn" id="continueMyBtn" href="classroom-ep01-pain.html">第 1 课 · 疼痛评估</a></div>
+<div class="card"><h2>📚 我的课程</h2>
+<div id="myCourses"></div></div>
+<div class="card"><h2>📝 我的错题</h2>
+<div id="myMistakes"></div>
+<p class="note">做题错了会记在这里，点“回炉”回去重做。</p></div>
+<div class="card"><h2>🎁 免费资料包</h2>
+<p>第 1 课的样品包：单词短语表、小抄卡、跟读音频、小测、打卡、口袋卡。（第 1 课整节免费）</p>
+<a class="btn ghost" href="fan/free-pack.html">领免费体验包 →</a></div>
+<div class="card"><h2>⚙️ 设置</h2><p>用户名称：<input type="text" id="userNameInput" maxlength="20" placeholder="给自己起个名字，例如：小夜"> <button class="btn" onclick="saveUserName()">保存</button></p>
+<p id="userNameMsg" class="note"></p>
+
+<p><button class="ghost" onclick="clearAllProgress()">清除本机全部课堂进度</button>
+<button class="ghost" onclick="clearCheckins()">清除本机打卡记录</button>
+<button class="ghost" onclick="clearMembership()">清除本机会员与兑换记录（测试用）</button></p>
+<p class="note">登录即将开通。开通之前，进度、错题、打卡只存在这台设备上；开通之后登录，跟着账号走，换设备也不丢。学习交流，不构成诊疗建议；临床操作以本院制度和医嘱为准。</p></div>
+</div>
+<p class="note">总站入口（请收藏，不要外传）：https://wangjiecheng09-png.github.io/yeban-english/home-8f3a9c2e.html —— 根地址现在打开的是粉丝免费版；以后新课、部门合集、学生课都往总站加。</p>
+</div>
+<nav class="nav">
+<button class="active" onclick="showSec(this,'sec-home')">🏠 首页</button>
+<button onclick="showSec(this,'sec-lessons')">📚 课程</button>
+<button onclick="showSec(this,'sec-courses')">🎬 视频课</button>
+<button onclick="location.href='words.html'">🔤 背单词</button>
+<button onclick="showSec(this,'sec-my')">👤 我的</button>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="video/auth.js"></script>
+<script>
+function showSec(btn,id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));document.getElementById(id).classList.add('show');window.scrollTo(0,0);document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(id==='sec-my')loadMy();try{if(history.replaceState)history.replaceState(null,'','#'+id);}catch(e){}}
+function toggleGroup(id){var g=document.getElementById(id);if(!g)return;var body=g.querySelector('.group-body');var head=g.querySelector('.group-head');var arrow=g.querySelector('.group-arrow');var open=body.style.display==='none';body.style.display=open?'block':'none';if(arrow)arrow.textContent=open?'▼':'▶';if(head)head.setAttribute('aria-expanded',open?'true':'false');}
+function doSearch(){const q=document.getElementById('q').value.trim().toLowerCase();const out=document.getElementById('searchResult');if(!q){out.innerHTML='<p class="note">输入关键词，上面课程里能搜到的都会列出来。</p>';return;}const hits=[];document.querySelectorAll('#lessonList .lesson').forEach(el=>{if(el.dataset.kw.toLowerCase().includes(q))hits.push(el.outerHTML);});out.innerHTML=hits.length?hits.join(''):'<p>没搜到“'+document.getElementById('q').value+'”，换个词试试，例如：输液、allergy、cold。</p>';}
+var LESSONS_BY_DATE={"2026-11-02":["第 1 课 · 疼痛评估","On a scale of zero to ten, how bad is your pain?（从零到十分，你的疼痛有几分？）<br>About seven, it's sharp.（大概七分，是刺痛。）","classroom-ep01-pain.html"],"2026-11-03":["第 2 课 · 生命体征","Let me check your blood pressure.（我给你量一下血压。）<br>Your blood pressure is one twenty over eighty, that's normal.（你的血压是一百二比八十，正常。）","classroom-ep02-vital-signs.html"],"2026-11-04":["第 3 课 · 入院问过敏史","Do you have any allergies?（你对什么过敏吗？）<br>Yes, I'm allergic to penicillin.（是的，我对青霉素过敏。）","classroom-ep03-allergies.html"],"2026-11-05":["第 4 课 · 输液","I'm going to start an IV drip for you.（我要给你输液了）<br>It may feel a little cold.（可能会感觉有点凉）","classroom-ep04-iv-drip.html"],"2026-11-06":["第 5 课 · 换药","I need to change your dressing.（我需要给你换药。）<br>Please tell me if it hurts.（如果疼请告诉我。）","classroom-ep05-dressing.html"],"2026-11-07":["第 6 课 · 给药核对","Please tell me your name and date of birth.（请告诉我你的姓名和出生日期。）<br>Let me check the medicine name and dose.（再核对药名和剂量。）","classroom-ep06-identity-check.html"],"2026-11-08":["第 7 课 · 术后观察","How are you feeling after the operation?（手术后你感觉怎么样？）<br>A bit dizzy, but okay.（有点晕，但还好。）","classroom-ep07-postop.html"],"2026-11-09":["第 8 课 · 术前禁食","You need to fast before surgery.（手术前你需要禁食。）<br>No food or water after midnight.（午夜之后不要吃东西，也不要喝水。）","classroom-ep08-fasting.html"],"2026-11-10":["第 9 课 · 防跌倒呼叫铃","Please press the call bell if you need help.（需要帮助请按呼叫铃。）<br>Don't get up alone.（不要自己一个人起来。）","classroom-ep09-callbell.html"],"2026-11-11":["第 10 课 · 出院宣教","Take this medicine twice a day after meals.（这个药每天吃两次，饭后吃。）<br>Come back for a follow-up in one week.（一周后回来复查。）","classroom-ep10-discharge.html"]};
+function todayKey(){try{var ps=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());var y="",m="",d="";ps.forEach(function(p){if(p.type==="year")y=p.value;if(p.type==="month")m=p.value;if(p.type==="day")d=p.value;});return y+"-"+m+"-"+d;}catch(e){var n=new Date();return n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0");}}
+function todayLesson(){var k=todayKey();if(LESSONS_BY_DATE[k])return LESSONS_BY_DATE[k];return k<"2026-11-02"?LESSONS_BY_DATE["2026-11-02"]:LESSONS_BY_DATE["2026-11-11"];}
+function updateToday(){var L=todayLesson();document.getElementById('todayTitle').textContent=L[0];document.getElementById('todayLines').innerHTML=L[1];var b=document.getElementById('todayBtn');b.href=L[2];b.textContent='开始'+L[0].split(' · ')[0]+' →';}
+var CONTINUE_LESSONS=[['ep01','第 1 课 · 疼痛评估','classroom-ep01-pain.html'],['ep02','第 2 课 · 生命体征','classroom-ep02-vital-signs.html'],['ep03','第 3 课 · 入院问过敏史','classroom-ep03-allergies.html'],['ep04','第 4 课 · 输液','classroom-ep04-iv-drip.html'],['ep05','第 5 课 · 换药','classroom-ep05-dressing.html'],['ep06','第 6 课 · 给药核对','classroom-ep06-identity-check.html'],['ep07','第 7 课 · 术后观察','classroom-ep07-postop.html'],['ep08','第 8 课 · 术前禁食','classroom-ep08-fasting.html'],['ep09','第 9 课 · 防跌倒呼叫铃','classroom-ep09-callbell.html'],['ep10','第 10 课 · 出院宣教','classroom-ep10-discharge.html']];
+function updateContinue(){var next=null;for(var i=0;i<CONTINUE_LESSONS.length;i++){if(!localStorage.getItem('classroom-'+CONTINUE_LESSONS[i][0]+'-done')){next=CONTINUE_LESSONS[i];break;}}var txt=document.getElementById('continue'),btn=document.getElementById('continueBtn');if(next){txt.textContent='下一课是'+next[1]+'，点下面继续。';btn.href=next[2];btn.textContent=next[1];}else{var L=todayLesson();txt.textContent='10 课都学完了，复习一下今日一课吧。';btn.href=L[2];btn.textContent=L[0];}var cm=document.getElementById('continueMy'),cb2=document.getElementById('continueMyBtn');if(cm&&cb2){if(next){cm.textContent='下一课是'+next[1]+'，点下面继续。';cb2.href=next[2];cb2.textContent=next[1];}else{var L2=todayLesson();cm.textContent='10 课都学完了，复习一下今日一课吧。';cb2.href=L2[2];cb2.textContent=L2[0];}}}
+/* ---- 我的：打卡 / 进度 / 日历 / 徽章（新 key：yeban-checkin-days，存 YYYY-MM-DD 数组；与免费包的 freepack-checkin 不冲突） ---- */
+function shanghaiToday(){try{var ps=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Shanghai",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());var y=0,m=0,d=0;ps.forEach(function(p){if(p.type==="year")y=+p.value;if(p.type==="month")m=+p.value;if(p.type==="day")d=+p.value;});return{y:y,m:m,d:d,key:y+"-"+String(m).padStart(2,"0")+"-"+String(d).padStart(2,"0")};}catch(e){var n=new Date();return{y:n.getFullYear(),m:n.getMonth()+1,d:n.getDate(),key:n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0")};}}
+function getCheckins(){try{var a=JSON.parse(localStorage.getItem('yeban-checkin-days')||'[]');return Array.isArray(a)?a:[];}catch(e){return[];}}
+function doCheckin(){var t=shanghaiToday();var days=getCheckins();if(days.indexOf(t.key)<0){days.push(t.key);localStorage.setItem('yeban-checkin-days',JSON.stringify(days));}loadMy();}
+function calcStreak(days){var set={};days.forEach(function(k){set[k]=1;});var t=shanghaiToday();var d=new Date(Date.UTC(t.y,t.m-1,t.d));if(!set[t.key])d.setUTCDate(d.getUTCDate()-1);var n=0;while(true){var k=d.getUTCFullYear()+"-"+String(d.getUTCMonth()+1).padStart(2,"0")+"-"+String(d.getUTCDate()).padStart(2,"0");if(set[k]){n++;d.setUTCDate(d.getUTCDate()-1);}else break;}return n;}
+var calView=null;
+function calShift(n){if(!calView){var t=shanghaiToday();calView={y:t.y,m:t.m};}calView.m+=n;while(calView.m<1){calView.m+=12;calView.y--;}while(calView.m>12){calView.m-=12;calView.y++;}renderCal();}
+function renderCal(){var t=shanghaiToday();if(!calView)calView={y:t.y,m:t.m};var y=calView.y,m=calView.m;var days=getCheckins();var set={};days.forEach(function(k){set[k]=1;});
+document.getElementById('calTitle').textContent=y+' 年 '+m+' 月';
+var first=new Date(Date.UTC(y,m-1,1)).getUTCDay();var dim=new Date(Date.UTC(y,m,0)).getUTCDate();
+var html='<table class="cal"><tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr><tr>';var cell=0;
+for(var i=0;i<first;i++){html+='<td class="dim"></td>';cell++;}
+for(var d=1;d<=dim;d++){var k=y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');var cls=[];if(set[k])cls.push('hit');if(y===t.y&&m===t.m&&d===t.d)cls.push('today');html+='<td class="'+cls.join(' ')+'">'+d+'</td>';cell++;if(cell%7===0&&d<dim)html+='</tr><tr>';}
+while(cell%7!==0){html+='<td class="dim"></td>';cell++;}
+html+='</tr></table>';document.getElementById('calBox').innerHTML=html;}
+function clearCheckins(){localStorage.removeItem('yeban-checkin-days');loadMy();}
+/* ---- 会员：身份 / 兑换码 / 到期（本机验证，测试码仅供测试；服务器验码以后再上） ---- */
+var MEMBER_TIERS={month:['月会员','tier-month',30],quarter:['季会员','tier-quarter',90],year:['年会员','tier-year',365]};
+/* 合集名：B1 急诊科、B2 外科、B3 手术室、B4 预检分诊、B5 体检、B6 内科、B7 儿科、B8 妇产科、B9 心内科、B10 内分泌科；基础合集是“护士基本功” */
+var COLL_NAMES={b1:'急诊科',b2:'外科',b3:'手术室',b4:'预检分诊',b5:'体检',b6:'内科',b7:'儿科',b8:'妇产科',b9:'心内科',b10:'内分泌科'};
+/* 买断包的中文名：优惠包 / 单课（MY_NAMES 的课名）/ 合集（科室名）；与模块页共用同一套 */
+function packDisplayName(pack){
+if(pack==='bundle-w1a')return '优惠包“入院到出院 + 护士基本功”';
+if(pack&&pack.indexOf('lesson-')===0){var k=pack.slice(7);return (typeof MY_NAMES!=='undefined'&&MY_NAMES[k])?('单课“'+MY_NAMES[k]+'”'):('单课“'+pack+'”');}
+if(pack&&pack.indexOf('coll-')===0){var c=pack.slice(5);return COLL_NAMES[c]?('合集“'+COLL_NAMES[c]+'”'):('合集“'+pack+'”');}
+return pack;}
+function boughtPacks(ent){
+var bo=(ent&&ent.buyout)||[];
+var lessons=bo.filter(function(p){return p.indexOf('lesson-')===0;}).sort(function(a,b){return parseInt(a.slice(9),10)-parseInt(b.slice(9),10);});
+var colls=bo.filter(function(p){return p.indexOf('coll-')===0;}).sort(function(a,b){return parseInt(a.slice(6),10)-parseInt(b.slice(6),10);});
+return {bundle:bo.indexOf('bundle-w1a')>=0,lessons:lessons,colls:colls};}
+/* 测试码的 SHA-256（只存哈希，不存明文；正式码由服务器发，绝不进仓库） */
+var REDEEM_CODES={
+'76b4936f620c0892e9d5f574c3621ccbb94d0cacf70b0e2ca1faf09cc014b76c':{type:'buyout',pack:'lesson-ep02'},
+'2fa240c6a78f13ce7be4f1129b703644c5570446144b8b05e92bfa6ea2a8f8c6':{type:'buyout',pack:'lesson-ep03'},
+'0e71104f4b5d3e007c4825df3f658e883c1fcc68a4f701e136e4d3e3b73bd0f8':{type:'buyout',pack:'lesson-ep10'},
+'93fb972fe147b682c2e600ce594c4353389c5663bf0dcf7a4c225e9110a55c7f':{type:'buyout',pack:'bundle-w1a'},
+'e1fa7cdfb460f1c06e48876ad0d3556fe7bc023af3fba4d77fead63cbd645e96':{type:'buyout',pack:'coll-b1'},
+'97b425ed18ebbd037956adeeeebd93a807fccf3bcdc7f16993e113c9e92f5b36':{type:'buyout',pack:'coll-b3'},
+'55d354332b7636becb0d4e19232a92281a31290ef2c50fc7b078a94711666f48':{type:'vip',tier:'month'},
+'c6c85179cb3103e04b90a56ca6759fa96c8d3af1bb012ee296a9053e3864294c':{type:'vip',tier:'quarter'},
+'5bcc0bf266937c86c4d5142b2704b04356c9d999eda27646e47cf940ca981d08':{type:'vip',tier:'year'},
+'6e33464c0bd03f3c442a1efcf1d43bd9ed1064cd1e2dab069f3504d9b7a13c21':{type:'expired'}};
+function getEntitlement(){try{var e=JSON.parse(localStorage.getItem('yeban-entitlement')||'{}');return e&&typeof e==='object'?e:{};}catch(err){return{};}}
+function saveEntitlement(e){localStorage.setItem('yeban-entitlement',JSON.stringify(e));}
+function getUsedCodes(){try{var a=JSON.parse(localStorage.getItem('yeban-used-codes')||'[]');return Array.isArray(a)?a:[];}catch(err){return[];}}
+function addDays(key,days){var p=key.split('-');var d=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]));d.setUTCDate(d.getUTCDate()+days);return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0');}
+function renderMember(){var ent=getEntitlement();var today=shanghaiToday().key;
+if(ent.vip&&ent.vip.until&&ent.vip.until<today){delete ent.vip;saveEntitlement(ent);}
+var tierEl=document.getElementById('memberTier'),untilEl=document.getElementById('memberUntil');
+if(ent.vip&&ent.vip.until&&MEMBER_TIERS[ent.vip.tier]){var t=MEMBER_TIERS[ent.vip.tier];tierEl.textContent=t[0];tierEl.className='tier '+t[1];untilEl.textContent=ent.vip.until+'（到期后自动变回普通用户）';}
+else{tierEl.textContent='普通用户';tierEl.className='tier tier-free';untilEl.textContent='未开通会员';}
+var bought=boughtPacks(ent);
+var lesEl=document.getElementById('memberLessonLine'),lesList=document.getElementById('memberLessonList');
+if(lesEl){lesEl.style.display=bought.lessons.length?'block':'none';if(lesList)lesList.textContent=bought.lessons.map(function(p){var k=p.slice(7);return MY_NAMES[k]||p;}).join('、');}
+var bunEl=document.getElementById('memberBundleLine');
+if(bunEl)bunEl.style.display=bought.bundle?'block':'none';
+var colEl=document.getElementById('memberCollLine'),colList=document.getElementById('memberCollList');
+if(colEl){colEl.style.display=bought.colls.length?'block':'none';if(colList)colList.textContent=bought.colls.map(function(p){var c=p.slice(5);return COLL_NAMES[c]||p;}).join('、');}
+var rs=document.getElementById('redeemState');if(rs){
+var vipTxt=(ent.vip&&ent.vip.until&&MEMBER_TIERS[ent.vip.tier])?MEMBER_TIERS[ent.vip.tier][0]+'，到期 '+ent.vip.until:'普通用户（未开通会员）';
+var owned=[];
+if(bought.lessons.length)owned.push('单课：'+bought.lessons.map(function(p){var k=p.slice(7);return MY_NAMES[k]||p;}).join('、'));
+if(bought.bundle)owned.push('优惠包：入院到出院 + 护士基本功');
+if(bought.colls.length)owned.push('合集：'+bought.colls.map(function(p){var c=p.slice(5);return COLL_NAMES[c]||p;}).join('、'));
+rs.textContent='当前：'+vipTxt+(owned.length?'；已购（买断，不限期）：'+owned.join('；')+'。':'。');}
+var nm='';try{nm=(localStorage.getItem('yeban-username')||'').trim();}catch(err){}
+var disp=document.getElementById('userNameDisplay');if(disp)disp.textContent=nm||'夜班学员';
+var inp=document.getElementById('userNameInput');if(inp&&document.activeElement!==inp)inp.value=nm;}
+/* 兑换码验码只用本机同步 SHA-256（已逐字节对过 Node crypto），不依赖 crypto.subtle / TextEncoder，微信内置浏览器也能用 */
+function sha256sync(ascii){function rr(v,a){return (v>>>a)|(v<<(32-a));}var maxWord=Math.pow(2,32),i,j,result='';var words=[],asciiBitLength=ascii.length*8;var hash=sha256sync.h=sha256sync.h||[],k=sha256sync.k=sha256sync.k||[];var primeCounter=k.length,isComposite={};for(var candidate=2;primeCounter<64;candidate++){if(!isComposite[candidate]){for(i=0;i<313;i+=candidate)isComposite[i]=candidate;hash[primeCounter]=(Math.pow(candidate,.5)*maxWord)|0;k[primeCounter++]=(Math.pow(candidate,1/3)*maxWord)|0;}}ascii+='\x80';while(ascii.length%64-56)ascii+='\x00';for(i=0;i<ascii.length;i++){j=ascii.charCodeAt(i);if(j>>8)return '';words[i>>2]|=j<<((3-i)%4)*8;}words[words.length]=((asciiBitLength/maxWord)|0);words[words.length]=(asciiBitLength);for(j=0;j<words.length;){var w=words.slice(j,j+=16),oldHash=hash;hash=hash.slice(0,8);for(i=0;i<64;i++){var w15=w[i-15],w2=w[i-2];var a=hash[0],e=hash[4];var temp1=hash[7]+(rr(e,6)^rr(e,11)^rr(e,25))+((e&hash[5])^((~e)&hash[6]))+k[i]+(w[i]=(i<16)?w[i]:(w[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+w[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);var temp2=(rr(a,2)^rr(a,13)^rr(a,22))+((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));hash=[(temp1+temp2)|0].concat(hash);hash[4]=(hash[4]+temp1)|0;}for(i=0;i<8;i++)hash[i]=(hash[i]+oldHash[i])|0;}for(i=0;i<8;i++)for(j=3;j+1;j--){var b=(hash[i]>>(j*8))&255;result+=((b<16)?0:'')+b.toString(16);}return result;}
+function normalizeCode(s){return (s||'').replace(/[\s\u3000]+/g,'').replace(/[\uFF01-\uFF5E]/g,function(ch){return String.fromCharCode(ch.charCodeAt(0)-0xFEE0);}).toUpperCase();}
+function redeemCode(){var msg=document.getElementById('redeemMsg');var inp=document.getElementById('redeemInput');var code=normalizeCode(inp.value);if(!code){msg.className='err';msg.textContent='先输入兑换码。';return;}
+var h=sha256sync(code);if(!h){msg.className='err';msg.textContent='这个码里有打不出来的字符，换个输入法再试。';return;}
+var c=REDEEM_CODES[h];if(!c){msg.className='err';msg.textContent='这个码不对，再看一眼，是不是字母输错了？';return;}
+if(c.type==='expired'){msg.className='err';msg.textContent='这个码已经过期了。';return;}
+var used=getUsedCodes();if(used.indexOf(h)>=0){msg.className='ok';msg.textContent='这个码已经用过啦——就是你刚才兑的那个，一个码只能用一次。去上面“我的会员”看一眼，已经开通过了。';renderMember();return;}
+used.push(h);localStorage.setItem('yeban-used-codes',JSON.stringify(used));
+var ent=getEntitlement();
+if(c.type==='buyout'){ent.buyout=ent.buyout||[];if(ent.buyout.indexOf(c.pack)<0)ent.buyout.push(c.pack);msg.className='ok';msg.textContent='✅ 开通成功！'+packDisplayName(c.pack)+'已买断，不限期。';}
+else{var t=MEMBER_TIERS[c.tier];ent.vip={tier:c.tier,until:addDays(shanghaiToday().key,t[2])};msg.className='ok';msg.textContent='✅ 开通成功！'+t[0]+'已开通，到期时间 '+ent.vip.until+'。';}
+saveEntitlement(ent);inp.value='';renderMember();
+try{var mc=document.getElementById('memberCard');if(mc)mc.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}}
+function saveUserName(){var inp=document.getElementById('userNameInput');var v=(inp.value||'').trim().slice(0,20);try{localStorage.setItem('yeban-username',v);}catch(err){}document.getElementById('userNameMsg').textContent=v?'已保存：'+v:'已清空，用默认名字“夜班学员”。';renderMember();}
+function clearMembership(){localStorage.removeItem('yeban-entitlement');localStorage.removeItem('yeban-used-codes');renderMember();document.getElementById('redeemMsg').textContent='本机会员与兑换记录已清除（测试用）。';}
+/* ---- 登录：魔法链接（邮箱收链接，点开就登录；服务器开关在 video/auth.js，未开时只显示“即将开通”） ---- */
+function loginServerOn(){return (typeof window.YebanServerAvailable==='function')&&window.YebanServerAvailable();}
+function sendLoginLink(){var msg=document.getElementById('loginMsg');var em=(document.getElementById('loginEmailInput').value||'').trim();
+if(!loginServerOn()){msg.className='err';msg.textContent='登录功能即将开通。现在先用兑换码开课，进度存在本机；开通后登录，权益跟着账号走。';return;}
+if(!em||em.indexOf('@')<0||em.lastIndexOf('.')<em.indexOf('@')){msg.className='err';msg.textContent='先填一个能收邮件的邮箱。';return;}
+msg.className='note';msg.textContent='正在发…';
+YebanAuth.login(em).then(function(r){
+if(r&&r.error){msg.className='err';msg.textContent='发送失败：'+(r.error.message||'请稍后再试。');}
+else{msg.className='ok';msg.textContent='登录链接已发到 '+em+'，点开就登录了，再回到这个页面。';}
+}).catch(function(){msg.className='err';msg.textContent='发送失败，请稍后再试。';});}
+function updateLoginUI(){var out=document.getElementById('loginStateOut'),inn=document.getElementById('loginStateIn');
+var tag=document.getElementById('loginSoonTag');if(tag)tag.style.display=loginServerOn()?'none':'inline-block';
+if(!out||!inn)return;
+if(!loginServerOn()){out.style.display='block';inn.style.display='none';return;}
+YebanAuth.currentUser().then(function(u){
+if(u&&u.email){out.style.display='none';inn.style.display='block';document.getElementById('loginEmailShow').textContent=u.email;}
+else{out.style.display='block';inn.style.display='none';}
+}).catch(function(){out.style.display='block';inn.style.display='none';});}
+function logoutUser(){if(!loginServerOn())return;YebanAuth.logout().then(function(){updateLoginUI();renderMember();});}
+
+
+var MY_NAMES={'ep01':'第 1 课 · 疼痛评估','ep02':'第 2 课 · 生命体征','ep03':'第 3 课 · 入院问过敏史','ep04':'第 4 课 · 输液','ep05':'第 5 课 · 换药','ep06':'第 6 课 · 给药核对','ep07':'第 7 课 · 术后观察','ep08':'第 8 课 · 术前禁食','ep09':'第 9 课 · 防跌倒呼叫铃','ep10':'第 10 课 · 出院宣教'};
+var MY_KEYS=Object.keys(MY_NAMES);
+var MY_TOTAL=10;
+function myDoneCount(){var n=0;MY_KEYS.forEach(function(k){if(localStorage.getItem('classroom-'+k+'-done'))n++;});return n;}
+function myAllDoneCount(){var n=myDoneCount();if(localStorage.getItem('classroom-a1-done'))n++;return n;}
+function renderBadges(){var done=myDoneCount(),streak=calcStreak(getCheckins());
+var zeroFree=false;MY_KEYS.forEach(function(k){if(localStorage.getItem('classroom-'+k+'-done')){var mm=JSON.parse(localStorage.getItem('classroom-'+k+'-mistakes')||'[]');if(!mm.length)zeroFree=true;}});
+var list=[
+['🌱','第一课','学完 1 节',done>=1],
+['📚','入院到出院学完','学完 10 节',done>=MY_TOTAL],
+['🎯','零错题','一课全对',zeroFree],
+['🔥','打卡 7 天','连续打卡 7 天',streak>=7]];
+document.getElementById('badgeGrid').innerHTML=list.map(function(b){return '<div class="badge-cell'+(b[3]?'':' locked')+'"><div class="ic">'+b[0]+'</div><b>'+b[1]+'</b><br><span style="font-size:13px">'+(b[3]?'✅ 已解锁':('🔒 '+b[2]))+'</span></div>';}).join('');}
+function renderMyCourses(){var done=myDoneCount();var rows=[
+['🌙','入院到出院','10 节','module-m1.html',done+' / '+MY_TOTAL+' 节'],
+['🩸','护士基本功 · 采血取药','20 节',null,'敬请期待'],
+['🚨','急诊英语','20 节',null,'敬请期待'],
+['🩺','外科英语','20 节',null,'敬请期待'],
+['💉','手术室英语','20 节',null,'敬请期待'],
+['📋','分诊英语','20 节',null,'敬请期待'],
+['🩻','体检英语','20 节',null,'敬请期待'],
+['❤️','内科英语','20 节',null,'敬请期待'],
+['🧒','儿科英语','20 节',null,'敬请期待'],
+['🤰','妇产科英语','20 节',null,'敬请期待'],
+['💓','心内科英语','20 节',null,'敬请期待'],
+['💊','内分泌科英语','20 节',null,'敬请期待']];
+document.getElementById('myCourses').innerHTML=rows.map(function(r){return '<div class="mycourse"><div><b>'+r[0]+' '+r[1]+'</b><br><span class="note">'+r[2]+' · '+r[4]+'</span></div>'+(r[3]?'<a class="btn ghost" href="'+r[3]+'">去学习 →</a>':'<span class="note">🔒 敬请期待</span>')+'</div>';}).join('');}
+function renderMyMistakes(){var html='';var any=false;
+MY_KEYS.forEach(function(k){var mm=JSON.parse(localStorage.getItem('classroom-'+k+'-mistakes')||'[]');if(mm.length){any=true;var nm=MY_NAMES[k];var title=Array.isArray(nm)?nm[0]:nm;var href=Array.isArray(nm)?nm[1]:('classroom-'+k+'-'+({'ep01':'pain','ep02':'vital-signs','ep03':'allergies','ep04':'iv-drip','ep05':'dressing','ep06':'identity-check','ep07':'postop','ep08':'fasting','ep09':'callbell','ep10':'discharge'}[k])+'.html');html+='<p><b>'+title+'</b>：'+mm.join('、')+' <a href="'+href+'">回炉 →</a></p>';}});
+document.getElementById('myMistakes').innerHTML=any?html:'<p class="note">还没有错题，做题错了会记在这里。</p>';}
+function loadMy(){var done=myDoneCount(),all=myAllDoneCount(),streak=calcStreak(getCheckins());var t=shanghaiToday();var days=getCheckins();
+document.getElementById('streakNum').textContent=streak;try{renderMoonRow(streak);}catch(e){}
+var st=document.getElementById('todayCheckinState');var cb=document.getElementById('checkinBtn');
+if(days.indexOf(t.key)>=0){st.textContent='✅ 今天已打卡，连续 '+streak+' 天';cb.textContent='✅ 今天已打卡';cb.disabled=true;}else{st.textContent='今天还没打卡';cb.textContent='✅ 今日打卡';cb.disabled=false;}
+var pct1=Math.round(done/MY_TOTAL*100),pctA=Math.round(all/230*100);
+document.getElementById('m1ProgText').textContent='已学 '+done+' / '+MY_TOTAL+' 节 · '+pct1+'%';
+document.getElementById('m1Bar').style.width=pct1+'%';
+document.getElementById('allProgText').textContent='已学 '+all+' / 230 节 · '+pctA+'%';
+document.getElementById('allBar').style.width=pctA+'%';
+renderCal();renderBadges();renderMember();renderCal();renderBadges();renderMyCourses();renderMyMistakes();updateContinue();updateLoginUI();}
+function clearAllProgress(){['classroom-ep01-done','classroom-ep01-mistakes','classroom-ep02-done','classroom-ep02-mistakes','classroom-ep03-done','classroom-ep03-mistakes','classroom-ep04-done','classroom-ep04-mistakes','classroom-ep05-done','classroom-ep05-mistakes','classroom-ep06-done','classroom-ep06-mistakes','classroom-ep07-done','classroom-ep07-mistakes','classroom-ep08-done','classroom-ep08-mistakes','classroom-ep09-done','classroom-ep09-mistakes','classroom-ep10-done','classroom-ep10-mistakes','classroom-a1-done','classroom-a1-mistakes'].forEach(k=>localStorage.removeItem(k));loadMy();}
+
+
+/* ---- v3 · 值班卡：打卡状态 + 一夜的时间线（19:00→07:00）---- */
+function markShift(){
+  var st=document.getElementById('shiftState'),dot=document.getElementById('nightDot');
+  if(!st||!dot)return;
+  var now=new Date(),h=now.getHours(),m=now.getMinutes();
+  try{
+    var parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(now);
+    parts.forEach(function(p){if(p.type==='hour')h=+p.value;if(p.type==='minute')m=+p.value;});
+    if(h===24)h=0;
+  }catch(e){}
+  var p=0,night=false;
+  if(h>=19){p=(h-19+m/60)/12;night=true;}
+  else if(h<7){p=(h+5+m/60)/12;night=true;}
+  dot.style.left=(p*100).toFixed(1)+'%';
+  var fl=document.getElementById('nightFill');if(fl)fl.style.width=(p*100).toFixed(1)+'%';
+  var checked=false;
+  try{var days=getCheckins();var t=shanghaiToday();checked=days.indexOf(t.key)>=0;}catch(e){}
+  st.textContent=checked?(night?'\u2705 \u5df2\u6253\u5361\u4e0a\u73ed \u00b7 \u4eca\u665a\u503c\u73ed\u4e2d':'\u2705 \u4eca\u5929\u5df2\u6253\u5361'):(night?'\uD83C\uDF19 \u4eca\u665a\u503c\u73ed \u00b7 \u8fd8\u6ca1\u6253\u5361':'\uD83C\uDF19 \u4eca\u665a 19:00 \u4e0a\u73ed');
+}
+
+/* ---- v3 · 月亮行：连续值班几夜，就亮几个月亮（一周七夜）---- */
+function renderMoonRow(streak){
+  var el=document.getElementById('moonRow');
+  if(!el)return;
+  var n=Math.max(0,Math.min(7,streak|0)),s='';
+  for(var i=0;i<7;i++)s+=i<n?'\uD83C\uDF15':'<span class="moon-off" aria-hidden="true"></span>';
+  el.innerHTML=s;
+}
+
+/* ---- v3 · 切 tab 后重算金线（隐藏的走廊量不到高度）---- */
+try{
+  var _showSecV3=showSec;
+  showSec=function(b,s){_showSecV3(b,s);try{markCorridorDetails();}catch(e){}};
+}catch(e){}
+
+/* ---- v3 · 走廊细节：房间状态词 + 已经走过的金线 ---- */
+function markCorridorDetails(){
+  var corridors=document.querySelectorAll('.corridor');
+  corridors.forEach(function(c){
+    var rooms=c.querySelectorAll('.room[data-ep]');
+    rooms.forEach(function(r){
+      var st=r.querySelector('.room-state');
+      if(st){st.textContent=r.classList.contains('done')?'已查完':(r.classList.contains('now')?'查房中':'');}
+    });
+    var nowRoom=c.querySelector('.room.now');
+    var allDone=rooms.length>0&&c.querySelectorAll('.room.done').length===rooms.length;
+    var h=0;
+    try{
+      if(nowRoom){h=nowRoom.offsetTop+18;}
+      else if(allDone){h=c.offsetHeight-24;}
+    }catch(e){h=0;}
+    try{c.style.setProperty('--walked',Math.max(0,h)+'px');}catch(e){}
+  });
+}
+
+/* ---- v2 · 查房路线：给房间标状态（已完成 / 正在学 / 今日一课）---- */
+function markCorridor(){
+  var rooms=document.querySelectorAll('.corridor .room[data-ep]');
+  if(!rooms.length)return;
+  function epDone(ep){try{return !!localStorage.getItem('classroom-'+ep+'-done');}catch(e){return false;}}
+  var eps=['ep01','ep02','ep03','ep04','ep05','ep06','ep07','ep08','ep09','ep10'];
+  var firstTodo=null;
+  for(var i=0;i<eps.length;i++){if(!epDone(eps[i])){firstTodo=eps[i];break;}}
+  var todayEp=null;
+  try{var L=todayLesson();var m=/classroom-(ep\d+)-/.exec(L[2]||'');if(m)todayEp=m[1];}catch(e){}
+  rooms.forEach(function(r){
+    var ep=r.getAttribute('data-ep');
+    var plate=r.querySelector('.room-plate');
+    if(epDone(ep)){r.classList.add('done');if(plate)plate.textContent='\u2713';}
+    if(ep===firstTodo)r.classList.add('now');
+    if(ep===todayEp)r.classList.add('today');
+  });
+}
+updateToday();updateContinue();loadMy();doSearch();try{markCorridor();}catch(e){}try{markShift();}catch(e){}try{markCorridorDetails();}catch(e){}
+/* hash 直达必须放在最后：showSec('sec-my') 会调 loadMy → myDoneCount 用 MY_NAMES/MY_KEYS，放在前面会在赋值前抛错、中断整个脚本（REDEEM_CODES 等都未定义） */
+(function(){var h=(location.hash||'').slice(1);if(h&&document.getElementById(h)){var bs=document.querySelectorAll('.nav button');for(var i=0;i<bs.length;i++){if((bs[i].getAttribute('onclick')||'').indexOf("'"+h+"'")>=0){showSec(bs[i],h);break;}}}})();
+</script><!-- pages-rebuild --><script>/* 维护开关：maintenance.json 里 maintenance 为 true 时才跳转，平时不影响页面 */(function(){try{fetch("maintenance.json",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){if(d&&d.maintenance&&location.pathname.indexOf("maintenance.html")<0){location.replace("maintenance.html")}}).catch(function(){})}catch(e){}})();</script></body></html>
