@@ -172,9 +172,13 @@
   /* 5. LAYOUT — 世界坐标 720x1280,全部按此排布 */
   function layout() {
     var top = SAFE_TOP;
-    var posterX = 24, posterW = 672, cell = posterW / 40; // 16.8,40 格宽大像素画
-    var posterY = top + 148;
-    var posterH = 24 * cell; // 403.2
+    // 画板贴合画:按当前关裁剪后的宽高算格子,画铺满画框;短画上下居中
+    var cw = S ? S.W : 40, ch = S ? S.H : 24;
+    var maxPosterH = 1280 - (top + 148) - 564; // 卡槽+等候区+道具条+底边共 564
+    var cell = Math.min(672 / cw, maxPosterH / ch);
+    var posterW = cw * cell, posterH = ch * cell;
+    var posterX = (720 - posterW) / 2;
+    var posterY = top + 148 + (maxPosterH - posterH) / 2;
     var slotsY = posterY + posterH + 10;
     var slotsH = 128;
     var deckY = slotsY + slotsH + 28;
@@ -264,13 +268,24 @@
     rng = mulberry32(20261121 + levelIdx * 7919);
     var L = LEVELS[levelIdx];
     var H = L.rows.length, W = L.rows[0].length;
+    // 裁掉画外空白行列:画板只框住有画的部分,画铺满画框
+    var minX = W, maxX = -1, minY = H, maxY = -1;
+    L.rows.forEach(function (row, ry) {
+      for (var x = 0; x < row.length; x++) {
+        if (row[x] !== '.') {
+          if (x < minX) minX = x; if (x > maxX) maxX = x;
+          if (ry < minY) minY = ry; if (ry > maxY) maxY = ry;
+        }
+      }
+    });
+    var cropW = maxX - minX + 1;
     // 图就是小人拼成的:每列的小人列 = 画里该列的非空白格,从下往上按原顺序排,
     // 颜色就是调色板里的色;不随机高度,不补空白格。接走一个小人,那一格就空了,
     // 全部接走板子就是空的。
-    var stacks = [], total = 0;
-    for (var x = 0; x < W; x++) {
+    var stacks = [], total = 0, maxStack = 0;
+    for (var x = minX; x <= maxX; x++) {
       var col = [];
-      for (var ry = H - 1; ry >= 0; ry--) {
+      for (var ry = maxY; ry >= minY; ry--) {
         var ch = L.rows[ry][x];
         if (ch === '.') continue;
         var iceHp = 0;
@@ -279,6 +294,7 @@
         col.push({ c: L.palette[ch], ice: iceHp });
       }
       stacks.push(col); total += col.length;
+      if (col.length > maxStack) maxStack = col.length;
     }
     var counts = {};
     stacks.forEach(function (col) { col.forEach(function (cell) { counts[cell.c] = (counts[cell.c] || 0) + 1; }); });
@@ -329,7 +345,8 @@
       try { console.warn('[kai-che] level ' + levelIdx + ' seat mismatch: seats=' + seats + ' total=' + total); } catch (e) {}
     }
     S = {
-      level: levelIdx, W: W, H: H, stacks: stacks, total: total, cleared: 0,
+      // 板高 = 最高的一列:小人列从板底往上摞,最高列顶到板顶,画才铺满画框
+      level: levelIdx, W: cropW, H: maxStack, stacks: stacks, total: total, cleared: 0,
       slots: new Array(L.slots).fill(null), locks: buildLocks(L),
       rainbowQuota: rainbowQuota, rainbowTaken: {},
       deck: deck, backs: R.backs, hints: R.hints, shuffles: R.shuffles + shopStock.shuffles,
@@ -937,19 +954,15 @@
     g.beginPath(); g.arc(x, y + s * 0.05, s * 0.22, 0.15 * Math.PI, 0.85 * Math.PI); g.stroke();
   }
   function drawPassenger(g, x, y, w, h, color, face, ice) {
+    // 实心像素:满格铺色,格子之间不留缝,画才密实;脸画在方块正中
     g.save();
     g.fillStyle = color;
-    rr(x + 2, y + 2, w - 4, h - 4, 8);
-    g.fill();
-    g.strokeStyle = 'rgba(0,0,0,0.18)';
-    g.lineWidth = 2;
-    g.stroke();
+    g.fillRect(x, y, w, h);
     if (face) drawFace(g, x + w / 2, y + h / 2, Math.min(w, h) * 0.8);
     if (ice > 0) {
-      // 冰冻:半透明蓝覆盖;1 层只有淡蓝 tint,2 层加一个小雪花标记,不再写字
+      // 冰冻:半透明蓝覆盖整格;1 层只有淡蓝 tint,2 层加一个小雪花标记,不再写字
       g.fillStyle = ice >= 2 ? 'rgba(120,190,255,0.62)' : 'rgba(160,215,255,0.38)';
-      rr(x + 2, y + 2, w - 4, h - 4, 8);
-      g.fill();
+      g.fillRect(x, y, w, h);
       if (ice >= 2) {
         var cx2 = x + w / 2, cy2 = y + h / 2, r2 = Math.min(w, h) * 0.32;
         g.strokeStyle = 'rgba(255,255,255,0.95)';
@@ -1164,13 +1177,13 @@
     rr(8, L.posterY - 16, 704, 56, 22); ctx.fill();
     ctx.restore();
     ctx.save();
-    ctx.fillStyle = '#8a5a2b';
+    ctx.fillStyle = '#6b421e';
     rr(L.posterX - 10, L.posterY - 10, L.posterW + 20, L.posterH + 20, 12); ctx.fill();
-    ctx.fillStyle = '#a9743f';
+    ctx.fillStyle = '#8a5a2b';
     rr(L.posterX - 6, L.posterY - 6, L.posterW + 12, L.posterH + 12, 10); ctx.fill();
     ctx.restore();
     // --- 空板:图就是小人拼成的,没有背景画;接走一个小人那一格就空了 ---
-    ctx.fillStyle = '#fbeecb';
+    ctx.fillStyle = '#e3c996'; // 暖沙底:必须比最浅的小人色(#fdfdff 近白)明显深一档,白身体才看得见
     ctx.fillRect(L.posterX, L.posterY, L.posterW, L.posterH);
     // --- 小人列 ---
     var blockH = L.posterH / S.H;
@@ -1178,14 +1191,10 @@
       var col = S.stacks[ci];
       for (var bi = 0; bi < col.length; bi++) {
         var cell = col[bi];
-        var fromTop = col.length - 1 - bi;
         var bx = L.posterX + ci * L.cell;
         var by = L.posterY + L.posterH - (bi + 1) * blockH;
-        // 深度越深越暗
-        ctx.save();
-        ctx.globalAlpha = Math.max(0.72, 1 - fromTop * 0.05);
+        // 实心像素满格铺色,不做深度变暗,颜色才够亮
         drawPassenger(ctx, bx, by, L.cell, blockH, cell.c, bi === col.length - 1, cell.ice);
-        ctx.restore();
         if (bi === 0) {
           // 最底下一排小人露出两条小腿(原版既视感)
           ctx.fillStyle = 'rgba(40,30,20,0.85)';
@@ -2082,8 +2091,8 @@
     }
     var tops = [];
     if (S) S.stacks.forEach(function (col, i) {
-      var cellW = 672 / S.W;
-      if (col.length) tops.push({ x: round(24 + i * cellW + cellW / 2), y: round(300), c: col[col.length - 1].c });
+      var r = topBlockRect(i);
+      if (r) tops.push({ x: round(r.x + r.w / 2), y: round(r.y + r.h / 2), c: col[col.length - 1].c });
     });
     return {
       phase: phase,
