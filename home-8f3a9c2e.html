@@ -567,7 +567,7 @@ var bo=(ent&&ent.buyout)||[];
 var lessons=bo.filter(function(p){return p.indexOf('lesson-')===0;}).sort(function(a,b){return parseInt(a.slice(9),10)-parseInt(b.slice(9),10);});
 var colls=bo.filter(function(p){return p.indexOf('coll-')===0;}).sort(function(a,b){return parseInt(a.slice(6),10)-parseInt(b.slice(6),10);});
 return {bundle:bo.indexOf('bundle-w1a')>=0,lessons:lessons,colls:colls};}
-/* 测试码的 SHA-256（只存哈希，不存明文；正式码由服务器发，绝不进仓库） */
+/* 兑换码 SHA-256（只存哈希，不存明文）。测试码 10 个；首发包正式码 20 个（2026-11-25 上架，本地验码过渡；服务器验码上线后替换，正式码改由服务器发）。 */
 var REDEEM_CODES={
 '76b4936f620c0892e9d5f574c3621ccbb94d0cacf70b0e2ca1faf09cc014b76c':{type:'buyout',pack:'lesson-ep02'},
 '2fa240c6a78f13ce7be4f1129b703644c5570446144b8b05e92bfa6ea2a8f8c6':{type:'buyout',pack:'lesson-ep03'},
@@ -578,7 +578,27 @@ var REDEEM_CODES={
 '55d354332b7636becb0d4e19232a92281a31290ef2c50fc7b078a94711666f48':{type:'vip',tier:'month'},
 'c6c85179cb3103e04b90a56ca6759fa96c8d3af1bb012ee296a9053e3864294c':{type:'vip',tier:'quarter'},
 '5bcc0bf266937c86c4d5142b2704b04356c9d999eda27646e47cf940ca981d08':{type:'vip',tier:'year'},
-'6e33464c0bd03f3c442a1efcf1d43bd9ed1064cd1e2dab069f3504d9b7a13c21':{type:'expired'}};
+'6e33464c0bd03f3c442a1efcf1d43bd9ed1064cd1e2dab069f3504d9b7a13c21':{type:'expired'},
+'88147fa12dec531999ab260c34ebeb5bba7ec692c55b64d206bfbb2b8d97346e':{type:'buyout',pack:'bundle-w1a'},
+'5574f795279014d6816ec864d66d099ac343030de3a11096c05a93bac06be7c8':{type:'buyout',pack:'bundle-w1a'},
+'042ecca09809b352a8e59aa33c4f6d1f3d08a1447674edf54edb11c1100bf364':{type:'buyout',pack:'bundle-w1a'},
+'6a9c8cbf5a25371c0799dfba5bc1a7ca6670c7fa41f794756bb19ce228d71af9':{type:'buyout',pack:'bundle-w1a'},
+'51f5c7e36f01964f878f465e968eed544a902e44c7c599c9c795fed076e2adee':{type:'buyout',pack:'bundle-w1a'},
+'c9e4415c66328ecdfea6207eebc3b34a9cba87558a942c79f431b08a760965c4':{type:'buyout',pack:'bundle-w1a'},
+'e8264637565fb5440ca61a82437d039099c0d6b8ea945abdf459c8ca50e76ce8':{type:'buyout',pack:'bundle-w1a'},
+'4be30378d23ca68fcfb4f2d1b1b9d8f28fb6ff7eec0fe78a46823d66fe039d90':{type:'buyout',pack:'bundle-w1a'},
+'1ff110b2384489479b3397b1de4bad11b9594d3061c67de4fc7b18fdfa3875f4':{type:'buyout',pack:'bundle-w1a'},
+'a77b4b7756e7b519c56c1186decf55209daa52e8ee9a49bda97b8ce4a7c2af21':{type:'buyout',pack:'bundle-w1a'},
+'b2c3963f51ca043ad66854090a17859a82545d3738abc0a654c46bec97a58d8e':{type:'buyout',pack:'bundle-w1a'},
+'39067b9f6dacbc4e16d8f17c9c72a148d705651e9d605631289bfc786b9919c3':{type:'buyout',pack:'bundle-w1a'},
+'82dc26c455fb855f1fa32c8b72ede569cbcd6981797a2d4af7b733a684693032':{type:'buyout',pack:'bundle-w1a'},
+'93f41bbeec376239278e7806bbee1b11d505914aa69111dba4377277eafe83fa':{type:'buyout',pack:'bundle-w1a'},
+'828694a811fedbd1716bd3e9c9ecf43685b254035aa46d6d66d437733c201e44':{type:'buyout',pack:'bundle-w1a'},
+'eb474f4b5eaecc73be0471f50d1ce42babdd160093e5d39936bb8d95669f5bab':{type:'buyout',pack:'bundle-w1a'},
+'53d1b90113f59003deee1e2a45bb298530136b633bfdc2b230890144823947b2':{type:'buyout',pack:'bundle-w1a'},
+'c0addcffcd03f889472a7d001f6899175d09178d95f4ea34e90db6d3770fe36b':{type:'buyout',pack:'bundle-w1a'},
+'fbfe42aac9f19bb544962824d03934fb58427e94c26b03c0b268f5a26517bae8':{type:'buyout',pack:'bundle-w1a'},
+'2631e8ae84cd7fd74c2b8ba3ff56ceaad7156e055b8eb96a8ee40cc1d16ecd99':{type:'buyout',pack:'bundle-w1a'}};
 function getEntitlement(){try{var e=JSON.parse(localStorage.getItem('yeban-entitlement')||'{}');return e&&typeof e==='object'?e:{};}catch(err){return{};}}
 function saveEntitlement(e){localStorage.setItem('yeban-entitlement',JSON.stringify(e));}
 function getUsedCodes(){try{var a=JSON.parse(localStorage.getItem('yeban-used-codes')||'[]');return Array.isArray(a)?a:[];}catch(err){return[];}}
